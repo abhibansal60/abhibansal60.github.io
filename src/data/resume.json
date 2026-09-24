@@ -3,10 +3,10 @@
   "basics": {
     "name": "Abhinav Bansal",
     "label": "I help enterprises put AI agents into production.",
-    "subline": "From test automation to AI agents: 10 years automating engineering at a global bank.",
+    "subline": "From test automation to modernization at scale to AI agents: 10 years automating engineering at a global bank.",
     "email": "abhibansal60@gmail.com",
     "url": "https://abhibansal60.github.io",
-    "summary": "Vice President at Morgan Stanley leading agentic AI adoption and tech modernization. Strong Python engineer who builds multi-agent systems with LangChain, MCP and the Claude Agent SDK, and teaches engineering teams to do the same. Came up through test automation and DevOps, and co-invented a patented test automation engine.",
+    "summary": "Vice President at Morgan Stanley leading agentic AI adoption and tech modernization, after five years modernizing technology at scale across the firm's business units. Known as the Plumber: wherever something needs fixing, I go in. Strong Python engineer who builds multi-agent systems with LangChain, MCP and the Claude Agent SDK. I love building cookie-cutter tools that let every team start from a working pattern, and presenting them as a developer advocate. Came up through test automation and DevOps, and co-invented a patented test automation engine.",
     "currently": "Leading agentic AI adoption at Morgan Stanley in Glasgow, and shipping tidy, an AI inbox cleaner that can't go rogue.",
     "location": {
       "city": "Glasgow",
@@ -24,7 +24,8 @@
         "username": "abhibansal60",
         "url": "https://github.com/abhibansal60"
       }
-    ]
+    ],
+    "nickname": "the Plumber"
   },
   "work": [
     {
@@ -255,6 +256,15 @@
         "Selenium",
         "TestNG"
       ]
+    },
+    {
+      "name": "Advocacy",
+      "keywords": [
+        "Developer advocacy",
+        "Presenting",
+        "Cookie-cutter tooling",
+        "Mentoring"
+      ]
     }
   ],
   "languages": [
@@ -311,13 +321,14 @@
       ]
     },
     {
-      "year": "2021",
-      "stage": "deploy",
-      "name": "DevOps",
+      "year": "2020",
+      "stage": "modernize",
+      "name": "Tech at scale",
       "log": [
-        "45% fewer production incidents",
-        "35% faster modernization rollouts across business units",
-        "28% faster time-to-market for new applications"
+        "Five years modernizing technology across Morgan Stanley business units",
+        "Engineer as a Service: 35% faster modernization rollouts",
+        "Led 5+ teams to a 40% jump in deployment frequency",
+        "Cookie-cutter patterns and Kubernetes adoption: 28% faster time-to-market, 45% fewer incidents"
       ]
     },
     {
