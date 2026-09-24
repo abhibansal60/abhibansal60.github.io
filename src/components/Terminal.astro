@@ -32,6 +32,7 @@ ${dim('try: plumber')}`,
     `<span class="g">✓</span> Then I get on stage and show people how to use them`,
     dim('no job too small, no pipeline too clogged'),
   ].join('\n'),
+  pip: `<span class="g">Pip is back on duty.</span> ${dim('bottom right, holding a wrench')}`,
   cv: `opening ${link('/cv/', '/cv')} ...`,
   crawl: dim('rolling the opening crawl. Press Esc to skip.'),
   'sudo rm -rf /': `<span class="g">[harness] blocked.</span>\nThe model can ask. Plain code decides. That's the whole idea.`,
@@ -46,7 +47,7 @@ for (const p of projects) {
   ].join('\n');
 }
 const chips = ['whoami', 'plumber', 'projects', 'experience', 'patent', 'writing', 'contact', 'sudo rm -rf /', 'clear'];
-commands.help = dim(`commands: ${[...chips, 'speaking', 'cv', 'crawl', ...projects.map((p) => p.name)].join(', ')}`);
+commands.help = dim(`commands: ${[...chips, 'speaking', 'cv', 'crawl', 'pip', ...projects.map((p) => p.name)].join(', ')}`);
 ---
 
 <div class="term" data-term>
@@ -190,6 +191,7 @@ commands.help = dim(`commands: ${[...chips, 'speaking', 'cv', 'crawl', ...projec
       }
       out.scrollTop = out.scrollHeight;
       busy = false;
+      if (cmd === 'pip') dispatchEvent(new Event('pip:summon'));
       if (cmd === 'cv') setTimeout(() => (location.href = '/cv/'), 600);
       if (cmd === 'crawl') {
         crawl.classList.remove('rolling');
