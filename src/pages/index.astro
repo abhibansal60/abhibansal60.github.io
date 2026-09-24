@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import resume from '../data/resume.json';
 import { getPosts, formatDate } from '../lib';
 import Terminal from '../components/Terminal.astro';
-import LifeField from '../components/LifeField.astro';
 
 const { basics, projects, talks } = resume;
 const linkedin = basics.profiles.find((p) => p.network === 'LinkedIn')!.url;
@@ -16,7 +15,6 @@ const patent = resume.highlights.find((h) => h.name.startsWith('BLAZE'))!;
 
 <Base>
   <section class="hero">
-    <LifeField />
     <div class="intro">
       <h1>{basics.label}</h1>
       <p class="subline">{basics.subline}</p>
@@ -91,8 +89,6 @@ const patent = resume.highlights.find((h) => h.name.startsWith('BLAZE'))!;
     gap: 3rem;
     align-items: center;
     margin-bottom: 5rem;
-    position: relative;
-    isolation: isolate;
   }
   .intro h1 { max-width: 14ch; }
   .subline { font-size: 1.25rem; max-width: 40ch; }

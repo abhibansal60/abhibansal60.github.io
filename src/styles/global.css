@@ -1,12 +1,15 @@
-/* Palette from ai-workbench: deep indigo base, matrix green for "passed/focused", purple for tool output. */
+/* Rebel console: deep space, saber green for "passed/focused", hologram blue for tool output,
+   targeting-computer amber for UI chrome. */
 :root {
-  --bg: #0d0221;
-  --raised: #150834;
-  --text: #ece8f7;
-  --muted: #a39fb8;
-  --line: #3a2a66;
-  --green: #00ff9f;
-  --purple: #b98cff;
+  --bg: #04050b;
+  --raised: #0b0f1c;
+  --text: #e8ecf5;
+  --muted: #8f98ad;
+  --line: #243049;
+  --green: #52ff8f;
+  --holo: #7dd8ff;
+  --amber: #ffb547;
+  --glow: 0 0 14px color-mix(in srgb, var(--green) 45%, transparent);
   --sans: 'IBM Plex Sans', system-ui, sans-serif;
   --condensed: 'IBM Plex Sans Condensed', 'IBM Plex Sans', system-ui, sans-serif;
   --mono: 'IBM Plex Mono', ui-monospace, monospace;
@@ -16,13 +19,15 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    --bg: #f8f6fc;
+    --bg: #eef1f6;
     --raised: #ffffff;
-    --text: #1a1033;
-    --muted: #5a5470;
-    --line: #d9d0ee;
-    --green: #007a4d;
-    --purple: #6b35d9;
+    --text: #0b1020;
+    --muted: #4f5870;
+    --line: #cfd6e3;
+    --green: #0a7a3a;
+    --holo: #0b6aa8;
+    --amber: #8a5200;
+    --glow: none;
     color-scheme: light;
   }
 }
@@ -39,7 +44,7 @@ body {
   font: 400 1.0625rem/1.6 var(--sans);
 }
 
-a { color: inherit; text-decoration-color: var(--purple); text-underline-offset: 0.2em; }
+a { color: inherit; text-decoration-color: var(--holo); text-underline-offset: 0.2em; }
 a:hover { color: var(--green); text-decoration-color: currentColor; }
 :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 2px; }
 
@@ -49,7 +54,7 @@ h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
 h3 { font-size: 1.3rem; }
 p { margin: 0 0 1em; }
 code, pre { font-family: var(--mono); font-size: 0.9em; }
-code { color: var(--purple); }
+code { color: var(--holo); }
 pre { background: var(--raised); border: 1px solid var(--line); padding: 1rem; overflow-x: auto; border-radius: 6px; }
 pre code { color: var(--text); }
 
@@ -73,9 +78,9 @@ pre code { color: var(--text); }
   padding: 0 0.4rem;
   background: var(--bg);
   font: 500 0.85rem/1.4 var(--mono);
-  color: var(--muted);
+  color: var(--amber);
 }
-.pane.focused { border-color: var(--green); }
+.pane.focused { border-color: var(--green); box-shadow: var(--glow); }
 .pane.focused .pane-title { color: var(--green); }
 
 .button-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
@@ -87,15 +92,17 @@ pre code { color: var(--text); }
   text-decoration: none;
   font-weight: 500;
 }
-.button.primary { background: var(--green); border-color: var(--green); color: var(--bg); }
+.button.primary { background: var(--green); border-color: var(--green); color: var(--bg); box-shadow: var(--glow); }
 .button.primary:hover { color: var(--bg); filter: brightness(1.1); }
 .button:not(.primary):hover { border-color: var(--green); }
 
 .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0; margin: 0.75rem 0 0; list-style: none; }
-.tags li { font: 0.8rem/1.5 var(--mono); color: var(--purple); }
+.tags li { font: 0.8rem/1.5 var(--mono); color: var(--holo); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+html:has(dialog[open]) { overflow: hidden; }

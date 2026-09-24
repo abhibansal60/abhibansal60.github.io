@@ -6,6 +6,7 @@ import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import '../styles/global.css';
 import resume from '../data/resume.json';
+import Starfield from '../components/Starfield.astro';
 
 interface Props {
   title?: string;
@@ -43,6 +44,7 @@ const nav = [
     <meta name="twitter:card" content="summary" />
   </head>
   <body>
+    <Starfield />
     <a class="skip" href="#main">Skip to content</a>
     <header class="wrap site-header">
       <a class="wordmark" href="/">abhinav bansal</a>
@@ -71,11 +73,11 @@ const nav = [
     gap: 0.75rem 2rem; padding-block: 1.5rem 3rem;
   }
   .wordmark { font: 500 1rem/1 var(--mono); color: var(--green); text-decoration: none; }
-  .wordmark::before { content: '~/'; color: var(--muted); }
+  .wordmark::before { content: '~/'; color: var(--amber); }
   nav ul { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; margin: 0; padding: 0; list-style: none; }
   nav a { text-decoration: none; color: var(--muted); }
   nav a:hover, nav a[aria-current='page'] { color: var(--text); }
-  nav a[aria-current='page'] { text-decoration: underline; text-decoration-color: var(--green); }
+  nav a[aria-current='page'] { text-decoration: underline; text-decoration-color: var(--amber); }
   main { padding-bottom: 5rem; }
   .site-footer { border-top: 1px solid var(--line); padding-block: 1.5rem 2.5rem; font-size: 0.9rem; }
 </style>

@@ -15,7 +15,7 @@ const setup = [
 <Base title="Uses" description="The Linux and Claude Code setup Abhinav Bansal works in every day.">
   <div class="prose">
     <h1>Uses</h1>
-    <p class="lede">My daily setup on Ubuntu. All of it installs with one Claude Code skill, <a href="https://github.com/abhibansal60/ai-workbench">ai-workbench</a>, with no sudo. It's also where this site's colours come from.</p>
+    <p class="lede">My daily setup on Ubuntu. All of it installs with one Claude Code skill, <a href="https://github.com/abhibansal60/ai-workbench">ai-workbench</a>, with no sudo.</p>
     <dl>
       {setup.map(([k, v]) => (<><dt>{k}</dt><dd>{v}</dd></>))}
     </dl>
@@ -25,7 +25,7 @@ const setup = [
 <style>
   .lede { font-size: 1.25rem; }
   dl { display: grid; grid-template-columns: 9rem 1fr; gap: 0.9rem 1.5rem; margin-top: 2.5rem; }
-  dt { font-family: var(--mono); color: var(--purple); }
+  dt { font-family: var(--mono); color: var(--holo); }
   dd { margin: 0; }
   @media (max-width: 40rem) { dl { grid-template-columns: 1fr; gap: 0.2rem; } dd { margin-bottom: 0.8rem; } }
 </style>
