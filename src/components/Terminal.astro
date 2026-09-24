@@ -1,0 +1,145 @@
+---
+import resume from '../data/resume.json';
+import { getPosts } from '../lib';
+
+// Every command's output is built here at build time, so the browser only looks strings up.
+const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+const dim = (s: string) => `<span class="d">${esc(s)}</span>`;
+const link = (href: string, text: string) => `<a href="${esc(href)}">${esc(text)}</a>`;
+
+const { basics, projects, timeline, talks } = resume;
+const posts = await getPosts();
+const linkedin = basics.profiles.find((p) => p.network === 'LinkedIn')!.url;
+const pad = Math.max(...projects.map((p) => p.name.length)) + 3;
+
+const commands: Record<string, string> = {
+  whoami: `${esc(basics.name)}, ${esc(basics.location.city)}.\n${esc(basics.label)}\n${dim('VP at Morgan Stanley. 10 years from test automation to agentic AI.')}`,
+  projects: projects
+    .map((p) => `<span class="g">${esc(p.name)}/</span>${' '.repeat(pad - p.name.length - 1)}${esc(p.kind)}`)
+    .join('\n') + `\n${dim('type a project name for details')}`,
+  experience: [...timeline].reverse().map((t) => `<span class="p">${t.year}</span>  ${esc(t.name)}: ${esc(t.log[0])}`).join('\n') + `\n${dim('full history: ')}${link('/work/', '/work')}`,
+  patent: `BLAZE: BDD Lean Automation Zenith Engine\nAPI specifications in, executable Java test suites out.\n${dim('US patent, co-inventor.')}`,
+  writing: posts.length
+    ? posts.slice(0, 5).map((p) => link(`/writing/${p.id}/`, p.data.title)).join('\n')
+    : `First posts are on the way. ${link('/rss.xml', 'RSS')}`,
+  speaking: talks.map((t) => `<span class="g">*</span> ${esc(t.title)}`).join('\n') + `\n${dim('invite me: ')}${link('/speaking/', '/speaking')}`,
+  contact: `${link(`mailto:${basics.email}`, basics.email)}\n${link(linkedin, linkedin.replace('https://www.', ''))}`,
+  cv: `opening ${link('/cv/', '/cv')} ...`,
+  'sudo hire abhinav': `<span class="g">[sudo] permission granted.</span>\nGood call. ${link(`mailto:${basics.email}?subject=${encodeURIComponent('Hiring')}`, basics.email)}`,
+};
+for (const p of projects) {
+  commands[p.name] = [
+    `<span class="d">→ show_project("${esc(p.name)}")</span>`,
+    esc(p.description),
+    ...(p.highlights ?? []).map((h) => `<span class="g">✓</span> ${esc(h)}`),
+    ...(p.install ? [`<span class="g">${esc(p.install)}</span>`] : []),
+    link(p.url, p.url.replace('https://', '')),
+  ].join('\n');
+}
+const chips = ['whoami', 'projects', 'experience', 'patent', 'writing', 'contact', 'sudo hire abhinav', 'clear'];
+commands.help = dim(`commands: ${[...chips, 'speaking', 'cv', ...projects.map((p) => p.name)].join(', ')}`);
+---
+
+<div class="term" data-term>
+  <div class="bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>abhinav@portfolio: ~</div>
+  <div class="out" data-out aria-live="polite">
+    <p><span class="p">$ </span>whoami</p>
+    <p class="r" set:html={commands.whoami} />
+    <p><span class="p">$ </span>projects</p>
+    <p class="r" set:html={commands.projects} />
+  </div>
+  <form class="in" data-form autocomplete="off" hidden>
+    <span class="p" aria-hidden="true">$</span>
+    <input data-input aria-label="Type a command" placeholder="type help, or tap a command below" spellcheck="false" autocapitalize="off" />
+  </form>
+  <div class="chips" data-chips hidden>
+    {chips.map((c) => <button type="button" data-cmd={c}>{c}</button>)}
+  </div>
+  <script type="application/json" data-commands set:html={JSON.stringify(commands).replace(/</g, '\\u003c')} />
+</div>
+
+<style>
+  .term {
+    display: flex; flex-direction: column; height: clamp(22rem, 34vw, 26rem);
+    background: color-mix(in srgb, var(--raised) 92%, transparent);
+    border: 1px solid var(--line); border-radius: 8px; font: 0.88rem/1.55 var(--mono);
+    backdrop-filter: blur(4px);
+  }
+  .bar { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.9rem; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 0.8rem; }
+  .dots { display: flex; gap: 0.35rem; }
+  .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+  .out { flex: 1; overflow-y: auto; padding: 0.9rem; }
+  .out :global(p) { margin: 0 0 0.35rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .out :global(p.r) { margin-bottom: 1rem; }
+  .term :global(.p) { color: var(--purple); }
+  .term :global(.g) { color: var(--green); }
+  .term :global(.d) { color: var(--muted); }
+  .out :global(a) { color: var(--text); }
+  .in { display: flex; gap: 0.6ch; padding: 0.2rem 0.9rem 0.6rem; }
+  .in[hidden], .chips[hidden] { display: none; }
+  .in input { flex: 1; min-width: 0; background: transparent; border: 0; color: var(--text); font: inherit; caret-color: var(--green); }
+  .in input:focus { outline: none; }
+  .in:focus-within { box-shadow: inset 0 -1px 0 var(--green); }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.6rem 0.9rem 0.8rem; border-top: 1px solid var(--line); }
+  .chips button {
+    font: 0.78rem var(--mono); color: var(--text); background: var(--bg); border: 1px solid var(--line);
+    border-radius: 999px; padding: 0.25rem 0.7rem; cursor: pointer;
+  }
+  .chips button:hover { border-color: var(--green); color: var(--green); }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-term]');
+  if (root) {
+    const out = root.querySelector<HTMLElement>('[data-out]')!;
+    const form = root.querySelector<HTMLFormElement>('[data-form]')!;
+    const input = root.querySelector<HTMLInputElement>('[data-input]')!;
+    const chips = root.querySelector<HTMLElement>('[data-chips]')!;
+    const commands: Record<string, string> = JSON.parse(root.querySelector('[data-commands]')!.textContent!);
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let busy = false;
+
+    const line = (html: string) => {
+      const p = document.createElement('p');
+      p.innerHTML = html;
+      out.append(p);
+      return p;
+    };
+
+    async function run(raw: string, typed: boolean) {
+      if (busy) return;
+      busy = true;
+      const cmd = raw.trim().toLowerCase().replace(/\s+/g, ' ');
+      const echo = line('<span class="p">$ </span>');
+      const text = document.createTextNode('');
+      echo.append(text);
+      if (typed && !still) {
+        for (const ch of raw) { text.data += ch; await new Promise((r) => setTimeout(r, 32)); }
+      } else text.data = raw;
+
+      if (cmd === 'clear') out.replaceChildren();
+      else if (commands[cmd]) line(commands[cmd]).className = 'r';
+      else {
+        const p = line('');
+        p.className = 'r d';
+        p.textContent = `${raw.trim()}: command not found. Type help.`;
+      }
+      out.scrollTop = out.scrollHeight;
+      busy = false;
+      if (cmd === 'cv') setTimeout(() => (location.href = '/cv/'), 600);
+    }
+
+    form.hidden = false;
+    chips.hidden = false;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const v = input.value;
+      input.value = '';
+      if (v.trim()) run(v, false);
+    });
+    chips.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-cmd]');
+      if (b) run(b.dataset.cmd!, true);
+    });
+  }
+</script>

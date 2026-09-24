@@ -278,5 +278,57 @@
       "title": "Cheap judgments, expensive builders",
       "summary": "Splitting work between a frontier model that writes the code once and a small model that makes thousands of decisions, with real cost numbers from tidy."
     }
+  ],
+  "timeline": [
+    {
+      "year": "2013",
+      "stage": "bootstrap",
+      "name": "DollarsGPT",
+      "log": [
+        "Founded a consumer rewards platform while at university",
+        "Grew from zero to 20,000 users with 1,500+ monthly actives",
+        "Ran development, partners, payments and growth"
+      ]
+    },
+    {
+      "year": "2016",
+      "stage": "build",
+      "name": "Infosys",
+      "log": [
+        "BDD frameworks with Selenium, Java and Cucumber",
+        "Clients: Telstra and the Government of India",
+        "A report module that made the team 11 times more productive"
+      ]
+    },
+    {
+      "year": "2018",
+      "stage": "test",
+      "name": "Test automation",
+      "log": [
+        "An organization-wide test automation framework at Morgan Stanley",
+        "Email-embeddable Cucumber reporting for QA teams",
+        "Co-invented BLAZE: API specs in, Java test suites out (US patent)"
+      ]
+    },
+    {
+      "year": "2021",
+      "stage": "deploy",
+      "name": "DevOps",
+      "log": [
+        "45% fewer production incidents",
+        "35% faster modernization rollouts across business units",
+        "28% faster time-to-market for new applications"
+      ]
+    },
+    {
+      "year": "2024",
+      "stage": "release",
+      "name": "Agentic AI",
+      "log": [
+        "VP, AI Platform & Tech Modernization",
+        "Boardroom: multi-agent orchestration with the Claude Agent SDK",
+        "India Technology Showcase Award for the ACT Conference Portal"
+      ]
+    }
   ]
 }

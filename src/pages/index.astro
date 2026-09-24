@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import resume from '../data/resume.json';
 import { getPosts, formatDate } from '../lib';
+import Terminal from '../components/Terminal.astro';
+import LifeField from '../components/LifeField.astro';
 
 const { basics, projects, talks } = resume;
 const linkedin = basics.profiles.find((p) => p.network === 'LinkedIn')!.url;
@@ -10,17 +12,11 @@ const [lead, ...others] = projects.filter((p) => p.featured);
 const latest = (await getPosts())[0];
 const patent = resume.highlights.find((h) => h.name.startsWith('BLAZE'))!;
 
-const history = [
-  ['2013', 'founded DollarsGPT, grew it to 20,000 users'],
-  ['2016', 'Infosys: test automation for Telstra and the Government of India'],
-  ['2018', 'Morgan Stanley: a firm-wide test automation framework'],
-  ['2021', 'DevOps lead: 45% fewer production incidents'],
-  ['2024', 'VP: agentic AI adoption across engineering'],
-];
 ---
 
 <Base>
   <section class="hero">
+    <LifeField />
     <div class="intro">
       <h1>{basics.label}</h1>
       <p class="subline">{basics.subline}</p>
@@ -33,16 +29,7 @@ const history = [
       </ul>
     </div>
 
-    <div class="pane trace" aria-label="Career history">
-      <span class="pane-title">~/history</span>
-      <p class="cmd"><span class="prompt">$</span> abhinav --history</p>
-      <ol>
-        {history.map(([year, text], i) => (
-          <li style={`--i: ${i}`}><span class="ok" aria-hidden="true">✓</span><span class="year">{year}</span><span>{text}</span></li>
-        ))}
-        <li class="next" style={`--i: ${history.length}`}><span class="ok" aria-hidden="true">▸</span><span class="year">next</span><span class="cursor" aria-label="to be written"></span></li>
-      </ol>
-    </div>
+    <Terminal />
   </section>
 
   <section class="panes" aria-label="Highlights">
@@ -104,35 +91,13 @@ const history = [
     gap: 3rem;
     align-items: center;
     margin-bottom: 5rem;
+    position: relative;
+    isolation: isolate;
   }
   .intro h1 { max-width: 14ch; }
   .subline { font-size: 1.25rem; max-width: 40ch; }
   .intro .button-row { margin-top: 1.75rem; }
 
-  .trace { font: 0.92rem/1.55 var(--mono); padding-top: 1.75rem; }
-  .cmd { color: var(--muted); }
-  .prompt { color: var(--purple); margin-right: 0.5ch; }
-  .trace ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
-  .trace li {
-    display: grid;
-    grid-template-columns: 2ch 5ch 1fr;
-    animation: run 0.25s ease-out both;
-    animation-delay: calc(0.3s + var(--i) * 0.35s);
-  }
-  .ok { color: var(--green); }
-  .year { color: var(--purple); }
-  .next .ok, .next .year { color: var(--muted); }
-  .cursor::after {
-    content: '';
-    display: inline-block;
-    width: 0.6ch;
-    height: 1.1em;
-    vertical-align: text-bottom;
-    background: var(--green);
-    animation: blink 1s steps(1) infinite;
-  }
-  @keyframes run { from { opacity: 0; } }
-  @keyframes blink { 50% { opacity: 0; } }
 
   .panes {
     display: grid;
@@ -156,6 +121,5 @@ const history = [
   @media (max-width: 40rem) {
     .panes { grid-template-columns: 1fr; }
     .lead { grid-row: auto; }
-    .trace li { grid-template-columns: 2ch 5ch 1fr; font-size: 0.85rem; }
   }
 </style>

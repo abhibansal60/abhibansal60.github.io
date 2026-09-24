@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import resume from '../data/resume.json';
 import { formatMonth } from '../lib';
+import Pipeline from '../components/Pipeline.astro';
 ---
 
 <Base title="Work" description="Ten years at Morgan Stanley and Infosys, from test automation to agentic AI.">
@@ -9,6 +10,11 @@ import { formatMonth } from '../lib';
     <h1>Work</h1>
     <p class="lede">I started out writing test frameworks, moved into DevOps, and now lead agentic AI adoption at Morgan Stanley. The thread through all of it: build the harness that lets a team trust automation.</p>
   </div>
+
+  <section aria-labelledby="run" class="first">
+    <h2 id="run" class="sr-only">Career at a glance</h2>
+    <Pipeline />
+  </section>
 
   <section aria-labelledby="built">
     <h2 id="built">What I built at Morgan Stanley</h2>
@@ -51,6 +57,7 @@ import { formatMonth } from '../lib';
 
 <style>
   section { margin-top: 4rem; }
+  section.first { margin-top: 2.5rem; }
   .lede { font-size: 1.25rem; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
   .grid .pane { padding-top: 1.25rem; }

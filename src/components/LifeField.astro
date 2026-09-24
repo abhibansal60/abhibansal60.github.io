@@ -1,0 +1,91 @@
+---
+// Conway's Game of Life, drawn faintly behind the hero. Decorative only.
+---
+
+<canvas class="life" data-life aria-hidden="true"></canvas>
+
+<style>
+  .life {
+    position: absolute;
+    top: -6rem;
+    left: 50%;
+    width: 100vw;
+    height: calc(100% + 9rem);
+    transform: translateX(-50%);
+    z-index: -1;
+    opacity: 0.16;
+    mask-image: linear-gradient(to bottom, #000 60%, transparent);
+  }
+  @media (prefers-color-scheme: light) {
+    .life { opacity: 0.12; }
+  }
+</style>
+
+<script>
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-life]');
+  if (canvas) {
+    const ctx = canvas.getContext('2d')!;
+    const SIZE = 10;
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let cols = 0, rows = 0, grid = new Uint8Array(0), timer = 0, color = '', visible = false;
+
+    function reset() {
+      const r = canvas!.getBoundingClientRect();
+      const dpr = devicePixelRatio || 1;
+      canvas!.width = r.width * dpr;
+      canvas!.height = r.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cols = Math.ceil(r.width / SIZE);
+      rows = Math.ceil(r.height / SIZE);
+      grid = new Uint8Array(cols * rows).map(() => (Math.random() < 0.2 ? 1 : 0));
+      color = getComputedStyle(canvas!).getPropertyValue('--green').trim() || '#00ff9f';
+      draw();
+    }
+    function step() {
+      const next = new Uint8Array(cols * rows);
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          let n = 0;
+          for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+            if (dx || dy) n += grid[((y + dy + rows) % rows) * cols + ((x + dx + cols) % cols)];
+          }
+          const i = y * cols + x;
+          next[i] = n === 3 || (n === 2 && grid[i]) ? 1 : 0;
+        }
+      }
+      grid = next;
+    }
+    function draw() {
+      ctx.clearRect(0, 0, cols * SIZE, rows * SIZE);
+      ctx.fillStyle = color;
+      for (let i = 0; i < grid.length; i++) {
+        if (grid[i]) ctx.fillRect((i % cols) * SIZE, Math.floor(i / cols) * SIZE, SIZE - 1, SIZE - 1);
+      }
+    }
+    const start = () => { if (!still && visible && !document.hidden && !timer) timer = window.setInterval(() => { step(); draw(); }, 140); };
+    const stop = () => { clearInterval(timer); timer = 0; };
+
+    // Moving the pointer over the hero drops a glider there.
+    canvas.parentElement!.addEventListener('pointermove', (e) => {
+      const r = canvas!.getBoundingClientRect();
+      const x = Math.floor((e.clientX - r.left) / SIZE), y = Math.floor((e.clientY - r.top) / SIZE);
+      for (const [dx, dy] of [[1, 0], [2, 1], [0, 2], [1, 2], [2, 2]]) {
+        if (x + dx < cols && y + dy < rows) grid[(y + dy) * cols + x + dx] = 1;
+      }
+    });
+
+    reset();
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? start() : stop(); }).observe(canvas);
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+    let resizeTimer = 0;
+    // Only reseed when the width changes; mobile URL bars fire resize on scroll.
+    let lastWidth = innerWidth;
+    addEventListener('resize', () => {
+      if (innerWidth === lastWidth) return;
+      lastWidth = innerWidth;
+      clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(reset, 200);
+    });
+    matchMedia('(prefers-color-scheme: light)').addEventListener('change', reset);
+  }
+</script>

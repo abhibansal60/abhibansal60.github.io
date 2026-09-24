@@ -32,6 +32,7 @@
 html { -webkit-text-size-adjust: 100%; }
 
 body {
+  overflow-x: clip;
   margin: 0;
   background: var(--bg);
   color: var(--text);
@@ -96,3 +97,5 @@ pre code { color: var(--text); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

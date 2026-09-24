@@ -1,0 +1,133 @@
+---
+import resume from '../data/resume.json';
+
+// The career as a CI run. Renders fully passed without JS; the script replays it once when scrolled into view.
+const stages = [
+  ...resume.timeline.map((t) => ({ label: `${t.stage}: ${t.name}`, year: t.year, log: t.log })),
+  { label: 'next', year: '', log: ['Waiting for the right team.', `Trigger manually: ${resume.basics.email}`] },
+];
+const last = stages.length - 1;
+---
+
+<div class="pipe" data-pipeline>
+  <div class="pipe-top">
+    <p class="file">career.yml</p>
+    <p class="status" data-status>{last} of {stages.length} stages passed, 1 awaiting approval</p>
+  </div>
+  <ol class="stages">
+    {stages.map((s, i) => (
+      <li>
+        <button type="button" class:list={['stg', i === last ? 'wait' : 'done']} aria-pressed={i === last - 1 ? 'true' : 'false'} data-i={i}>
+          <span class="st"><span class="ico" aria-hidden="true"></span><span data-lbl>{i === last ? 'awaiting approval' : 'passed'}</span></span>
+          <span class="nm">{s.label}</span>
+          {s.year && <span class="yr">{s.year}</span>}
+        </button>
+      </li>
+    ))}
+  </ol>
+  <div class="pipe-log" aria-live="polite" data-log>
+    {stages.map((s, i) => (
+      <div data-log-i={i} hidden={i !== last - 1}>
+        <p class="cmd">$ run {s.label}</p>
+        <ul>{s.log.map((l) => <li>{l}</li>)}</ul>
+      </div>
+    ))}
+  </div>
+  <button type="button" class="replay" data-replay hidden>Re-run pipeline</button>
+</div>
+
+<style>
+  .pipe {
+    background: var(--raised);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 1.25rem clamp(1rem, 3vw, 1.75rem);
+    display: grid;
+    gap: 1rem;
+  }
+  .pipe-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1rem; align-items: baseline; }
+  .pipe-top p { margin: 0; }
+  .file { font: 600 1.3rem var(--condensed); }
+  .status { font: 0.85rem var(--mono); color: var(--muted); }
+  .stages { list-style: none; margin: 0; padding: 0 0 0.4rem; display: flex; overflow-x: auto; }
+  .stages li { flex: 1 0 9.5rem; position: relative; }
+  .stages li + li { margin-left: 1.4rem; }
+  .stages li + li::before {
+    content: ''; position: absolute; left: -1.4rem; top: 50%; width: 1.4rem; height: 2px; background: var(--line);
+  }
+  .stages li:has(> .done) + li::before { background: var(--green); }
+  .stg {
+    width: 100%; height: 100%; display: grid; gap: 0.3rem; align-content: start; padding: 0.8rem; text-align: left;
+    color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; cursor: pointer; font: inherit;
+  }
+  .stg:hover { border-color: var(--green); }
+  .stg[aria-pressed='true'] { border-color: var(--purple); }
+  .st, .yr { font: 0.78rem var(--mono); color: var(--muted); display: flex; gap: 0.4rem; align-items: center; }
+  .nm { font-weight: 500; font-size: 0.95rem; line-height: 1.3; }
+  .ico { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--line); flex: none; }
+  .run .ico { border-color: var(--purple); border-top-color: transparent; animation: spin 0.8s linear infinite; }
+  .done .ico { border-color: var(--green); background: var(--green); }
+  .done .st { color: var(--green); }
+  .wait .ico { border-style: dashed; border-color: var(--purple); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .pipe-log {
+    min-height: 8.5rem; background: var(--bg); border: 1px solid var(--line); border-radius: 6px;
+    padding: 0.8rem 1rem; font: 0.88rem/1.6 var(--mono);
+  }
+  .pipe-log p { margin: 0 0 0.3rem; color: var(--muted); }
+  .pipe-log ul { list-style: none; margin: 0; padding: 0; }
+  .pipe-log li::before { content: '✓ '; color: var(--green); }
+  .replay {
+    justify-self: end; font: 500 0.8rem var(--mono); color: var(--muted); background: transparent;
+    border: 1px solid var(--line); border-radius: 4px; padding: 0.35rem 0.7rem; cursor: pointer;
+  }
+  .replay:hover { color: var(--green); border-color: var(--green); }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-pipeline]');
+  if (root) {
+    const btns = [...root.querySelectorAll<HTMLButtonElement>('.stg')];
+    const logs = [...root.querySelectorAll<HTMLElement>('[data-log-i]')];
+    const status = root.querySelector<HTMLElement>('[data-status]')!;
+    const replay = root.querySelector<HTMLButtonElement>('[data-replay]')!;
+    const last = btns.length - 1;
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+    const show = (i: number) => {
+      btns.forEach((b, j) => b.setAttribute('aria-pressed', String(i === j)));
+      logs.forEach((l, j) => (l.hidden = i !== j));
+    };
+    const setState = (b: HTMLButtonElement, state: string, label: string) => {
+      b.classList.remove('done', 'run', 'wait', 'queued');
+      b.classList.add(state);
+      b.querySelector('[data-lbl]')!.textContent = label;
+    };
+    btns.forEach((b, i) => b.addEventListener('click', () => show(i)));
+
+    let runId = 0;
+    async function run() {
+      const id = ++runId;
+      btns.forEach((b) => setState(b, 'queued', 'queued'));
+      status.textContent = 'running';
+      for (let i = 0; i < btns.length; i++) {
+        if (id !== runId) return;
+        show(i);
+        if (i === last) { setState(btns[i], 'wait', 'awaiting approval'); break; }
+        setState(btns[i], 'run', 'running');
+        await sleep(1000);
+        if (id !== runId) return;
+        setState(btns[i], 'done', 'passed');
+      }
+      status.textContent = `${last} of ${btns.length} stages passed, 1 awaiting approval`;
+    }
+
+    replay.hidden = false;
+    replay.addEventListener('click', run);
+    if (!still) {
+      const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); run(); } }, { threshold: 0.5 });
+      io.observe(root);
+    }
+  }
+</script>
