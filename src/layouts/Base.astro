@@ -1,0 +1,81 @@
+---
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource/ibm-plex-sans-condensed/600.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/global.css';
+import resume from '../data/resume.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = resume.basics.summary } = Astro.props;
+const fullTitle = title ? `${title} | Abhinav Bansal` : `Abhinav Bansal: ${resume.basics.label}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const nav = [
+  ['/work/', 'Work'],
+  ['/projects/', 'Projects'],
+  ['/writing/', 'Writing'],
+  ['/speaking/', 'Speaking'],
+  ['/uses/', 'Uses'],
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="Abhinav Bansal: writing" href="/rss.xml" />
+    <link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="wrap site-header">
+      <a class="wordmark" href="/">abhinav bansal</a>
+      <nav aria-label="Main">
+        <ul>
+          {nav.map(([href, label]) => (
+            <li><a href={href} aria-current={Astro.url.pathname.startsWith(href) ? 'page' : undefined}>{label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+    <main id="main" class="wrap">
+      <slot />
+    </main>
+    <footer class="wrap site-footer">
+      <p class="muted">Abhinav Bansal, Glasgow. For agents: <a href="/llms.txt">llms.txt</a>, <a href="/resume.json">resume.json</a>. For readers: <a href="/rss.xml">RSS</a>.</p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .skip { position: absolute; left: -9999px; }
+  .skip:focus { left: 1rem; top: 1rem; background: var(--green); color: var(--bg); padding: 0.5rem 1rem; z-index: 10; }
+  .site-header {
+    display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+    gap: 0.75rem 2rem; padding-block: 1.5rem 3rem;
+  }
+  .wordmark { font: 500 1rem/1 var(--mono); color: var(--green); text-decoration: none; }
+  .wordmark::before { content: '~/'; color: var(--muted); }
+  nav ul { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; margin: 0; padding: 0; list-style: none; }
+  nav a { text-decoration: none; color: var(--muted); }
+  nav a:hover, nav a[aria-current='page'] { color: var(--text); }
+  nav a[aria-current='page'] { text-decoration: underline; text-decoration-color: var(--green); }
+  main { padding-bottom: 5rem; }
+  .site-footer { border-top: 1px solid var(--line); padding-block: 1.5rem 2.5rem; font-size: 0.9rem; }
+</style>

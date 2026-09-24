@@ -1,0 +1,161 @@
+---
+import Base from '../layouts/Base.astro';
+import resume from '../data/resume.json';
+import { getPosts, formatDate } from '../lib';
+
+const { basics, projects, talks } = resume;
+const linkedin = basics.profiles.find((p) => p.network === 'LinkedIn')!.url;
+const github = basics.profiles.find((p) => p.network === 'GitHub')!.url;
+const [lead, ...others] = projects.filter((p) => p.featured);
+const latest = (await getPosts())[0];
+const patent = resume.highlights.find((h) => h.name.startsWith('BLAZE'))!;
+
+const history = [
+  ['2013', 'founded DollarsGPT, grew it to 20,000 users'],
+  ['2016', 'Infosys: test automation for Telstra and the Government of India'],
+  ['2018', 'Morgan Stanley: a firm-wide test automation framework'],
+  ['2021', 'DevOps lead: 45% fewer production incidents'],
+  ['2024', 'VP: agentic AI adoption across engineering'],
+];
+---
+
+<Base>
+  <section class="hero">
+    <div class="intro">
+      <h1>{basics.label}</h1>
+      <p class="subline">{basics.subline}</p>
+      <p class="muted">Vice President at Morgan Stanley. Based in Glasgow.</p>
+      <ul class="button-row">
+        <li><a class="button primary" href="/cv/">View CV</a></li>
+        <li><a class="button" href={linkedin}>LinkedIn</a></li>
+        <li><a class="button" href={github}>GitHub</a></li>
+        <li><a class="button" href={`mailto:${basics.email}`}>Email me</a></li>
+      </ul>
+    </div>
+
+    <div class="pane trace" aria-label="Career history">
+      <span class="pane-title">~/history</span>
+      <p class="cmd"><span class="prompt">$</span> abhinav --history</p>
+      <ol>
+        {history.map(([year, text], i) => (
+          <li style={`--i: ${i}`}><span class="ok" aria-hidden="true">✓</span><span class="year">{year}</span><span>{text}</span></li>
+        ))}
+        <li class="next" style={`--i: ${history.length}`}><span class="ok" aria-hidden="true">▸</span><span class="year">next</span><span class="cursor" aria-label="to be written"></span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="panes" aria-label="Highlights">
+    <div class="pane now">
+      <span class="pane-title">now</span>
+      <p>{basics.currently}</p>
+    </div>
+
+    <article class="pane focused lead">
+      <span class="pane-title">{lead.kind}</span>
+      <h2><a href={lead.url}>{lead.name}</a></h2>
+      <p>{lead.description}</p>
+      <ul class="facts">{lead.highlights!.map((h) => <li>{h}</li>)}</ul>
+      <pre><code>{lead.install}</code></pre>
+    </article>
+
+    {others.map((p) => (
+      <article class="pane">
+        <span class="pane-title">{p.kind}</span>
+        <h3><a href={p.url}>{p.name}</a></h3>
+        <p>{p.description}</p>
+        <ul class="tags">{p.keywords.map((k) => <li>{k}</li>)}</ul>
+      </article>
+    ))}
+
+    <div class="pane">
+      <span class="pane-title">us patent</span>
+      <h3>{patent.name}</h3>
+      <p>{patent.summary}</p>
+      <a href="/work/">How I got from test automation to agents</a>
+    </div>
+
+    <div class="pane">
+      <span class="pane-title">writing</span>
+      {latest ? (
+        <>
+          <h3><a href={`/writing/${latest.id}/`}>{latest.data.title}</a></h3>
+          <p class="muted">{formatDate(latest.data.date)}</p>
+          <a href="/writing/">All writing</a>
+        </>
+      ) : (
+        <p>First posts are on the way. Follow along with <a href="/rss.xml">RSS</a>.</p>
+      )}
+    </div>
+
+    <div class="pane speaking">
+      <span class="pane-title">speaking</span>
+      <h3>{talks[0].title}</h3>
+      <p>{talks[0].summary}</p>
+      <a href="/speaking/">All talk topics</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: 5rem;
+  }
+  .intro h1 { max-width: 14ch; }
+  .subline { font-size: 1.25rem; max-width: 40ch; }
+  .intro .button-row { margin-top: 1.75rem; }
+
+  .trace { font: 0.92rem/1.55 var(--mono); padding-top: 1.75rem; }
+  .cmd { color: var(--muted); }
+  .prompt { color: var(--purple); margin-right: 0.5ch; }
+  .trace ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+  .trace li {
+    display: grid;
+    grid-template-columns: 2ch 5ch 1fr;
+    animation: run 0.25s ease-out both;
+    animation-delay: calc(0.3s + var(--i) * 0.35s);
+  }
+  .ok { color: var(--green); }
+  .year { color: var(--purple); }
+  .next .ok, .next .year { color: var(--muted); }
+  .cursor::after {
+    content: '';
+    display: inline-block;
+    width: 0.6ch;
+    height: 1.1em;
+    vertical-align: text-bottom;
+    background: var(--green);
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes run { from { opacity: 0; } }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .panes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem 1.5rem;
+  }
+  .now { grid-column: 1 / -1; font-size: 1.15rem; }
+  .speaking { grid-column: 1 / -1; }
+  .speaking p { max-width: var(--measure); }
+  .now p { margin: 0; }
+  .lead { grid-row: span 2; }
+  .lead h2 a, .pane h3 a { text-decoration: none; }
+  .facts { padding-left: 1.1rem; }
+  .facts li::marker { color: var(--green); }
+  .pane > :last-child { margin-bottom: 0; }
+
+  @media (max-width: 60rem) {
+    .hero { grid-template-columns: 1fr; gap: 2.5rem; }
+    .panes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 40rem) {
+    .panes { grid-template-columns: 1fr; }
+    .lead { grid-row: auto; }
+    .trace li { grid-template-columns: 2ch 5ch 1fr; font-size: 0.85rem; }
+  }
+</style>

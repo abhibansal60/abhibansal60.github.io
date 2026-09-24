@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import resume from '../data/resume.json';
+import { formatMonth } from '../lib';
+
+const { basics, work, highlights, skills, certificates, education, awards } = resume;
+---
+
+<Base title="CV" description="Abhinav Bansal's CV: agentic AI, platform engineering and test automation.">
+  <div class="cv">
+    <p class="no-print"><button class="button primary" type="button" onclick="window.print()">Save as PDF</button></p>
+    <h1>{basics.name}</h1>
+    <p>{basics.label} {basics.location.city}, UK. <a href={`mailto:${basics.email}`}>{basics.email}</a></p>
+    <p>{basics.profiles.map((p, i) => <>{i > 0 && ', '}<a href={p.url}>{p.url.replace('https://', '')}</a></>)}</p>
+    <p>{basics.summary}</p>
+
+    <h2>Experience</h2>
+    {work.map((w) => (
+      <section>
+        <h3>{w.position}, {w.name}</h3>
+        <p class="muted">{formatMonth(w.startDate)} to {formatMonth(w.endDate)}{w.location && `, ${w.location}`}</p>
+        <ul>{w.highlights.map((h) => <li>{h}</li>)}</ul>
+      </section>
+    ))}
+
+    <h2>Key achievements</h2>
+    <ul>{highlights.map((h) => <li><strong>{h.name}.</strong> {h.summary}</li>)}</ul>
+
+    <h2>Skills</h2>
+    <ul>{skills.map((s) => <li><strong>{s.name}:</strong> {s.keywords.join(', ')}</li>)}</ul>
+
+    <h2>Education, awards and certifications</h2>
+    <ul>
+      {education.map((e) => <li>{e.studyType}, {e.area}, {e.institution} ({e.endDate})</li>)}
+      {awards.map((a) => <li>{a.title} ({a.awarder})</li>)}
+      {certificates.map((c) => <li>{c.name}</li>)}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .cv { max-width: var(--measure); }
+  .cv h2 { margin-top: 2rem; font-size: 1.5rem; }
+  .cv h3 { font-size: 1.15rem; margin-bottom: 0.1em; }
+  .cv section { margin-bottom: 1rem; }
+  .cv .muted { margin-bottom: 0.3em; }
+  .cv ul { padding-left: 1.1rem; margin-top: 0.3em; }
+
+  @media print {
+    :global(body) { background: #fff; color: #000; font-size: 10.5pt; line-height: 1.4; }
+    :global(.site-header), :global(.site-footer), .no-print { display: none; }
+    :global(main) { padding: 0; }
+    .cv { max-width: none; }
+    .cv h1 { font-size: 22pt; }
+    .cv a { color: #000; }
+    .cv .muted { color: #444; }
+    .cv section { break-inside: avoid; }
+  }
+</style>

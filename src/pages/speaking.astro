@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import resume from '../data/resume.json';
+
+const invite = `mailto:${resume.basics.email}?subject=${encodeURIComponent('Speaking invitation')}`;
+---
+
+<Base title="Speaking" description="Talk topics on agentic AI in the enterprise, testing and AI cost.">
+  <div class="prose">
+    <h1>Speaking</h1>
+    <p class="lede">I run agentic AI literacy sessions for engineering teams at work, and I'm now taking these topics to meetups and conferences. Each one can be a 20-minute talk or a hands-on workshop.</p>
+  </div>
+  <div class="talks">
+    {resume.talks.map((t) => (
+      <article class="pane">
+        <h2>{t.title}</h2>
+        <p>{t.summary}</p>
+      </article>
+    ))}
+  </div>
+  <p><a class="button primary" href={invite}>Invite me to speak</a></p>
+</Base>
+
+<style>
+  .lede { font-size: 1.25rem; }
+  .talks { display: grid; gap: 1.5rem; margin-block: 3rem; max-width: 48rem; }
+  .talks .pane { padding-top: 1.25rem; }
+  .talks p { margin: 0; }
+</style>

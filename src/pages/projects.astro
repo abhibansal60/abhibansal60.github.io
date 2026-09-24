@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import resume from '../data/resume.json';
+---
+
+<Base title="Projects" description="Open source agent tools and developer tooling by Abhinav Bansal.">
+  <div class="prose">
+    <h1>Projects</h1>
+    <p class="lede">Open source work I build outside my day job, mostly agents and the tooling around them.</p>
+  </div>
+  <div class="list">
+    {resume.projects.map((p) => (
+      <article class={p.featured ? 'pane' : 'pane quiet'}>
+        <span class="pane-title">{p.kind}</span>
+        <h2><a href={p.url}>{p.name}</a></h2>
+        <p>{p.description}</p>
+        {p.highlights && <ul>{p.highlights.map((h) => <li>{h}</li>)}</ul>}
+        {p.install && <pre><code>{p.install}</code></pre>}
+        <ul class="tags">{p.keywords.map((k) => <li>{k}</li>)}</ul>
+      </article>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .lede { font-size: 1.25rem; }
+  .list { display: grid; gap: 2rem; margin-top: 3rem; max-width: 48rem; }
+  .list h2 a { text-decoration: none; }
+  .list ul:not(.tags) { padding-left: 1.1rem; }
+  .quiet { background: transparent; }
+</style>

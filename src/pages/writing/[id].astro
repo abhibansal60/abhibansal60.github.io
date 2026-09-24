@@ -1,0 +1,30 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getPosts, formatDate } from '../../lib';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Base title={post.data.title} description={post.data.description}>
+  <article class="prose">
+    <h1>{post.data.title}</h1>
+    <p class="muted">{formatDate(post.data.date)}{post.data.draft && ' (draft, not published)'}</p>
+    <Content />
+  </article>
+  <p class="prose back"><a href="/writing/">All writing</a></p>
+</Base>
+
+<style>
+  article :global(h2) { margin-top: 2em; }
+  article :global(li) { margin-bottom: 0.4em; }
+  article :global(table) { border-collapse: collapse; width: 100%; font-size: 0.95rem; margin-bottom: 1.5em; display: block; overflow-x: auto; }
+  article :global(th), article :global(td) { border-bottom: 1px solid var(--line); padding: 0.5rem 0.75rem 0.5rem 0; text-align: left; }
+  .back { margin-top: 3rem; }
+</style>

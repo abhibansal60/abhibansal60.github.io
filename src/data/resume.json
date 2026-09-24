@@ -1,0 +1,282 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "name": "Abhinav Bansal",
+    "label": "I help enterprises put AI agents into production.",
+    "subline": "From test automation to AI agents: 10 years automating engineering at a global bank.",
+    "email": "abhibansal60@gmail.com",
+    "url": "https://abhibansal60.github.io",
+    "summary": "Vice President at Morgan Stanley leading agentic AI adoption and tech modernization. Strong Python engineer who builds multi-agent systems with LangChain, MCP and the Claude Agent SDK, and teaches engineering teams to do the same. Came up through test automation and DevOps, and co-invented a patented test automation engine.",
+    "currently": "Leading agentic AI adoption at Morgan Stanley in Glasgow, and shipping tidy, an AI inbox cleaner that can't go rogue.",
+    "location": {
+      "city": "Glasgow",
+      "region": "Scotland",
+      "countryCode": "GB"
+    },
+    "profiles": [
+      {
+        "network": "LinkedIn",
+        "username": "erabhinavbansal",
+        "url": "https://www.linkedin.com/in/erabhinavbansal/"
+      },
+      {
+        "network": "GitHub",
+        "username": "abhibansal60",
+        "url": "https://github.com/abhibansal60"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "Morgan Stanley",
+      "position": "Vice President, AI Platform & Tech Modernization",
+      "location": "Glasgow, UK",
+      "startDate": "2024-12",
+      "summary": "Relocated to Glasgow to lead technology modernization under the firm's Refresh Tech strategy.",
+      "highlights": [
+        "Lead agentic AI adoption and literacy across engineering teams: developer advocacy programmes on agentic frameworks (LangChain, MCP, Claude Agent SDK) and LLM integration patterns",
+        "Build specialised agents for development workflows and DevOps operations",
+        "Drove Kubernetes and Docker adoption across development teams, with 30% faster deployment cycles",
+        "Give architectural guidance on multi-agent orchestration, developer tooling and LLM integration"
+      ]
+    },
+    {
+      "name": "Morgan Stanley",
+      "position": "Vice President",
+      "location": "Bengaluru, India",
+      "startDate": "2024-01",
+      "endDate": "2024-12",
+      "highlights": [
+        "Led 5+ engineering teams through tech modernization, with a 40% improvement in deployment frequency",
+        "Led the ACT Conference Portal, recognised with the India Technology Showcase Award",
+        "Pioneered Kubernetes adoption with documentation and training that sped up adoption across the organization",
+        "Set up a formal mentoring programme; 3 mentees are now in advanced technical roles"
+      ]
+    },
+    {
+      "name": "Morgan Stanley",
+      "position": "Senior Manager, DevOps",
+      "location": "Bengaluru, India",
+      "startDate": "2021-01",
+      "endDate": "2024-01",
+      "highlights": [
+        "Scaled the Engineer as a Service model: 35% faster modernization rollouts across business units",
+        "Reusable architecture patterns that cut time-to-market for new applications by 28%",
+        "DevOps and SRE practices with global teams: 45% fewer production incidents",
+        "Frameworks and tools used across the firm, improving quality metrics by 20%",
+        "Led the firm's Transformation network for DevOps practice adoption"
+      ]
+    },
+    {
+      "name": "Morgan Stanley",
+      "position": "Manager, Test Automation",
+      "location": "Bengaluru, India",
+      "startDate": "2020-01",
+      "endDate": "2021-01",
+      "highlights": [
+        "Built an email-embeddable Cucumber reporting tool for QA teams",
+        "Built DevOps tooling and a worklog dashboard on the Bitbucket API, adopted by multiple teams"
+      ]
+    },
+    {
+      "name": "Morgan Stanley",
+      "position": "Senior Associate, Test Automation",
+      "location": "Bengaluru, India",
+      "startDate": "2018-08",
+      "endDate": "2020-01",
+      "highlights": [
+        "Led a generic, organization-wide test automation framework from concept to code"
+      ]
+    },
+    {
+      "name": "Infosys",
+      "position": "System Engineer",
+      "location": "Bengaluru, India",
+      "startDate": "2016-08",
+      "endDate": "2018-08",
+      "highlights": [
+        "Designed a UI automation framework in Java using the Reflection API",
+        "Built a report generation module with data cleansing that made the team 11 times more productive",
+        "Designed the frontend and REST API of the GST Refund Application",
+        "Clients: Telstra and the Government of India"
+      ]
+    },
+    {
+      "name": "DollarsGPT.com",
+      "position": "Founder",
+      "startDate": "2013-05",
+      "endDate": "2015-12",
+      "summary": "Consumer rewards platform paying users in gift cards and cash for micro-tasks. Bootstrapped while at university.",
+      "highlights": [
+        "Grew from zero to 20,000 users with 1,500+ monthly actives through performance marketing and partner integrations",
+        "Ran the whole product: platform development, partner onboarding, payments and growth"
+      ]
+    }
+  ],
+  "highlights": [
+    {
+      "name": "Boardroom",
+      "summary": "A multi-agent orchestration system: three specialised agents and an orchestrator, built with LangChain and the Claude Agent SDK. It is the internal reference implementation for agentic AI at the firm."
+    },
+    {
+      "name": "BLAZE (US patent, co-inventor)",
+      "summary": "BDD Lean Automation Zenith Engine: turns API specifications into executable Java test suites using behaviour-driven development."
+    },
+    {
+      "name": "Internal events and conference platform",
+      "summary": "Built and evolved over 5+ years into the standard for global internal events. Added AI features: proposal submission and review with a recommendation engine for session curation, content filtering, and a Hacker News-style knowledge platform with AI ranking."
+    },
+    {
+      "name": "AI developer tooling",
+      "summary": "A VS Code extension for in-place codebase review and modernisation, CLI skills for DevOps automation, and reusable skills infrastructure that cut onboarding and deployment tasks from days to minutes."
+    },
+    {
+      "name": "Pull request chat",
+      "summary": "A chat bubble on the pull request page so authors can talk to reviewers in place, saving 375+ person-days of effort a year."
+    }
+  ],
+  "projects": [
+    {
+      "name": "tidy",
+      "kind": "python package",
+      "featured": true,
+      "description": "Cleans up Gmail and YouTube subscriptions with AI without letting AI loose on your account. A small model judges each email; plain, tested code decides what that judgment may do; nothing risky happens until you approve.",
+      "highlights": [
+        "Sorted a 12,158-email backlog for about $0.43",
+        "Never deletes, never touches starred mail, never clicks unsubscribe links"
+      ],
+      "keywords": [
+        "Python",
+        "Agents",
+        "Guardrails"
+      ],
+      "url": "https://github.com/abhibansal60/tidy",
+      "install": "pipx install tidy-ai"
+    },
+    {
+      "name": "ai-workbench",
+      "kind": "claude code skill",
+      "featured": true,
+      "description": "A Claude Code skill that sets up a matching matrix-green and cyber-purple dev environment on Linux: prompt, terminal, editor, diffs and status line. No sudo; it reads your config before touching it.",
+      "keywords": [
+        "Claude Code",
+        "Skills",
+        "Linux"
+      ],
+      "url": "https://github.com/abhibansal60/ai-workbench"
+    },
+    {
+      "name": "awesome-copilot-toolkit",
+      "kind": "vs code extension",
+      "featured": true,
+      "description": "A VS Code extension to browse and install custom instructions, prompts and chat modes from the github/awesome-copilot repository without leaving the editor.",
+      "keywords": [
+        "TypeScript",
+        "VS Code",
+        "Copilot"
+      ],
+      "url": "https://github.com/abhibansal60/awesome-copilot-toolkit"
+    },
+    {
+      "name": "macify",
+      "kind": "shell script",
+      "description": "Makes Ubuntu GNOME look like macOS in one command, with a one-command revert.",
+      "keywords": [
+        "Shell",
+        "Linux"
+      ],
+      "url": "https://github.com/abhibansal60/macify"
+    }
+  ],
+  "awards": [
+    {
+      "title": "India Technology Showcase Award",
+      "awarder": "Morgan Stanley",
+      "summary": "For the ACT Conference Portal."
+    }
+  ],
+  "certificates": [
+    {
+      "name": "HashiCorp Certified: Terraform Associate (003)",
+      "issuer": "HashiCorp"
+    },
+    {
+      "name": "Site Reliability Engineering (SRE)"
+    }
+  ],
+  "education": [
+    {
+      "institution": "Maharishi Markandeshwar University",
+      "studyType": "Bachelor of Technology",
+      "area": "Computer Science",
+      "startDate": "2012",
+      "endDate": "2016"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Agentic AI",
+      "keywords": [
+        "LangChain",
+        "MCP",
+        "Claude Agent SDK",
+        "Anthropic and OpenAI APIs",
+        "Pipecat",
+        "Deepgram",
+        "Twilio"
+      ]
+    },
+    {
+      "name": "Platform",
+      "keywords": [
+        "Docker",
+        "Kubernetes",
+        "AWS",
+        "Terraform",
+        "Jenkins",
+        "CI/CD"
+      ]
+    },
+    {
+      "name": "Languages",
+      "keywords": [
+        "Python",
+        "Java",
+        "TypeScript",
+        "React",
+        "SQL"
+      ]
+    },
+    {
+      "name": "Testing",
+      "keywords": [
+        "BDD",
+        "Cucumber",
+        "Selenium",
+        "TestNG"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "language": "English"
+    },
+    {
+      "language": "Hindi"
+    }
+  ],
+  "talks": [
+    {
+      "title": "Getting agents past the change board",
+      "summary": "What it takes to move agentic AI from demo to production in a regulated enterprise: guardrails, literacy programmes, and the reference implementations that make teams trust it."
+    },
+    {
+      "title": "Your test suite was the first agent harness",
+      "summary": "Ten years of BDD and test automation taught the same lesson agents need now: put deterministic checks around the part you don't trust."
+    },
+    {
+      "title": "Cheap judgments, expensive builders",
+      "summary": "Splitting work between a frontier model that writes the code once and a small model that makes thousands of decisions, with real cost numbers from tidy."
+    }
+  ]
+}

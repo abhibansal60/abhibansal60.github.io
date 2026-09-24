@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getPosts, formatDate } from '../../lib';
+
+const posts = await getPosts();
+---
+
+<Base title="Writing" description="Notes on agentic AI in the enterprise, testing and the cost of AI.">
+  <div class="prose">
+    <h1>Writing</h1>
+    <p class="lede">Notes on getting AI agents into production: guardrails, adoption, cost, and what test automation already taught us. New posts every two weeks. <a href="/rss.xml">RSS feed</a>.</p>
+    {posts.length === 0 && <p>First posts are on the way.</p>}
+    <ul class="posts">
+      {posts.map((p) => (
+        <li>
+          <a href={`/writing/${p.id}/`}>{p.data.title}</a>
+          <span class="muted">{formatDate(p.data.date)}{p.data.draft && ' (draft)'}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .lede { font-size: 1.25rem; }
+  .posts { list-style: none; padding: 0; margin: 2.5rem 0 0; }
+  .posts li { display: grid; gap: 0.2rem; padding-block: 1rem; border-top: 1px solid var(--line); }
+  .posts a { font-size: 1.2rem; font-weight: 500; text-decoration: none; }
+  .posts span { font-size: 0.9rem; }
+</style>
