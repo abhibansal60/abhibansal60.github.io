@@ -1,33 +1,34 @@
-/* Rebel console: deep space, saber green for "passed/focused", hologram blue for tool output,
-   targeting-computer amber for UI chrome. */
+/* Droid schematic: the site is an engineering drawing. Drafting blue with white linework,
+   cyan for callouts and passed states, red for annotations and live values. */
 :root {
-  --bg: #04050b;
-  --raised: #0b0f1c;
-  --text: #e8ecf5;
-  --muted: #8f98ad;
-  --line: #243049;
-  --green: #52ff8f;
-  --holo: #7dd8ff;
-  --amber: #ffb547;
-  --glow: 0 0 14px color-mix(in srgb, var(--green) 45%, transparent);
-  --sans: 'IBM Plex Sans', system-ui, sans-serif;
-  --condensed: 'IBM Plex Sans Condensed', 'IBM Plex Sans', system-ui, sans-serif;
-  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --bg: #0e2a47;
+  --raised: #0e2a47;
+  --text: #f1f5fa;
+  --muted: #a9c1dc;
+  --line: #4d78a3;
+  --cyan: #8fd3ff;
+  --red: #ff8a73;
+  --grid: rgb(143 211 255 / 0.1);
+  --grid-major: rgb(143 211 255 / 0.18);
+  --sans: 'B612', system-ui, sans-serif;
+  --display: 'B612', system-ui, sans-serif;
+  --mono: 'B612 Mono', ui-monospace, monospace;
   --measure: 68ch;
   color-scheme: dark;
 }
 
+/* Light theme is a whiteprint: the same drawing on white stock. */
 @media (prefers-color-scheme: light) {
   :root {
-    --bg: #eef1f6;
-    --raised: #ffffff;
-    --text: #0b1020;
-    --muted: #4f5870;
-    --line: #cfd6e3;
-    --green: #0a7a3a;
-    --holo: #0b6aa8;
-    --amber: #8a5200;
-    --glow: none;
+    --bg: #f7f9fc;
+    --raised: #f7f9fc;
+    --text: #0e2a47;
+    --muted: #45617f;
+    --line: #9fb6cf;
+    --cyan: #1c5f9e;
+    --red: #c2412d;
+    --grid: rgb(14 42 71 / 0.06);
+    --grid-major: rgb(14 42 71 / 0.1);
     color-scheme: light;
   }
 }
@@ -39,23 +40,29 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   overflow-x: clip;
   margin: 0;
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
   color: var(--text);
-  font: 400 1.0625rem/1.6 var(--sans);
+  font: 400 1rem/1.65 var(--sans);
 }
 
-a { color: inherit; text-decoration-color: var(--holo); text-underline-offset: 0.2em; }
-a:hover { color: var(--green); text-decoration-color: currentColor; }
-:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 2px; }
+a { color: inherit; text-decoration-color: var(--red); text-underline-offset: 0.2em; }
+a:hover { color: var(--cyan); text-decoration-color: currentColor; }
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 2px; }
 
-h1, h2, h3 { font-family: var(--condensed); font-weight: 600; line-height: 1.1; margin: 0 0 0.5em; }
-h1 { font-size: clamp(2.5rem, 6.2vw, 4.75rem); letter-spacing: -0.015em; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; margin: 0 0 0.5em; text-wrap: balance; }
+h1 { font-size: clamp(2.3rem, 5.6vw, 4.2rem); letter-spacing: -0.025em; }
 h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
 h3 { font-size: 1.3rem; }
 p { margin: 0 0 1em; }
 code, pre { font-family: var(--mono); font-size: 0.9em; }
-code { color: var(--holo); }
-pre { background: var(--raised); border: 1px solid var(--line); padding: 1rem; overflow-x: auto; border-radius: 6px; }
+code { color: var(--red); }
+pre { background: var(--raised); border: 1px solid var(--line); padding: 1rem; overflow-x: auto; }
 pre code { color: var(--text); }
 
 .wrap { width: min(72rem, 100% - 2rem); margin-inline: auto; }
@@ -63,11 +70,10 @@ pre code { color: var(--text); }
 .prose p, .prose li { line-height: 1.7; }
 .muted { color: var(--muted); }
 
-/* Zellij-style pane: title sits in the top border; the focused pane gets the green frame. */
+/* A drawing detail: the label sits in the frame line; the featured detail gets the cyan frame. */
 .pane {
   position: relative;
   border: 1px solid var(--line);
-  border-radius: 6px;
   padding: 1.5rem 1.25rem 1.25rem;
   background: var(--raised);
 }
@@ -78,26 +84,25 @@ pre code { color: var(--text); }
   padding: 0 0.4rem;
   background: var(--bg);
   font: 500 0.85rem/1.4 var(--mono);
-  color: var(--amber);
+  color: var(--cyan);
 }
-.pane.focused { border-color: var(--green); box-shadow: var(--glow); }
-.pane.focused .pane-title { color: var(--green); }
+.pane.focused { border-color: var(--cyan); border-width: 1.5px; }
+.pane.focused .pane-title { color: var(--cyan); }
 
 .button-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
 .button {
   display: inline-block;
   padding: 0.5rem 0.95rem;
   border: 1px solid var(--line);
-  border-radius: 4px;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 700;
 }
-.button.primary { background: var(--green); border-color: var(--green); color: var(--bg); box-shadow: var(--glow); }
-.button.primary:hover { color: var(--bg); filter: brightness(1.1); }
-.button:not(.primary):hover { border-color: var(--green); }
+.button.primary { background: var(--text); border-color: var(--text); color: var(--bg); }
+.button.primary:hover { color: var(--bg); background: var(--cyan); border-color: var(--cyan); }
+.button:not(.primary):hover { border-color: var(--cyan); }
 
 .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0; margin: 0.75rem 0 0; list-style: none; }
-.tags li { font: 0.8rem/1.5 var(--mono); color: var(--holo); }
+.tags li { font: 0.8rem/1.5 var(--mono); color: var(--red); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
