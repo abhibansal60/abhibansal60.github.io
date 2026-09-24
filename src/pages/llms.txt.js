@@ -9,7 +9,7 @@ export async function GET({ site }) {
   const lines = [
     `# ${basics.name}`,
     '',
-    `> ${basics.label} ${basics.summary}`,
+    `> ${basics.label}. ${basics.summary}`,
     '',
     `Based in ${basics.location.city}. Contact: ${basics.email}.`,
     '',

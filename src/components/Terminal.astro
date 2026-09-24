@@ -13,7 +13,7 @@ const linkedin = basics.profiles.find((p) => p.network === 'LinkedIn')!.url;
 const pad = Math.max(...projects.map((p) => p.name.length)) + 3;
 
 const commands: Record<string, string> = {
-  whoami: `${esc(basics.name)}, ${esc(basics.location.city)}.\n${esc(basics.label)}\n${dim('VP at Morgan Stanley. 10 years from test automation to agentic AI.')}
+  whoami: `${esc(basics.name)}, ${esc(basics.location.city)}.\n${esc(basics.label)}\n${dim('VP at Morgan Stanley, leading engineering teams. 10 years from test automation to agentic AI.')}
 ${dim('try: plumber')}`,
   projects: projects
     .map((p) => `<span class="g">${esc(p.name)}/</span>${' '.repeat(pad - p.name.length - 1)}${esc(p.kind)}`)

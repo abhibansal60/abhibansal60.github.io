@@ -10,7 +10,7 @@ const { basics, work, highlights, skills, certificates, education, awards } = re
   <div class="cv">
     <p class="no-print"><button class="button primary" type="button" onclick="window.print()">Save as PDF</button></p>
     <h1>{basics.name}</h1>
-    <p>{basics.label} {basics.location.city}, UK. <a href={`mailto:${basics.email}`}>{basics.email}</a></p>
+    <p>{basics.label}. {basics.location.city}, UK. <a href={`mailto:${basics.email}`}>{basics.email}</a></p>
     <p>{basics.profiles.map((p, i) => <>{i > 0 && ', '}<a href={p.url}>{p.url.replace('https://', '')}</a></>)}</p>
     <p>{basics.summary}</p>
 
