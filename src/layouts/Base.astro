@@ -7,6 +7,7 @@ import '@fontsource/ibm-plex-mono/500.css';
 import '../styles/global.css';
 import resume from '../data/resume.json';
 import Starfield from '../components/Starfield.astro';
+import Pip from '../components/Pip.astro';
 
 interface Props {
   title?: string;
@@ -62,6 +63,7 @@ const nav = [
     <footer class="wrap site-footer">
       <p class="muted">Abhinav Bansal, Glasgow. For agents: <a href="/llms.txt">llms.txt</a>, <a href="/resume.json">resume.json</a>. For readers: <a href="/rss.xml">RSS</a>. Views are my own, not my employer's.</p>
     </footer>
+    <Pip />
   </body>
 </html>
 
