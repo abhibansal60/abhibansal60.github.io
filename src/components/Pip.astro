@@ -47,6 +47,14 @@ const quips = [
     display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; pointer-events: none;
   }
   .pip[hidden], .bubble[hidden] { display: none; }
+  /* Intro: the welcome pose hides the dismiss link, then .flying glides Pip down to its corner. */
+  .intro .dismiss { display: none; }
+  .intro .bubble { pointer-events: none; }
+  .intro:not(.greeting):not(.flying) { visibility: hidden; }
+  .flying { transition: transform 1.8s cubic-bezier(0.45, 0, 0.2, 1); }
+  .flying .droid { animation: tilt 1.8s ease-in-out; }
+  .flying .jet { opacity: 0.8; }
+  .greeting .arm { animation: wave 0.7s ease-in-out 3 alternate; }
   .pip > * { pointer-events: auto; }
 
   .droid {
@@ -85,6 +93,8 @@ const quips = [
   }
   .dismiss:hover { color: var(--green); }
 
+  @keyframes tilt { 30% { transform: rotate(-10deg); } 80% { transform: rotate(4deg); } }
+  @keyframes wave { from { transform: rotate(10deg); } to { transform: rotate(-40deg); } }
   @keyframes float { 50% { transform: translateY(-6px); } }
   @keyframes blink { 0%, 95%, 100% { transform: scaleY(1); } 97% { transform: scaleY(0.1); } }
   @keyframes pulse { 50% { opacity: 0.35; } }
@@ -132,5 +142,43 @@ const quips = [
     // The terminal's pip command brings Pip back.
     addEventListener('pip:summon', () => { write('0'); root.hidden = false; });
     root.hidden = read() === '1';
+
+    // Welcome: once per visit, Pip appears beside the home page headline, waves, then glides to its corner.
+    const perch = document.querySelector<HTMLElement>('[data-pip-perch]');
+    const seen = () => { try { return sessionStorage.getItem('pip-welcomed') === '1'; } catch { return true; } };
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (perch && !root.hidden && !still && !seen()) {
+      try { sessionStorage.setItem('pip-welcomed', '1'); } catch {}
+      root.classList.add('intro');
+      document.fonts.ready.then(() => {
+        const range = document.createRange();
+        range.selectNodeContents(perch);
+        const text = range.getBoundingClientRect();
+        const d = droid.getBoundingClientRect();
+        if (text.bottom < 0 || text.top > innerHeight) return land(false);
+        const x = Math.min(text.right + 12, innerWidth - d.width - 8);
+        const y = text.top + text.height / 2 - d.height / 2;
+        root.style.transform = `translate(${x - d.left}px, ${y - d.top}px)`;
+        say.textContent = "Hi, I'm Pip. Welcome aboard.";
+        bubble.hidden = false;
+        droid.classList.add('talking');
+        root.classList.add('greeting');
+        timer = window.setTimeout(() => land(true), 2800);
+        addEventListener('scroll', () => land(true), { once: true, passive: true });
+      });
+    }
+    let landed = false;
+    function land(glide: boolean) {
+      if (landed) return;
+      landed = true;
+      clearTimeout(timer);
+      hide();
+      root!.classList.remove('greeting');
+      if (glide) root!.classList.add('flying');
+      requestAnimationFrame(() => { root!.style.transform = ''; });
+      const done = () => root!.classList.remove('intro', 'flying');
+      if (glide) root!.addEventListener('transitionend', done, { once: true });
+      else done();
+    }
   }
 </script>
