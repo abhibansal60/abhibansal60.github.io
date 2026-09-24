@@ -3,6 +3,6 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://abhibansal60.github.io',
+  site: 'https://abhibansal.dev',
   integrations: [sitemap()],
 });
