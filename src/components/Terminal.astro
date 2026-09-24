@@ -13,7 +13,8 @@ const linkedin = basics.profiles.find((p) => p.network === 'LinkedIn')!.url;
 const pad = Math.max(...projects.map((p) => p.name.length)) + 3;
 
 const commands: Record<string, string> = {
-  whoami: `${esc(basics.name)}, ${esc(basics.location.city)}.\n${esc(basics.label)}\n${dim('VP at Morgan Stanley. 10 years from test automation to agentic AI.')}`,
+  whoami: `${esc(basics.name)}, ${esc(basics.location.city)}.\n${esc(basics.label)}\n${dim('VP at Morgan Stanley. 10 years from test automation to agentic AI.')}
+${dim('a.k.a. ')}<span class="g">${esc(basics.nickname)}</span>${dim(': type plumber')}`,
   projects: projects
     .map((p) => `<span class="g">${esc(p.name)}/</span>${' '.repeat(pad - p.name.length - 1)}${esc(p.kind)}`)
     .join('\n') + `\n${dim('type a project name for details')}`,
@@ -24,6 +25,13 @@ const commands: Record<string, string> = {
     : `First posts are on the way. ${link('/rss.xml', 'RSS')}`,
   speaking: talks.map((t) => `<span class="g">*</span> ${esc(t.title)}`).join('\n') + `\n${dim('invite me: ')}${link('/speaking/', '/speaking')}`,
   contact: `${link(`mailto:${basics.email}`, basics.email)}\n${link(linkedin, linkedin.replace('https://www.', ''))}`,
+  plumber: [
+    `Wherever there's a leak, I go in.`,
+    `<span class="g">✓</span> Five years modernizing tech at scale across a global bank`,
+    `<span class="g">✓</span> Cookie-cutter tools, so every team starts from a pattern that works`,
+    `<span class="g">✓</span> Then I get on stage and show people how to use them`,
+    dim('no job too small, no pipeline too clogged'),
+  ].join('\n'),
   cv: `opening ${link('/cv/', '/cv')} ...`,
   crawl: dim('rolling the opening crawl. Press Esc to skip.'),
   'sudo rm -rf /': `<span class="g">[harness] blocked.</span>\nThe model can ask. Plain code decides. That's the whole idea.`,
@@ -37,7 +45,7 @@ for (const p of projects) {
     link(p.url, p.url.replace('https://', '')),
   ].join('\n');
 }
-const chips = ['whoami', 'projects', 'experience', 'patent', 'writing', 'contact', 'sudo rm -rf /', 'clear'];
+const chips = ['whoami', 'plumber', 'projects', 'experience', 'patent', 'writing', 'contact', 'sudo rm -rf /', 'clear'];
 commands.help = dim(`commands: ${[...chips, 'speaking', 'cv', 'crawl', ...projects.map((p) => p.name)].join(', ')}`);
 ---
 
@@ -65,6 +73,7 @@ commands.help = dim(`commands: ${[...chips, 'speaking', 'cv', 'crawl', ...projec
         <p class="ep-title">The Agentic Awakening</p>
         <p>It is a period of manual testing. From a university hostel, a young founder has launched DollarsGPT, rallying 20,000 users to the cause.</p>
         <p>Joining the Infosys and Morgan Stanley fleets, our engineer forges test frameworks, co-invents the BLAZE engine, and brings DevOps to the galaxy, cutting production incidents by 45%.</p>
+        <p>For five years the Plumber answers every call, modernizing systems across the fleet and handing each team cookie-cutter tools so no leak returns.</p>
         <p>Now, as the agents rise, Abhinav leads the mission to bring them safely into production. Somewhere in the Glasgow system, the next agent is already being built....</p>
       </div>
     </div>
