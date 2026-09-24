@@ -51,7 +51,7 @@ commands.help = dim(`commands: ${[...chips, 'speaking', 'cv', 'crawl', 'pip', ..
 ---
 
 <div class="term" data-term>
-  <div class="bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>abhinav@portfolio: ~</div>
+  <div class="bar"><span>Detail A: console</span><span>abhinav@portfolio: ~</span></div>
   <div class="out" data-out aria-live="polite">
     <p><span class="p">$ </span>whoami</p>
     <p class="r" set:html={commands.whoami} />
@@ -84,37 +84,35 @@ commands.help = dim(`commands: ${[...chips, 'speaking', 'cv', 'crawl', 'pip', ..
 
 <style>
   .term {
-    display: flex; flex-direction: column; height: clamp(22rem, 34vw, 26rem);
+    display: flex; flex-direction: column; min-height: 22rem; max-height: min(36rem, 85vh);
     background: color-mix(in srgb, var(--raised) 92%, transparent);
-    border: 1px solid var(--line); border-radius: 8px; font: 0.88rem/1.55 var(--mono);
+    border: 1px solid var(--line); font: 0.88rem/1.55 var(--mono);
     backdrop-filter: blur(4px);
   }
-  .bar { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.9rem; border-bottom: 1px solid var(--line); color: var(--amber); font-size: 0.8rem; }
-  .dots { display: flex; gap: 0.35rem; }
-  .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
-  .out { flex: 1; overflow-y: auto; padding: 0.9rem; }
+  .bar { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; padding: 0.5rem 0.9rem; border-bottom: 1px solid var(--line); color: var(--cyan); font-size: 0.8rem; }
+  .out { flex: 1; min-height: 0; overflow-y: auto; padding: 0.9rem; }
   .out :global(p) { margin: 0 0 0.35rem; white-space: pre-wrap; overflow-wrap: anywhere; }
   .out :global(p.r) { margin-bottom: 1rem; }
-  .term :global(.p) { color: var(--holo); }
-  .term :global(.g) { color: var(--green); }
+  .term :global(.p) { color: var(--red); }
+  .term :global(.g) { color: var(--cyan); }
   .term :global(.d) { color: var(--muted); }
   .out :global(a) { color: var(--text); }
   .in { display: flex; gap: 0.6ch; padding: 0.2rem 0.9rem 0.6rem; }
   .in[hidden], .chips[hidden] { display: none; }
-  .in input { flex: 1; min-width: 0; background: transparent; border: 0; color: var(--text); font: inherit; caret-color: var(--green); }
+  .in input { flex: 1; min-width: 0; background: transparent; border: 0; color: var(--text); font: inherit; caret-color: var(--cyan); }
   .in input:focus { outline: none; }
-  .in:focus-within { box-shadow: inset 0 -1px 0 var(--green); }
+  .in:focus-within { box-shadow: inset 0 -1px 0 var(--cyan); }
   .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.6rem 0.9rem 0.8rem; border-top: 1px solid var(--line); }
   .chips button {
     font: 0.78rem var(--mono); color: var(--text); background: var(--bg); border: 1px solid var(--line);
-    border-radius: 999px; padding: 0.25rem 0.7rem; cursor: pointer;
+    padding: 0.25rem 0.7rem; cursor: pointer;
   }
-  .chips button:hover { border-color: var(--green); color: var(--green); }
+  .chips button:hover { border-color: var(--cyan); color: var(--cyan); }
 
   /* The crawl is its own scene: fixed colours whatever the site theme. */
   .crawl {
     width: 100vw; height: 100vh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0;
-    background: #000; color: #ffe81f; overflow: hidden; font-family: var(--condensed);
+    background: #000; color: #ffe81f; overflow: hidden; font-family: var(--display);
   }
   .crawl::backdrop { background: #000; }
   .skip-crawl {
