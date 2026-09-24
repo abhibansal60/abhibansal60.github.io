@@ -26,7 +26,7 @@ const commands: Record<string, string> = {
   contact: `${link(`mailto:${basics.email}`, basics.email)}\n${link(linkedin, linkedin.replace('https://www.', ''))}`,
   cv: `opening ${link('/cv/', '/cv')} ...`,
   crawl: dim('rolling the opening crawl. Press Esc to skip.'),
-  'sudo hire abhinav': `<span class="g">[sudo] permission granted.</span>\nGood call. ${link(`mailto:${basics.email}?subject=${encodeURIComponent('Hiring')}`, basics.email)}`,
+  'sudo rm -rf /': `<span class="g">[harness] blocked.</span>\nThe model can ask. Plain code decides. That's the whole idea.`,
 };
 for (const p of projects) {
   commands[p.name] = [
@@ -37,7 +37,7 @@ for (const p of projects) {
     link(p.url, p.url.replace('https://', '')),
   ].join('\n');
 }
-const chips = ['whoami', 'projects', 'experience', 'patent', 'writing', 'contact', 'sudo hire abhinav', 'clear'];
+const chips = ['whoami', 'projects', 'experience', 'patent', 'writing', 'contact', 'sudo rm -rf /', 'clear'];
 commands.help = dim(`commands: ${[...chips, 'speaking', 'cv', 'crawl', ...projects.map((p) => p.name)].join(', ')}`);
 ---
 
@@ -65,7 +65,7 @@ commands.help = dim(`commands: ${[...chips, 'speaking', 'cv', 'crawl', ...projec
         <p class="ep-title">The Agentic Awakening</p>
         <p>It is a period of manual testing. From a university hostel, a young founder has launched DollarsGPT, rallying 20,000 users to the cause.</p>
         <p>Joining the Infosys and Morgan Stanley fleets, our engineer forges test frameworks, co-invents the BLAZE engine, and brings DevOps to the galaxy, cutting production incidents by 45%.</p>
-        <p>Now, as the agents rise, Abhinav leads the mission to bring them safely into production. Somewhere in the Glasgow system, a new team awaits....</p>
+        <p>Now, as the agents rise, Abhinav leads the mission to bring them safely into production. Somewhere in the Glasgow system, the next agent is already being built....</p>
       </div>
     </div>
   </dialog>

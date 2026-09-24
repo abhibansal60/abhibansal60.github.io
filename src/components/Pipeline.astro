@@ -4,7 +4,7 @@ import resume from '../data/resume.json';
 // The career as a CI run. Renders fully passed without JS; the script replays it once when scrolled into view.
 const stages = [
   ...resume.timeline.map((t) => ({ label: `${t.stage}: ${t.name}`, year: t.year, log: t.log })),
-  { label: 'next', year: '', log: ['Waiting for the right team.', `Trigger manually: ${resume.basics.email}`] },
+  { label: 'next', year: 'now', log: ['Building agents that ship safely inside a regulated enterprise', 'Writing up what works, every two weeks'] },
 ];
 const last = stages.length - 1;
 ---
@@ -12,13 +12,13 @@ const last = stages.length - 1;
 <div class="pipe" data-pipeline>
   <div class="pipe-top">
     <p class="file">career.yml</p>
-    <p class="status" data-status>{last} of {stages.length} stages passed, 1 awaiting approval</p>
+    <p class="status" data-status>{last} of {stages.length} stages passed, 1 running</p>
   </div>
   <ol class="stages">
     {stages.map((s, i) => (
       <li>
-        <button type="button" class:list={['stg', i === last ? 'wait' : 'done']} aria-pressed={i === last - 1 ? 'true' : 'false'} data-i={i}>
-          <span class="st"><span class="ico" aria-hidden="true"></span><span data-lbl>{i === last ? 'awaiting approval' : 'passed'}</span></span>
+        <button type="button" class:list={['stg', i === last ? 'run' : 'done']} aria-pressed={i === last - 1 ? 'true' : 'false'} data-i={i}>
+          <span class="st"><span class="ico" aria-hidden="true"></span><span data-lbl>{i === last ? 'running' : 'passed'}</span></span>
           <span class="nm">{s.label}</span>
           {s.year && <span class="yr">{s.year}</span>}
         </button>
@@ -68,7 +68,6 @@ const last = stages.length - 1;
   .run .ico { border-color: var(--holo); border-top-color: transparent; animation: spin 0.8s linear infinite; }
   .done .ico { border-color: var(--green); background: var(--green); }
   .done .st { color: var(--green); }
-  .wait .ico { border-style: dashed; border-color: var(--holo); }
   @keyframes spin { to { transform: rotate(360deg); } }
   .pipe-log {
     min-height: 8.5rem; background: var(--bg); border: 1px solid var(--line); border-radius: 6px;
@@ -100,7 +99,7 @@ const last = stages.length - 1;
       logs.forEach((l, j) => (l.hidden = i !== j));
     };
     const setState = (b: HTMLButtonElement, state: string, label: string) => {
-      b.classList.remove('done', 'run', 'wait', 'queued');
+      b.classList.remove('done', 'run', 'queued');
       b.classList.add(state);
       b.querySelector('[data-lbl]')!.textContent = label;
     };
@@ -114,13 +113,13 @@ const last = stages.length - 1;
       for (let i = 0; i < btns.length; i++) {
         if (id !== runId) return;
         show(i);
-        if (i === last) { setState(btns[i], 'wait', 'awaiting approval'); break; }
+        if (i === last) { setState(btns[i], 'run', 'running'); break; }
         setState(btns[i], 'run', 'running');
         await sleep(1000);
         if (id !== runId) return;
         setState(btns[i], 'done', 'passed');
       }
-      status.textContent = `${last} of ${btns.length} stages passed, 1 awaiting approval`;
+      status.textContent = `${last} of ${btns.length} stages passed, 1 running`;
     }
 
     replay.hidden = false;
