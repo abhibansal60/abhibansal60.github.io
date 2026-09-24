@@ -14,7 +14,7 @@ const pad = Math.max(...projects.map((p) => p.name.length)) + 3;
 
 const commands: Record<string, string> = {
   whoami: `${esc(basics.name)}, ${esc(basics.location.city)}.\n${esc(basics.label)}\n${dim('VP at Morgan Stanley. 10 years from test automation to agentic AI.')}
-${dim('a.k.a. ')}<span class="g">${esc(basics.nickname)}</span>${dim(': type plumber')}`,
+${dim('try: plumber')}`,
   projects: projects
     .map((p) => `<span class="g">${esc(p.name)}/</span>${' '.repeat(pad - p.name.length - 1)}${esc(p.kind)}`)
     .join('\n') + `\n${dim('type a project name for details')}`,
@@ -23,7 +23,7 @@ ${dim('a.k.a. ')}<span class="g">${esc(basics.nickname)}</span>${dim(': type plu
   writing: posts.length
     ? posts.slice(0, 5).map((p) => link(`/writing/${p.id}/`, p.data.title)).join('\n')
     : `First posts are on the way. ${link('/rss.xml', 'RSS')}`,
-  speaking: talks.map((t) => `<span class="g">*</span> ${esc(t.title)}`).join('\n') + `\n${dim('invite me: ')}${link('/speaking/', '/speaking')}`,
+  speaking: talks.map((t) => `<span class="g">*</span> ${esc(t.title)}`).join('\n') + `\n${dim('more: ')}${link('/speaking/', '/speaking')}`,
   contact: `${link(`mailto:${basics.email}`, basics.email)}\n${link(linkedin, linkedin.replace('https://www.', ''))}`,
   plumber: [
     `Wherever there's a leak, I go in.`,
