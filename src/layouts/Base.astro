@@ -6,6 +6,7 @@ import '@fontsource/b612-mono/400.css';
 import '../styles/global.css';
 import resume from '../data/resume.json';
 import Pip from '../components/Pip.astro';
+import Mark from '../components/Mark.astro';
 
 interface Props {
   title?: string;
@@ -45,7 +46,7 @@ const nav = [
   <body>
     <a class="skip" href="#main">Skip to content</a>
     <header class="wrap site-header">
-      <a class="wordmark" href="/">Abhinav Bansal</a>
+      <a class="wordmark" href="/"><Mark /><span>Abhinav Bansal<small>The Tech Plumber</small></span></a>
       <nav aria-label="Main">
         <ul>
           {nav.map(([href, label]) => (
@@ -68,10 +69,11 @@ const nav = [
   .skip { position: absolute; left: -9999px; }
   .skip:focus { left: 1rem; top: 1rem; background: var(--signal); color: var(--bg); padding: 0.5rem 1rem; z-index: 10; }
   .site-header {
-    display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
     gap: 0.75rem 2rem; padding-block: 1.75rem 4rem;
   }
-  .wordmark { font: 500 1rem/1.2 var(--sans); color: var(--text); text-decoration: none; }
+  .wordmark { display: inline-flex; align-items: center; gap: 0.6rem; font: 500 1rem/1.15 var(--sans); color: var(--text); text-decoration: none; }
+  .wordmark small { display: block; font-size: 0.8rem; color: var(--muted); }
   nav ul { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; margin: 0; padding: 0; list-style: none; }
   nav a { text-decoration: none; color: var(--muted); font-weight: 500; }
   nav a:hover, nav a[aria-current='page'] { color: var(--text); }

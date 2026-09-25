@@ -1,10 +1,18 @@
 ---
 import Base from '../layouts/Base.astro';
+import PipArt from '../components/PipArt.astro';
 ---
 
 <Base title="Page not found">
-  <div class="prose">
-    <h1>No such page</h1>
-    <p>This address doesn't exist, or it moved. Start from the <a href="/">home page</a> or look through <a href="/writing/">writing</a>.</p>
+  <div class="lost">
+    <PipArt width={150} />
+    <div class="prose">
+      <h1>No such page</h1>
+      <p>Pip checked every pipe and this address isn't connected to anything. It may have moved. Start from the <a href="/">home page</a> or look through <a href="/writing/">writing</a>.</p>
+    </div>
   </div>
 </Base>
+
+<style>
+  .lost { display: flex; flex-wrap: wrap; gap: 2rem 3rem; align-items: center; }
+</style>
