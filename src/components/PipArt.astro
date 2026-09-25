@@ -1,0 +1,44 @@
+---
+// Pip, the plumber droid, drawn once and reused: the corner droid, the 404 page and the colophon.
+// Flat ink linework on paper with one red accent, to match the site. Class names are animation hooks.
+interface Props { width?: number }
+const { width = 56 } = Astro.props;
+---
+
+<svg class="pip-art" viewBox="0 0 64 72" width={width} height={Math.round((width * 72) / 64)} aria-hidden="true">
+  <g class="jet"><path d="M26 64h12M28 68h8" /></g>
+  <line class="antenna" x1="32" y1="13" x2="32" y2="6" />
+  <circle class="tip" cx="32" cy="4.5" r="2.4" />
+  <path class="dome" d="M16 31a16 16 0 0 1 32 0z" />
+  <rect class="visor" x="21" y="20" width="22" height="7" rx="3.5" />
+  <g class="eye"><circle cx="35" cy="23.5" r="2.4" /></g>
+  <rect class="body" x="15" y="31" width="34" height="27" rx="4" />
+  <rect class="band" x="15" y="36" width="34" height="3" />
+  <path class="emblem" d="M26 42v5a5 5 0 0 0 5 5h7" />
+  <circle class="bolt" cx="20" cy="53" r="1.3" />
+  <circle class="bolt" cx="44" cy="53" r="1.3" />
+  <g class="arm">
+    <path d="M49 44h5" />
+    <g class="wrench" transform="rotate(-40 54 44)">
+      <rect x="53" y="42.6" width="9" height="2.8" />
+      <path class="jaw" d="M61 39.5h4.5v3h-2v3h2v3H61z" />
+    </g>
+  </g>
+</svg>
+
+<style>
+  .pip-art { overflow: visible; }
+  .pip-art :is(.dome, .body, .visor) { stroke: var(--text); stroke-width: 2; stroke-linejoin: round; }
+  .dome, .body { fill: var(--bg); }
+  .visor { fill: var(--text); }
+  .eye circle { fill: var(--signal); }
+  .band { fill: var(--text); }
+  .emblem { fill: none; stroke: var(--text); stroke-width: 2.5; }
+  .bolt { fill: var(--text); }
+  .antenna { stroke: var(--text); stroke-width: 2; }
+  .tip { fill: var(--signal); }
+  .arm path { fill: none; stroke: var(--text); stroke-width: 2; stroke-linecap: round; }
+  .wrench rect { fill: var(--text); }
+  .wrench .jaw { fill: var(--signal); stroke: none; }
+  .jet path { stroke: var(--muted); stroke-width: 2; stroke-linecap: round; }
+</style>

@@ -1,0 +1,15 @@
+---
+// The Tech Plumber mark: a pipe elbow with a red coupling. Inherits size from font-size.
+interface Props { size?: string; label?: string }
+const { size = '1.4em', label } = Astro.props;
+---
+
+<svg class="mark" viewBox="0 0 32 32" width={size} height={size} role={label ? 'img' : undefined} aria-label={label} aria-hidden={label ? undefined : 'true'}>
+  <path d="M8 3v11a10 10 0 0 0 10 10h11" fill="none" stroke="currentColor" stroke-width="6" />
+  <rect x="1" y="2" width="14" height="4" fill="var(--signal, #d9261c)" />
+  <rect x="26" y="17" width="4" height="14" fill="var(--signal, #d9261c)" />
+</svg>
+
+<style>
+  .mark { flex: none; vertical-align: middle; }
+</style>
