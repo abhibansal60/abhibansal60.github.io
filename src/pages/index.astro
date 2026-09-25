@@ -9,8 +9,7 @@ import { getLiveStats } from '../stats';
 const { basics, projects, talks, leaks } = resume;
 const linkedin = basics.profiles.find((p) => p.network === 'LinkedIn')!.url;
 const github = basics.profiles.find((p) => p.network === 'GitHub')!.url;
-const [lead, ...others] = projects.filter((p) => p.featured);
-const alsoBuilt = [...others, ...projects.filter((p) => !p.featured)];
+const oneLine = (text: string) => text.split('. ')[0].replace(/\.$/, '') + '.';
 const latest = (await getPosts())[0];
 const live = await getLiveStats();
 const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/London' });
@@ -76,16 +75,21 @@ const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month
       <video controls preload="none" playsinline poster="/media/career-poster.jpg" width="1920" height="1080" aria-describedby="film-note">
         <source src="/media/career.mp4" type="video/mp4" />
       </video>
-      <figcaption id="film-note" class="muted">Ten years in 40 seconds. The film is silent; the full timeline is on the <a href="/work/">work page</a>.</figcaption>
+      <figcaption id="film-note" class="muted">Ten years in 40 seconds. The film is silent; the <a href="/work/">work page</a> has the same timeline in text.</figcaption>
     </figure>
 
-    <article class="pane focused">
-      <span class="pane-title">{lead.kind}</span>
-      <h2><a href={lead.url}>{lead.name}</a></h2>
-      <p>{lead.description}</p>
-      <ul class="facts">{lead.highlights!.map((h) => <li>{h}</li>)}</ul>
-      <pre><code>{lead.install}</code></pre>
-    </article>
+    <div class="pane">
+      <span class="pane-title">open source</span>
+      <ul class="project-list">
+        {projects.map((p) => (
+          <li>
+            <a href={p.url}>{p.name}</a> <span class="muted">{p.kind}</span>
+            <p>{oneLine(p.description)}</p>
+          </li>
+        ))}
+      </ul>
+      <a href="/projects/">Details for each project</a>
+    </div>
   </section>
 
   <section class="console" id="console" aria-labelledby="console-title">
@@ -97,14 +101,6 @@ const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month
   </section>
 
   <section class="more" aria-label="More">
-    <div class="pane">
-      <span class="pane-title">also built</span>
-      <ul class="also">
-        {alsoBuilt.map((p) => (
-          <li><a href={p.url}>{p.name}</a> <span class="muted">{p.kind}</span></li>
-        ))}
-      </ul>
-    </div>
     <div class="pane">
       <span class="pane-title">speaking</span>
       <h3><a href="/speaking/">{talks[0].title}</a></h3>
@@ -155,19 +151,17 @@ const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month
   .film { margin: 0; }
   .film video { display: block; width: 100%; height: auto; background: var(--raised); border: 1px solid var(--line); }
   .film figcaption { margin-top: 0.6rem; font-size: 0.9rem; }
-  .featured h2 a { text-decoration: none; }
-  .facts { padding-left: 1.1rem; }
-  .facts li::marker { color: var(--signal); }
+  .project-list { list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: 0.9rem; }
+  .project-list a { font-weight: 800; font-size: 1.15rem; }
+  .project-list p { margin: 0.15rem 0 0; font-size: 0.95rem; }
   .pane > :last-child { margin-bottom: 0; }
 
   .console { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 2rem 3rem; align-items: start; border-top: 3px solid var(--text); padding-top: 1rem; }
   .console p { max-width: 40ch; }
 
-  .more { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 1.5rem; }
+  .more { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.5rem; }
   .more h3 { font-size: 1.2rem; }
   .more h3 a { text-decoration: none; }
-  .also { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
-  .also a { font-weight: 500; }
 
   @media (max-width: 60rem) {
     .hero, .featured, .console { grid-template-columns: 1fr; gap: 2.5rem; }
