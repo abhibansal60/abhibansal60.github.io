@@ -3,12 +3,15 @@ import Base from '../layouts/Base.astro';
 import resume from '../data/resume.json';
 import { getPosts, formatDate } from '../lib';
 import Terminal from '../components/Terminal.astro';
+import { getLiveStats } from '../stats';
 
 const { basics, projects, talks } = resume;
 const linkedin = basics.profiles.find((p) => p.network === 'LinkedIn')!.url;
 const github = basics.profiles.find((p) => p.network === 'GitHub')!.url;
 const [lead, ...others] = projects.filter((p) => p.featured);
 const latest = (await getPosts())[0];
+const live = await getLiveStats();
+const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/London' });
 const patent = resume.highlights.find((h) => h.name.startsWith('BLAZE'))!;
 
 ---
@@ -38,6 +41,18 @@ const patent = resume.highlights.find((h) => h.name.startsWith('BLAZE'))!;
       </div>
     ))}
   </section>
+
+  {live.stats.length > 0 && (
+    <section class="live" aria-labelledby="live-title">
+      <h2 id="live-title">Live from GitHub and PyPI</h2>
+      <dl>
+        {live.stats.map((s) => (
+          <div><dt>{s.label}</dt><dd>{s.value}</dd></div>
+        ))}
+      </dl>
+      <p class="muted">Rebuilt every night. Last updated <time datetime={live.builtAt.toISOString()}>{builtOn}</time>.</p>
+    </section>
+  )}
 
   <section class="panes" aria-label="Highlights">
     <div class="pane now">
@@ -103,7 +118,15 @@ const patent = resume.highlights.find((h) => h.name.startsWith('BLAZE'))!;
   .subline { font-size: 1.25rem; max-width: 40ch; }
   .intro .button-row { margin-top: 1.75rem; }
 
-  .figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; margin-bottom: 5rem; }
+  .figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+
+  .live { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 0.5rem 1.5rem; margin-bottom: 5rem; align-items: baseline; }
+  .live h2 { font-size: 1rem; font-weight: 500; letter-spacing: 0; margin: 0; }
+  .live dl { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; margin: 0; }
+  .live dl div { display: flex; flex-direction: column-reverse; }
+  .live dt { color: var(--muted); font-size: 0.9rem; }
+  .live dd { margin: 0; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .live p { grid-column: 2; margin: 0; font-size: 0.85rem; }
   .figures div { border-top: 3px solid var(--text); padding-top: 0.6rem; }
   .figures p { margin: 0; }
   .value { font: 800 clamp(2rem, 4.5vw, 3.2rem)/1 var(--display); letter-spacing: -0.035em; font-variant-numeric: tabular-nums; }
@@ -127,6 +150,8 @@ const patent = resume.highlights.find((h) => h.name.startsWith('BLAZE'))!;
   .pane > :last-child { margin-bottom: 0; }
 
   @media (max-width: 60rem) {
+    .live { grid-template-columns: 1fr; }
+    .live p { grid-column: 1; }
     .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .hero { grid-template-columns: 1fr; gap: 2.5rem; }
     .panes { grid-template-columns: repeat(2, minmax(0, 1fr)); }

@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Nightly rebuild so the live GitHub and PyPI numbers stay current.
+  schedule:
+    - cron: '17 3 * * *'
 
 permissions:
   contents: read
@@ -20,6 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: withastro/action@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy:
     needs: build
     runs-on: ubuntu-latest
