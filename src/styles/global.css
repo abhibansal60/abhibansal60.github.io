@@ -1,34 +1,33 @@
-/* Droid schematic: the site is an engineering drawing. Drafting blue with white linework,
-   cyan for callouts and passed states, red for annotations and live values. */
+/* Used universe: weathered gunmetal panels, rebel flight-suit orange for actions and labels,
+   readout red for live values. Type follows the films' News Gothic lineage. */
 :root {
-  --bg: #0e2a47;
-  --raised: #0e2a47;
-  --text: #f1f5fa;
-  --muted: #a9c1dc;
-  --line: #4d78a3;
-  --cyan: #8fd3ff;
-  --red: #ff8a73;
-  --grid: rgb(143 211 255 / 0.1);
-  --grid-major: rgb(143 211 255 / 0.18);
-  --sans: 'B612', system-ui, sans-serif;
-  --display: 'B612', system-ui, sans-serif;
+  --bg: #26292e;
+  --raised: #30343a;
+  --text: #ecebe6;
+  --muted: #a9aaa6;
+  --line: #474c54;
+  --orange: #f26b1d;
+  --red: #ff5a4a;
+  --bolt: #5a5f68;
+  --hazard: repeating-linear-gradient(-45deg, var(--orange) 0 12px, #16181b 12px 24px);
+  --sans: 'Libre Franklin', system-ui, sans-serif;
+  --display: 'News Cycle', 'Libre Franklin', system-ui, sans-serif;
   --mono: 'B612 Mono', ui-monospace, monospace;
   --measure: 68ch;
   color-scheme: dark;
 }
 
-/* Light theme is a whiteprint: the same drawing on white stock. */
+/* Light theme: the same ship in hangar light, pale hull plating. */
 @media (prefers-color-scheme: light) {
   :root {
-    --bg: #f7f9fc;
-    --raised: #f7f9fc;
-    --text: #0e2a47;
-    --muted: #45617f;
-    --line: #9fb6cf;
-    --cyan: #1c5f9e;
-    --red: #c2412d;
-    --grid: rgb(14 42 71 / 0.06);
-    --grid-major: rgb(14 42 71 / 0.1);
+    --bg: #e4e5e7;
+    --raised: #f1f2f3;
+    --text: #1d1f23;
+    --muted: #52565d;
+    --line: #b9bcc1;
+    --orange: #b8480c;
+    --red: #b3261e;
+    --bolt: #a3a7ad;
     color-scheme: light;
   }
 }
@@ -40,23 +39,17 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   overflow-x: clip;
   margin: 0;
-  background-color: var(--bg);
-  background-image:
-    linear-gradient(var(--grid-major) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  background: var(--bg);
   color: var(--text);
-  font: 400 1rem/1.65 var(--sans);
+  font: 400 1.0625rem/1.6 var(--sans);
 }
 
 a { color: inherit; text-decoration-color: var(--red); text-underline-offset: 0.2em; }
-a:hover { color: var(--cyan); text-decoration-color: currentColor; }
-:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 2px; }
+a:hover { color: var(--orange); text-decoration-color: currentColor; }
+:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 2px; }
 
 h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; margin: 0 0 0.5em; text-wrap: balance; }
-h1 { font-size: clamp(2.3rem, 5.6vw, 4.2rem); letter-spacing: -0.025em; }
+h1 { font-size: clamp(2.8rem, 7.5vw, 5.5rem); line-height: 0.92; text-transform: uppercase; letter-spacing: -0.01em; }
 h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
 h3 { font-size: 1.3rem; }
 p { margin: 0 0 1em; }
@@ -70,7 +63,7 @@ pre code { color: var(--text); }
 .prose p, .prose li { line-height: 1.7; }
 .muted { color: var(--muted); }
 
-/* A drawing detail: the label sits in the frame line; the featured detail gets the cyan frame. */
+/* A bolted hull plate: the label sits in the frame line, the featured plate gets the orange frame. */
 .pane {
   position: relative;
   border: 1px solid var(--line);
@@ -83,23 +76,28 @@ pre code { color: var(--text); }
   left: 0.9rem;
   padding: 0 0.4rem;
   background: var(--bg);
-  font: 500 0.85rem/1.4 var(--mono);
-  color: var(--cyan);
+  font: 700 0.85rem/1.4 var(--display);
+  color: var(--orange);
 }
-.pane.focused { border-color: var(--cyan); border-width: 1.5px; }
-.pane.focused .pane-title { color: var(--cyan); }
+.pane.focused { border-color: var(--orange); border-width: 2px; }
+.pane::before, .pane::after {
+  content: ''; position: absolute; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: var(--bolt);
+}
+.pane::before { left: 8px; }
+.pane::after { right: 8px; }
+.pane.focused .pane-title { color: var(--orange); }
 
 .button-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
 .button {
   display: inline-block;
   padding: 0.5rem 0.95rem;
-  border: 1px solid var(--line);
+  border: 2px solid var(--muted);
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 600;
 }
-.button.primary { background: var(--text); border-color: var(--text); color: var(--bg); }
-.button.primary:hover { color: var(--bg); background: var(--cyan); border-color: var(--cyan); }
-.button:not(.primary):hover { border-color: var(--cyan); }
+.button.primary { background: var(--orange); border-color: var(--orange); color: #16181b; }
+.button.primary:hover { color: #16181b; filter: brightness(1.1); }
+.button:not(.primary):hover { border-color: var(--orange); }
 
 .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0; margin: 0.75rem 0 0; list-style: none; }
 .tags li { font: 0.8rem/1.5 var(--mono); color: var(--red); }
@@ -111,3 +109,5 @@ pre code { color: var(--text); }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 html:has(dialog[open]) { overflow: hidden; }
+
+.hazard { height: 8px; background: var(--hazard); }

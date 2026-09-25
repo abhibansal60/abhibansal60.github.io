@@ -1,6 +1,7 @@
 ---
-import '@fontsource/b612/400.css';
-import '@fontsource/b612/700.css';
+import '@fontsource/news-cycle/700.css';
+import '@fontsource/libre-franklin/400.css';
+import '@fontsource/libre-franklin/600.css';
 import '@fontsource/b612-mono/400.css';
 import '../styles/global.css';
 import resume from '../data/resume.json';
@@ -14,7 +15,6 @@ interface Props {
 const { title, description = resume.basics.summary } = Astro.props;
 const fullTitle = title ? `${title} | Abhinav Bansal` : `Abhinav Bansal: ${resume.basics.label}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const role = resume.work[0].position.split(',')[0];
 const nav = [
   ['/work/', 'Work'],
   ['/projects/', 'Projects'],
@@ -22,10 +22,6 @@ const nav = [
   ['/speaking/', 'Speaking'],
   ['/uses/', 'Uses'],
 ];
-// Each page is a numbered sheet of the drawing set, like engineering drawings.
-const sheets = ['/', ...nav.map(([href]) => href)];
-const sheetIndex = sheets.findLastIndex((href) => href === '/' ? Astro.url.pathname === '/' : Astro.url.pathname.startsWith(href));
-const sheet = sheetIndex >= 0 ? `Sheet ${sheetIndex + 1} of ${sheets.length}` : 'Detail sheet';
 ---
 
 <!doctype html>
@@ -49,7 +45,7 @@ const sheet = sheetIndex >= 0 ? `Sheet ${sheetIndex + 1} of ${sheets.length}` : 
   <body>
     <a class="skip" href="#main">Skip to content</a>
     <header class="wrap site-header">
-      <a class="wordmark" href="/">abhibansal.dev <span>{sheet}</span></a>
+      <a class="wordmark" href="/">Abhinav Bansal</a>
       <nav aria-label="Main">
         <ul>
           {nav.map(([href, label]) => (
@@ -58,16 +54,12 @@ const sheet = sheetIndex >= 0 ? `Sheet ${sheetIndex + 1} of ${sheets.length}` : 
         </ul>
       </nav>
     </header>
+    <div class="wrap hazard" aria-hidden="true"></div>
     <main id="main" class="wrap">
       <slot />
     </main>
     <footer class="wrap site-footer">
-      <dl class="titleblock">
-        <div><dt>Drawn by</dt><dd>{resume.basics.name}</dd></div>
-        <div><dt>Role</dt><dd>{role}, Morgan Stanley</dd></div>
-        <div><dt>Location</dt><dd>{resume.basics.location.city}</dd></div>
-        <div><dt>{sheet}</dt><dd>{title ?? 'Home'}</dd></div>
-      </dl>
+      <div class="hazard" aria-hidden="true"></div>
       <p class="muted">For agents: <a href="/llms.txt">llms.txt</a>, <a href="/resume.json">resume.json</a>. For readers: <a href="/rss.xml">RSS</a>. Views are my own, not my employer's.</p>
     </footer>
     <Pip />
@@ -76,25 +68,18 @@ const sheet = sheetIndex >= 0 ? `Sheet ${sheetIndex + 1} of ${sheets.length}` : 
 
 <style>
   .skip { position: absolute; left: -9999px; }
-  .skip:focus { left: 1rem; top: 1rem; background: var(--cyan); color: var(--bg); padding: 0.5rem 1rem; z-index: 10; }
+  .skip:focus { left: 1rem; top: 1rem; background: var(--orange); color: var(--bg); padding: 0.5rem 1rem; z-index: 10; }
   .site-header {
     display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
-    gap: 0.75rem 2rem; padding-block: 1.5rem 0.9rem; margin-bottom: 3rem; border-bottom: 1px solid var(--cyan);
+    gap: 0.75rem 2rem; padding-block: 1.5rem 1rem;
   }
-  .wordmark { font: 400 0.9rem/1.4 var(--mono); color: var(--cyan); text-decoration: none; }
-  .wordmark span { color: var(--muted); margin-left: 0.75ch; }
-  .wordmark span::before { content: '/ '; }
+  .hazard { margin-bottom: 3rem; }
+  .wordmark { font: 700 1.1rem/1.2 var(--display); color: var(--text); text-decoration: none; }
   nav ul { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; margin: 0; padding: 0; list-style: none; }
-  nav a { text-decoration: none; color: var(--muted); }
+  nav a { text-decoration: none; color: var(--muted); font: 700 1rem var(--display); }
   nav a:hover, nav a[aria-current='page'] { color: var(--text); }
-  nav a[aria-current='page'] { text-decoration: underline; text-decoration-color: var(--cyan); }
+  nav a[aria-current='page'] { text-decoration: underline; text-decoration-color: var(--orange); }
   main { padding-bottom: 5rem; }
   .site-footer { padding-block: 0 2.5rem; font-size: 0.9rem; }
-  .titleblock {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); margin: 0 0 1rem;
-    border: 1px solid var(--cyan); background: var(--bg);
-  }
-  .titleblock div { padding: 0.5rem 0.75rem; border-right: 1px solid var(--cyan); margin-right: -1px; }
-  .titleblock dt { font: 0.72rem/1.4 var(--mono); color: var(--cyan); }
-  .titleblock dd { margin: 0; font: 0.85rem/1.4 var(--mono); }
+  .site-footer .hazard { margin-bottom: 1rem; }
 </style>
