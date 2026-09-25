@@ -362,5 +362,25 @@
       "value": "1",
       "label": "US patent, co-inventor of BLAZE"
     }
+  ],
+  "leaks": [
+    {
+      "leak": "Test suites nobody trusts",
+      "fix": "Test frameworks built from the spec up, so tests are readable, repeatable and generated wherever they can be.",
+      "proof": "Co-inventor of US Patent 12,321,256 B1 for generating test code from behaviour specs, and a firm-wide test automation framework.",
+      "url": "https://patents.google.com/patent/US12321256B1/en"
+    },
+    {
+      "leak": "Slow, risky delivery",
+      "fix": "Pipelines, containers and cookie-cutter templates that make the safe path the easy one.",
+      "proof": "45% fewer production incidents and 40% more frequent deploys across 5+ engineering teams.",
+      "url": "/work/"
+    },
+    {
+      "leak": "AI that never leaves the demo",
+      "fix": "Reference agents, guardrails and literacy sessions, so teams ship agents they can trust.",
+      "proof": "Boardroom, a multi-agent system on the Claude Agent SDK, and tidy, an AI tool that can't go rogue.",
+      "url": "/work/"
+    }
   ]
 }

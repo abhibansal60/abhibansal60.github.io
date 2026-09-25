@@ -3,17 +3,17 @@ import Base from '../layouts/Base.astro';
 import resume from '../data/resume.json';
 import { getPosts, formatDate } from '../lib';
 import Terminal from '../components/Terminal.astro';
+import PipGreeter from '../components/PipGreeter.astro';
 import { getLiveStats } from '../stats';
 
-const { basics, projects, talks } = resume;
+const { basics, projects, talks, leaks } = resume;
 const linkedin = basics.profiles.find((p) => p.network === 'LinkedIn')!.url;
 const github = basics.profiles.find((p) => p.network === 'GitHub')!.url;
 const [lead, ...others] = projects.filter((p) => p.featured);
+const alsoBuilt = [...others, ...projects.filter((p) => !p.featured)];
 const latest = (await getPosts())[0];
 const live = await getLiveStats();
 const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/London' });
-const patent = resume.highlights.find((h) => h.name.startsWith('BLAZE'))!;
-
 ---
 
 <Base>
@@ -29,8 +29,7 @@ const patent = resume.highlights.find((h) => h.name.startsWith('BLAZE'))!;
         <li><a class="button" href={`mailto:${basics.email}`}>Email me</a></li>
       </ul>
     </div>
-
-    <Terminal />
+    <PipGreeter />
   </section>
 
   <section class="figures" aria-label="In numbers">
@@ -42,122 +41,138 @@ const patent = resume.highlights.find((h) => h.name.startsWith('BLAZE'))!;
     ))}
   </section>
 
-  {live.stats.length > 0 && (
-    <section class="live" aria-labelledby="live-title">
-      <h2 id="live-title">Live from GitHub and PyPI</h2>
-      <dl>
-        {live.stats.map((s) => (
-          <div><dt>{s.label}</dt><dd>{s.value}</dd></div>
-        ))}
-      </dl>
-      <p class="muted">Rebuilt every night. Last updated <time datetime={live.builtAt.toISOString()}>{builtOn}</time>.</p>
-    </section>
-  )}
-
-  <section class="panes" aria-label="Highlights">
-    <div class="pane now">
-      <span class="pane-title">now</span>
-      <p>{basics.currently}</p>
+  <section class="live" aria-labelledby="live-title">
+    <h2 id="live-title">Now</h2>
+    <div>
+      <p class="now">{basics.currently}</p>
+      {live.stats.length > 0 && (
+        <>
+          <dl>
+            {live.stats.map((s) => (
+              <div><dt>{s.label}</dt><dd>{s.value}</dd></div>
+            ))}
+          </dl>
+          <p class="muted small">Live from GitHub and PyPI, rebuilt every night. Last updated <time datetime={live.builtAt.toISOString()}>{builtOn}</time>.</p>
+        </>
+      )}
     </div>
+  </section>
 
-    <article class="pane focused lead">
+  <section class="leaks" aria-labelledby="leaks-title">
+    <h2 id="leaks-title">Leaks I fix</h2>
+    <div class="leak-grid">
+      {leaks.map((l) => (
+        <article class="pane">
+          <h3>{l.leak}</h3>
+          <p>{l.fix}</p>
+          <p class="proof"><span>Proof</span> <a href={l.url}>{l.proof}</a></p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="featured" aria-label="Featured">
+    <figure class="film" id="film">
+      <video controls preload="none" playsinline poster="/media/career-poster.jpg" width="1920" height="1080" aria-describedby="film-note">
+        <source src="/media/career.mp4" type="video/mp4" />
+      </video>
+      <figcaption id="film-note" class="muted">Ten years in 40 seconds. The film is silent; the full timeline is on the <a href="/work/">work page</a>.</figcaption>
+    </figure>
+
+    <article class="pane focused">
       <span class="pane-title">{lead.kind}</span>
       <h2><a href={lead.url}>{lead.name}</a></h2>
       <p>{lead.description}</p>
       <ul class="facts">{lead.highlights!.map((h) => <li>{h}</li>)}</ul>
       <pre><code>{lead.install}</code></pre>
     </article>
+  </section>
 
-    {others.map((p) => (
-      <article class="pane">
-        <span class="pane-title">{p.kind}</span>
-        <h3><a href={p.url}>{p.name}</a></h3>
-        <p>{p.description}</p>
-        <ul class="tags">{p.keywords.map((k) => <li>{k}</li>)}</ul>
-      </article>
-    ))}
-
-    <div class="pane">
-      <span class="pane-title">us patent</span>
-      <h3><a href={patent.url}>{patent.name}</a></h3>
-      <p>{patent.summary}</p>
-      <a href="/work/">How I got from test automation to agents</a>
+  <section class="console" id="console" aria-labelledby="console-title">
+    <div>
+      <h2 id="console-title">The console</h2>
+      <p>The same profile, for people who prefer a prompt. Type <code>help</code> or tap a command. It is the front end for the AI agent coming next, which will answer questions about my work from this site's data.</p>
     </div>
+    <Terminal />
+  </section>
 
+  <section class="more" aria-label="More">
     <div class="pane">
-      <span class="pane-title">writing</span>
-      {latest ? (
-        <>
-          <h3><a href={`/writing/${latest.id}/`}>{latest.data.title}</a></h3>
-          <p class="muted">{formatDate(latest.data.date)}</p>
-          <a href="/writing/">All writing</a>
-        </>
-      ) : (
-        <p>First posts are on the way. Follow along with <a href="/rss.xml">RSS</a>.</p>
-      )}
+      <span class="pane-title">also built</span>
+      <ul class="also">
+        {alsoBuilt.map((p) => (
+          <li><a href={p.url}>{p.name}</a> <span class="muted">{p.kind}</span></li>
+        ))}
+      </ul>
     </div>
-
-    <div class="pane speaking">
+    <div class="pane">
       <span class="pane-title">speaking</span>
-      <h3>{talks[0].title}</h3>
-      <p>{talks[0].summary}</p>
-      <a href="/speaking/">All talk topics</a>
+      <h3><a href="/speaking/">{talks[0].title}</a></h3>
+      <p class="muted">And {talks.length - 1} more talk topics.</p>
     </div>
+    {latest && (
+      <div class="pane">
+        <span class="pane-title">writing</span>
+        <h3><a href={`/writing/${latest.id}/`}>{latest.data.title}</a></h3>
+        <p class="muted">{formatDate(latest.data.date)}</p>
+      </div>
+    )}
   </section>
 </Base>
 
 <style>
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: 3rem;
-    align-items: center;
-    margin-bottom: 5rem;
-  }
+  section { margin-bottom: 5rem; }
+  h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); }
+
+  .hero { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 3rem; align-items: center; }
   .intro h1 { max-width: 14ch; }
   .subline { font-size: 1.25rem; max-width: 40ch; }
   .intro .button-row { margin-top: 1.75rem; }
 
   .figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
-
-  .live { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 0.5rem 1.5rem; margin-bottom: 5rem; align-items: baseline; }
-  .live h2 { font-size: 1rem; font-weight: 500; letter-spacing: 0; margin: 0; }
-  .live dl { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; margin: 0; }
-  .live dl div { display: flex; flex-direction: column-reverse; }
-  .live dt { color: var(--muted); font-size: 0.9rem; }
-  .live dd { margin: 0; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-  .live p { grid-column: 2; margin: 0; font-size: 0.85rem; }
   .figures div { border-top: 3px solid var(--text); padding-top: 0.6rem; }
   .figures p { margin: 0; }
   .value { font: 800 clamp(2rem, 4.5vw, 3.2rem)/1 var(--display); letter-spacing: -0.035em; font-variant-numeric: tabular-nums; }
   .value.signal { color: var(--signal); }
   .label { color: var(--muted); font-size: 0.95rem; margin-top: 0.4rem !important; }
 
+  .live { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 0.5rem 1.5rem; align-items: baseline; }
+  .live h2 { font-size: 1rem; font-weight: 500; letter-spacing: 0; margin: 0; }
+  .now { font-size: 1.15rem; margin: 0 0 1rem; max-width: var(--measure); }
+  .live dl { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; margin: 0 0 0.5rem; }
+  .live dl div { display: flex; flex-direction: column-reverse; }
+  .live dt { color: var(--muted); font-size: 0.9rem; }
+  .live dd { margin: 0; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .small { font-size: 0.85rem; margin: 0; }
 
-  .panes {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 2rem 1.5rem;
-  }
-  .now { grid-column: 1 / -1; font-size: 1.15rem; }
-  .speaking { grid-column: 1 / -1; }
-  .speaking p { max-width: var(--measure); }
-  .now p { margin: 0; }
-  .lead { grid-row: span 2; }
-  .lead h2 a, .pane h3 a { text-decoration: none; }
+  .leak-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 1.5rem; margin-top: 1.5rem; }
+  .leak-grid h3 { font-size: 1.5rem; }
+  .proof { margin: 0; font-size: 0.95rem; }
+  .proof span { display: block; color: var(--signal); font-weight: 500; font-size: 0.85rem; }
+  .proof a { text-decoration-color: var(--line); }
+
+  .featured { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 2rem; align-items: start; }
+  .film { margin: 0; }
+  .film video { display: block; width: 100%; height: auto; background: var(--raised); border: 1px solid var(--line); }
+  .film figcaption { margin-top: 0.6rem; font-size: 0.9rem; }
+  .featured h2 a { text-decoration: none; }
   .facts { padding-left: 1.1rem; }
   .facts li::marker { color: var(--signal); }
   .pane > :last-child { margin-bottom: 0; }
 
+  .console { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 2rem 3rem; align-items: start; border-top: 3px solid var(--text); padding-top: 1rem; }
+  .console p { max-width: 40ch; }
+
+  .more { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 1.5rem; }
+  .more h3 { font-size: 1.2rem; }
+  .more h3 a { text-decoration: none; }
+  .also { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
+  .also a { font-weight: 500; }
+
   @media (max-width: 60rem) {
-    .live { grid-template-columns: 1fr; }
-    .live p { grid-column: 1; }
+    .hero, .featured, .console { grid-template-columns: 1fr; gap: 2.5rem; }
     .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .hero { grid-template-columns: 1fr; gap: 2.5rem; }
-    .panes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (max-width: 40rem) {
-    .panes { grid-template-columns: 1fr; }
-    .lead { grid-row: auto; }
+    .live { grid-template-columns: 1fr; }
+    .leak-grid, .more { grid-template-columns: 1fr; }
   }
 </style>
