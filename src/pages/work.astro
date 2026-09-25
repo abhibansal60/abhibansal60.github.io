@@ -21,7 +21,14 @@ const reviews = [
     <p class="lede">I started out writing test frameworks, spent five years modernizing technology at scale across Morgan Stanley, and now lead agentic AI adoption. Colleagues call me the Plumber: wherever something needs fixing, I go in, and I leave behind a cookie-cutter tool so the next team doesn't have to. The thread through all of it: build the harness that lets a team trust automation.</p>
   </div>
 
-  <section aria-labelledby="run" class="first">
+  <figure class="film first">
+    <video controls preload="none" playsinline poster="/media/career-poster.jpg" width="1920" height="1080" aria-describedby="film-note">
+      <source src="/media/career.mp4" type="video/mp4" />
+    </video>
+    <figcaption id="film-note" class="muted">Ten years in 40 seconds. The film is silent, and the same timeline is written out below.</figcaption>
+  </figure>
+
+  <section aria-labelledby="run">
     <h2 id="run" class="sr-only">Career at a glance</h2>
     <Pipeline />
   </section>
@@ -81,7 +88,10 @@ const reviews = [
 
 <style>
   section { margin-top: 4rem; }
-  section.first { margin-top: 2.5rem; }
+  .first { margin-top: 2.5rem; }
+  .film { margin-bottom: 0; margin-inline: 0; }
+  .film video { display: block; width: 100%; height: auto; background: var(--raised); border: 1px solid var(--line); }
+  .film figcaption { margin-top: 0.6rem; font-size: 0.9rem; }
   .reviews { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 2rem 1.5rem; margin-top: 1.5rem; }
   .reviews figure { margin: 0; border-top: 3px solid var(--text); padding-top: 0.8rem; display: flex; flex-direction: column; gap: 0.6rem; }
   .reviews blockquote { margin: 0; flex: 1; }
