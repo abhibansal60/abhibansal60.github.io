@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import PipArt from '../components/PipArt.astro';
+
+const repo = 'https://github.com/abhibansal60/abhibansal60.github.io';
+// Snapshot from the pull request that added the quality gate; the gate itself runs on every PR.
+const scores = [
+  ['Home', 100, 100, 100, 100],
+  ['Work', 99, 100, 100, 100],
+  ['Projects', 100, 100, 100, 100],
+  ['Writing', 100, 100, 100, 100],
+  ['Speaking', 100, 100, 100, 100],
+  ['CV', 100, 100, 100, 100],
+] as const;
+---
+
+<Base title="Colophon" description="How abhibansal.dev is built, tested and kept fast.">
+  <div class="prose">
+    <h1>Colophon</h1>
+    <p class="lede">How this site is built, and the checks that keep it fast and usable.</p>
+
+    <h2>Quality gate</h2>
+    <p>Every change goes through a pull request. A <a href={`${repo}/blob/main/.github/workflows/quality.yml`}>GitHub Action</a> builds the site and runs Lighthouse on six pages; if performance, accessibility, best practices or SEO drops below 90 on any of them, the check fails. Scores when the gate was added, on 25 September 2026:</p>
+  </div>
+  <div class="table">
+    <table>
+      <thead><tr><th scope="col">Page</th><th scope="col">Performance</th><th scope="col">Accessibility</th><th scope="col">Best practices</th><th scope="col">SEO</th></tr></thead>
+      <tbody>
+        {scores.map(([page, ...s]) => (
+          <tr><th scope="row">{page}</th>{s.map((v) => <td>{v}</td>)}</tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <div class="prose">
+    <p>Current results are on the <a href={`${repo}/actions/workflows/quality.yml`}>workflow runs page</a>.</p>
+
+    <h2>Built with</h2>
+    <ul>
+      <li><a href="https://astro.build">Astro</a>, static output, with a few small scripts and no framework runtime</li>
+      <li>Schibsted Grotesk for text and B612 Mono for the console, both self-hosted</li>
+      <li>GitHub Pages, deployed by a GitHub Action on every merge to main</li>
+      <li>Every page works without JavaScript and respects reduced-motion settings</li>
+    </ul>
+
+    <h2>Live numbers</h2>
+    <p>The figures under the headline come from the GitHub and PyPI APIs at build time, and the site rebuilds every night. If a source fails, that number is left out rather than shown stale.</p>
+
+    <h2>For agents</h2>
+    <p>My profile is available as <a href="/llms.txt">llms.txt</a>, <a href="/llms-full.txt">llms-full.txt</a> and <a href="/resume.json">resume.json</a> (JSON Resume format), all generated from the same data as these pages. A public MCP server is planned next.</p>
+
+    <h2>Pip</h2>
+    <div class="pip-note">
+      <PipArt width={72} />
+      <p>Pip is the site's plumber droid, drawn in SVG. It stays out of the way until you call it from the footer or type <code>pip</code> in the console.</p>
+    </div>
+
+    <p><a href={repo}>Source on GitHub</a></p>
+  </div>
+</Base>
+
+<style>
+  .lede { font-size: 1.25rem; }
+  h2 { margin-top: 2.5rem; font-size: 1.5rem; }
+  .table { overflow-x: auto; margin-bottom: 1rem; }
+  table { border-collapse: collapse; min-width: 34rem; width: 100%; max-width: 52rem; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 0.55rem 1rem 0.55rem 0; border-bottom: 1px solid var(--line); }
+  thead th { border-bottom: 3px solid var(--text); font-weight: 500; color: var(--muted); }
+  tbody th { font-weight: 500; }
+  .pip-note { display: flex; gap: 1.25rem; align-items: center; }
+  .pip-note p { margin: 0; }
+</style>

@@ -28,6 +28,7 @@ export async function GET({ site }) {
     '## Optional',
     `- [Speaking topics](${url('/speaking/')})`,
     `- [Uses](${url('/uses/')})`,
+    `- [Colophon](${url('/colophon/')}): how the site is built and tested`,
   ];
   return new Response(lines.join('\n') + '\n', { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 }
