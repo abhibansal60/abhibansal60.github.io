@@ -3,6 +3,16 @@ import Base from '../layouts/Base.astro';
 import resume from '../data/resume.json';
 import { formatMonth } from '../lib';
 import Pipeline from '../components/Pipeline.astro';
+
+// Affectionate joke reviews, labelled as not real on the page. Kept out of resume.json so agents never read them as facts.
+const reviews = [
+  { from: 'Kubernetes', role: 'Container orchestrator', stars: 5, text: 'Brought whole teams over to me and cut their deploy times by 30%. Still pronounces my name three different ways.' },
+  { from: 'The change board', role: 'Approvals', stars: 5, text: 'Arrived with guardrails, evals and a rollback plan. We had nothing left to ask.' },
+  { from: 'Selenium WebDriver', role: 'First love', stars: 4, text: 'Taught Abhinav everything about flaky tests. Now the agents do the clicking.' },
+  { from: 'Jenkins', role: 'Retired CI server', stars: 3, text: 'Turned a pile of my freestyle jobs into one pipeline template. I am not angry. I am archived.' },
+  { from: 'Claude Code', role: 'Coding agent', stars: 5, text: 'Gives me skills, then tells me to be lazy. Best pairing partner I have had.' },
+  { from: 'A flaky test', role: 'Former resident', stars: 1, text: 'Found, fixed, and turned into a template so I can never come back. Rude.' },
+];
 ---
 
 <Base title="Work" description="Ten years at Morgan Stanley and Infosys, from test automation through modernization at scale to agentic AI.">
@@ -46,6 +56,20 @@ import Pipeline from '../components/Pipeline.astro';
     </ol>
   </section>
 
+  <section aria-labelledby="reviews">
+    <h2 id="reviews">What the tools say</h2>
+    <p class="muted">Not real reviews. The tools were not consulted.</p>
+    <div class="reviews">
+      {reviews.map((r) => (
+        <figure>
+          <p class="stars" role="img" aria-label={`${r.stars} out of 5`}>{'★'.repeat(r.stars)}<span>{'★'.repeat(5 - r.stars)}</span></p>
+          <blockquote><p>{r.text}</p></blockquote>
+          <figcaption><strong>{r.from}</strong> {r.role}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
   <section aria-labelledby="recognition" class="prose">
     <h2 id="recognition">Recognition and certifications</h2>
     <ul>
@@ -58,6 +82,14 @@ import Pipeline from '../components/Pipeline.astro';
 <style>
   section { margin-top: 4rem; }
   section.first { margin-top: 2.5rem; }
+  .reviews { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 2rem 1.5rem; margin-top: 1.5rem; }
+  .reviews figure { margin: 0; border-top: 3px solid var(--text); padding-top: 0.8rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .reviews blockquote { margin: 0; flex: 1; }
+  .reviews blockquote p { margin: 0; font-size: 1.05rem; }
+  .stars { margin: 0; color: var(--signal); letter-spacing: 0.1em; }
+  .stars span { color: var(--line); }
+  .reviews figcaption { color: var(--muted); font-size: 0.9rem; }
+  .reviews figcaption strong { color: var(--text); font-weight: 500; margin-right: 0.3rem; }
   .lede { font-size: 1.25rem; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
   .grid .pane { padding-top: 1.25rem; }
