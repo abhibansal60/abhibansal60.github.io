@@ -121,7 +121,9 @@
     },
     {
       "name": "BLAZE (US patent, co-inventor)",
-      "summary": "BDD Lean Automation Zenith Engine: turns API specifications into executable Java test suites using behaviour-driven development."
+      "summary": "BDD Lean Automation Zenith Engine: turns API specifications into executable Java test suites using behaviour-driven development. Granted as US Patent 12,321,256 B1, \"Behavior data driven automation test code generating system and method\", on 3 June 2025, assigned to Morgan Stanley.",
+      "patent": "US 12,321,256 B1",
+      "url": "https://patents.google.com/patent/US12321256B1/en"
     },
     {
       "name": "Internal events and conference platform",

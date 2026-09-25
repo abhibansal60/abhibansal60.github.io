@@ -24,7 +24,7 @@ export async function GET() {
     ]),
     '',
     '## Systems built at Morgan Stanley (internal, described only)',
-    ...highlights.map((h) => `- ${h.name}: ${h.summary}`),
+    ...highlights.map((h) => `- ${h.name}: ${h.summary}${h.url ? ` ${h.url}` : ""}`),
     '',
     '## Open source projects',
     ...projects.map((p) => `- ${p.name} (${p.url}): ${p.description}`),

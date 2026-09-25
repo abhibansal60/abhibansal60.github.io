@@ -79,7 +79,7 @@ const patent = resume.highlights.find((h) => h.name.startsWith('BLAZE'))!;
 
     <div class="pane">
       <span class="pane-title">us patent</span>
-      <h3>{patent.name}</h3>
+      <h3><a href={patent.url}>{patent.name}</a></h3>
       <p>{patent.summary}</p>
       <a href="/work/">How I got from test automation to agents</a>
     </div>
