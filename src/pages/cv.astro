@@ -24,7 +24,7 @@ const { basics, work, highlights, skills, certificates, education, awards } = re
     ))}
 
     <h2>Key achievements</h2>
-    <ul>{highlights.map((h) => <li><strong>{h.name}.</strong> {h.summary}</li>)}</ul>
+    <ul>{highlights.map((h) => <li><strong>{h.url ? <a href={h.url}>{h.name}</a> : h.name}.</strong> {h.summary}</li>)}</ul>
 
     <h2>Skills</h2>
     <ul>{skills.map((s) => <li><strong>{s.name}:</strong> {s.keywords.join(', ')}</li>)}</ul>

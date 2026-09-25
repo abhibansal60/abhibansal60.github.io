@@ -39,7 +39,7 @@ const reviews = [
     <div class="grid">
       {resume.highlights.map((h) => (
         <article class="pane">
-          <h3>{h.name}</h3>
+          <h3>{h.url ? <a href={h.url}>{h.name}</a> : h.name}</h3>
           <p>{h.summary}</p>
         </article>
       ))}

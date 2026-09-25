@@ -19,7 +19,7 @@ ${dim('try: plumber')}`,
     .map((p) => `<span class="g">${esc(p.name)}/</span>${' '.repeat(pad - p.name.length - 1)}${esc(p.kind)}`)
     .join('\n') + `\n${dim('type a project name for details')}`,
   experience: [...timeline].reverse().map((t) => `<span class="p">${t.year}</span>  ${esc(t.name)}: ${esc(t.log[0])}`).join('\n') + `\n${dim('full history: ')}${link('/work/', '/work')}`,
-  patent: `BLAZE: BDD Lean Automation Zenith Engine\nAPI specifications in, executable Java test suites out.\n${dim('US patent, co-inventor.')}`,
+  patent: `BLAZE: BDD Lean Automation Zenith Engine\nAPI specifications in, executable Java test suites out.\n${dim('US Patent 12,321,256 B1, granted 3 June 2025, co-inventor. ')}${link('https://patents.google.com/patent/US12321256B1/en', 'Read it on Google Patents')}`,
   writing: posts.length
     ? posts.slice(0, 5).map((p) => link(`/writing/${p.id}/`, p.data.title)).join('\n')
     : `First posts are on the way. ${link('/rss.xml', 'RSS')}`,
