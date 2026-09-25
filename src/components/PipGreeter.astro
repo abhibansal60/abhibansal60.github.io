@@ -1,0 +1,39 @@
+---
+// The home page welcome: Pip, drawn large, with a short scripted hello and three ways in.
+// Plain HTML and links, so it works without JavaScript; the bubbles rise in once on load.
+import PipArt from './PipArt.astro';
+---
+
+<div class="greeter">
+  <PipArt width={150} />
+  <div class="talk">
+    <p class="bubble" style="--i: 0">Hi, I'm Pip, the site's plumber droid.</p>
+    <p class="bubble" style="--i: 1">Abhinav fixes engineering leaks: test suites nobody trusts, slow delivery, and AI that never leaves the demo.</p>
+    <p class="bubble" style="--i: 2">Where do you want to start?</p>
+    <ul class="ways" style="--i: 3">
+      <li><a href="/work/">See the work</a></li>
+      <li><a href="#film">Watch the 40-second film</a></li>
+      <li><a href="#console">Try the console</a></li>
+    </ul>
+  </div>
+</div>
+
+<style>
+  .greeter { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+  .greeter :global(.pip-art) { margin-top: 0.5rem; }
+  .talk { display: grid; gap: 0.6rem; justify-items: start; }
+  .bubble, .ways { animation: rise 0.45s ease-out both; animation-delay: calc(0.3s + var(--i) * 0.5s); }
+  .bubble { margin: 0; padding: 0.7rem 1rem; background: var(--raised); max-width: 30ch; line-height: 1.45; }
+  .bubble:first-child { border-top: 3px solid var(--signal); }
+  .ways { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.4rem 0 0; padding: 0; list-style: none; }
+  .ways a {
+    display: inline-block; padding: 0.5rem 0.9rem; border: 2px solid var(--text); font-weight: 500;
+    text-decoration: none; color: var(--text);
+  }
+  .ways a:hover { background: var(--text); color: var(--bg); }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+  @media (max-width: 30rem) {
+    .greeter { grid-template-columns: 1fr; }
+    .greeter :global(.pip-art) { width: 96px; height: auto; }
+  }
+</style>
