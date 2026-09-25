@@ -1,0 +1,196 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  @font-face { font-family: S; src: url('__FONTS__/schibsted-grotesk-latin-400-normal.woff2'); font-weight: 400; }
+  @font-face { font-family: S; src: url('__FONTS__/schibsted-grotesk-latin-500-normal.woff2'); font-weight: 500; }
+  @font-face { font-family: S; src: url('__FONTS__/schibsted-grotesk-latin-800-normal.woff2'); font-weight: 800; }
+  :root { --ink: #111418; --muted: #5d626b; --line: #dfe2e6; --red: #d9261c; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #fff; color: var(--ink); font-family: S, sans-serif; }
+  .scene { position: absolute; inset: 0; }
+  .abs { position: absolute; }
+  /* Intro */
+  #intro-mark { left: 160px; top: 200px; }
+  #intro-name { left: 160px; top: 390px; font-size: 40px; font-weight: 500; }
+  #intro-title { font-size: 210px; font-weight: 800; letter-spacing: -0.05em; line-height: 0.92; width: 1500px; }
+  .clip { overflow: hidden; }
+  /* Timeline */
+  #track { position: absolute; left: 0; top: 0; height: 1080px; }
+  #pipe-bg { top: 640px; height: 14px; background: var(--line); }
+  #pipe { top: 640px; height: 14px; background: var(--ink); width: 0; }
+  .era { position: absolute; top: 0; width: 1000px; }
+  .node { position: absolute; top: 623px; left: -24px; width: 48px; height: 48px; border-radius: 50%; border: 8px solid var(--ink); background: #fff; }
+  .coupling { position: absolute; top: 612px; left: -40px; width: 18px; height: 70px; background: var(--red); }
+  .year { position: absolute; top: 250px; left: -14px; font-size: 250px; font-weight: 800; letter-spacing: -0.06em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .stage { position: absolute; top: 560px; left: 0; font-size: 30px; font-weight: 500; color: var(--muted); }
+  .name { position: absolute; top: 720px; left: 0; font-size: 64px; font-weight: 800; letter-spacing: -0.03em; }
+  .lines { position: absolute; top: 815px; left: 0; width: 1040px; display: flex; flex-direction: column; gap: 14px; }
+  .line { font-size: 34px; line-height: 1.3; padding-left: 40px; text-indent: -40px; }
+  .line::before { content: ''; display: inline-block; width: 22px; height: 4px; background: var(--ink); vertical-align: middle; margin-right: 18px; }
+  #hud { left: 160px; top: 90px; font-size: 30px; font-weight: 500; color: var(--muted); }
+  /* Figures */
+  #figs { left: 160px; right: 160px; top: 330px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 60px; }
+  .fig .rule { height: 8px; background: var(--ink); width: 0; }
+  .fig .val { white-space: nowrap; font-size: 170px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; margin-top: 30px; font-variant-numeric: tabular-nums; }
+  .fig .lab { font-size: 34px; color: var(--muted); margin-top: 20px; line-height: 1.3; }
+  .fig.signal .val { color: var(--red); }
+  .fig .val small { font-size: 0.4em; letter-spacing: -0.02em; margin-left: 0.15em; }
+  #figs-title { left: 160px; top: 200px; font-size: 40px; font-weight: 500; }
+  /* Outro */
+  #outro-mark { left: 160px; top: 300px; }
+  #outro-line { left: 150px; top: 440px; font-size: 130px; font-weight: 800; letter-spacing: -0.045em; line-height: 1; width: 1650px; }
+  #outro-url { left: 160px; top: 780px; font-size: 48px; font-weight: 500; }
+  #outro-url span { display: block; height: 6px; background: var(--red); width: 0; margin-top: 10px; }
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <symbol id="mk" viewBox="0 0 32 32"><path class="elbow" d="M8 3v11a10 10 0 0 0 10 10h11" fill="none" stroke="#111418" stroke-width="6" pathLength="1" stroke-dasharray="1" /><rect class="f1" x="1" y="2" width="14" height="4" fill="#d9261c" /><rect class="f2" x="26" y="17" width="4" height="14" fill="#d9261c" /></symbol>
+</defs></svg>
+
+<div class="scene" id="intro">
+  <svg class="abs" id="intro-mark" width="140" height="140" viewBox="0 0 32 32"><path id="i-elbow" d="M8 3v11a10 10 0 0 0 10 10h11" fill="none" stroke="#111418" stroke-width="6" pathLength="1" stroke-dasharray="1" /><rect id="i-f1" x="1" y="2" width="14" height="4" fill="#d9261c" /><rect id="i-f2" x="26" y="17" width="4" height="14" fill="#d9261c" /></svg>
+  <p class="abs" id="intro-name"></p>
+  <div class="abs clip" id="intro-title-wrap" style="left:150px;top:470px;height:420px;width:1700px"><p id="intro-title" style="position:relative;left:0;top:0"></p></div>
+</div>
+
+<div class="scene" id="timeline">
+  <p class="abs" id="hud">career.yml</p>
+  <div id="track"><div class="abs" id="pipe-bg"></div><div class="abs" id="pipe"></div></div>
+</div>
+
+<div class="scene" id="figures">
+  <p class="abs" id="figs-title">In numbers</p>
+  <div class="abs" id="figs"></div>
+</div>
+
+<div class="scene" id="outro">
+  <svg class="abs" id="outro-mark" width="110" height="110" viewBox="0 0 32 32"><use href="#mk" /></svg>
+  <p class="abs" id="outro-line">Wherever engineering leaks, I go in.</p>
+  <p class="abs" id="outro-url">abhibansal.dev<span></span></p>
+</div>
+
+<script>
+const D = __DATA__;
+const $ = (s) => document.querySelector(s);
+const clamp = (x) => Math.max(0, Math.min(1, x));
+const ease = (x) => { x = clamp(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const out = (x) => 1 - Math.pow(1 - clamp(x), 3);
+const p = (t, a, b) => ease((t - a) / (b - a));
+const po = (t, a, b) => out((t - a) / (b - a));
+
+// Timing (seconds)
+const INTRO_END = 4.6, ERA0 = 5.0, ERA_LEN = 4.2;
+const TL_END = ERA0 + D.eras.length * ERA_LEN + 0.4;          // ~30.6
+const FIG_START = TL_END, FIG_END = FIG_START + 5.6;
+const OUT_START = FIG_END, DURATION = OUT_START + 4.4;
+window.DURATION = DURATION;
+
+$('#intro-name').textContent = D.name;
+$('#intro-title').textContent = D.label;
+
+// Build the timeline track: eras spaced along a long pipe.
+const GAP = 1150, X0 = 260;
+const track = $('#track');
+track.style.width = (X0 + D.eras.length * GAP + 1920) + 'px';
+$('#pipe-bg').style.left = '0px'; $('#pipe-bg').style.width = track.style.width;
+$('#pipe').style.left = '0px';
+const eraEls = D.eras.map((e, i) => {
+  const el = document.createElement('div');
+  el.className = 'era';
+  el.style.left = (X0 + i * GAP) + 'px';
+  el.innerHTML = `<div class="coupling"></div><div class="node"></div><p class="year"></p><p class="stage"></p><p class="name"></p><div class="lines"><p class="line l0"></p><p class="line l1"></p></div>`;
+  el.querySelector('.year').textContent = e.year;
+  el.querySelector('.stage').textContent = e.stage;
+  el.querySelector('.name').textContent = e.name;
+  el.querySelector('.l0').textContent = e.lines[0];
+  el.querySelector('.l1').textContent = e.lines[1];
+  track.append(el);
+  return el;
+});
+
+// Figures
+const figs = $('#figs');
+const figEls = D.figures.map((f) => {
+  const m = f.value.match(/^(\d+)(.*)$/);
+  const el = document.createElement('div');
+  el.className = 'fig' + (f.signal ? ' signal' : '');
+  el.innerHTML = `<div class="rule"></div><p class="val"></p><p class="lab"></p>`;
+  el.querySelector('.lab').textContent = f.label;
+  figs.append(el);
+  return { el, n: +m[1], suffix: m[2] };
+});
+
+function show(el, o, y = 0) { el.style.opacity = o; el.style.transform = `translateY(${y}px)`; }
+
+function render(t) {
+  // Scene visibility
+  $('#intro').style.display = t < INTRO_END + 0.1 ? 'block' : 'none';
+  $('#timeline').style.display = t >= INTRO_END - 0.3 && t < TL_END + 0.6 ? 'block' : 'none';
+  $('#figures').style.display = t >= FIG_START && t < FIG_END + 0.2 ? 'block' : 'none';
+  $('#outro').style.display = t >= OUT_START - 0.1 ? 'block' : 'none';
+
+  // Intro: mark draws, couplings drop in, name and title rise.
+  $('#i-elbow').style.strokeDashoffset = 1 - p(t, 0.2, 1.3);
+  $('#i-f1').style.opacity = p(t, 1.1, 1.35); $('#i-f2').style.opacity = p(t, 1.25, 1.5);
+  show($('#intro-name'), po(t, 1.0, 1.7), 20 * (1 - po(t, 1.0, 1.7)));
+  $('#intro-title').style.transform = `translateY(${420 * (1 - po(t, 1.4, 2.3))}px)`;
+  const leave = p(t, 3.9, INTRO_END);
+  $('#intro').style.opacity = 1 - leave;
+  $('#intro').style.transform = `translateY(${-60 * leave}px)`;
+
+  // Timeline: the camera eases from era to era while the pipe fills behind it.
+  const tl = $('#timeline');
+  tl.style.opacity = p(t, INTRO_END - 0.3, INTRO_END + 0.3) * (1 - p(t, TL_END, TL_END + 0.6));
+  let cam = 0;
+  D.eras.forEach((e, i) => {
+    const s = ERA0 + i * ERA_LEN;
+    cam += GAP * p(t, s - 0.9, s) * (i > 0 ? 1 : 0);
+    const el = eraEls[i];
+    // Fade an era out as the camera leaves it, so it never peeks in at the left edge.
+    const next = ERA0 + (i + 1) * ERA_LEN;
+    el.style.opacity = i === D.eras.length - 1 ? 1 : 1 - p(t, next - 0.9, next - 0.4);
+    const arrive = po(t, s - 0.2, s + 0.4);
+    const node = el.querySelector('.node');
+    const live = i === D.eras.length - 1;
+    node.style.background = arrive > 0.5 ? (live ? '#fff' : '#111418') : '#fff';
+    node.style.borderColor = live && arrive > 0.5 ? '#d9261c' : '#111418';
+    node.style.transform = `scale(${0.6 + 0.4 * arrive + (live ? 0.08 * Math.sin(t * 6) * arrive : 0)})`;
+    el.querySelector('.coupling').style.opacity = arrive;
+    el.querySelector('.coupling').style.transform = `scaleY(${arrive})`;
+    show(el.querySelector('.year'), po(t, s, s + 0.6), 60 * (1 - po(t, s, s + 0.6)));
+    show(el.querySelector('.stage'), po(t, s + 0.2, s + 0.7), 0);
+    show(el.querySelector('.name'), po(t, s + 0.35, s + 0.9), 30 * (1 - po(t, s + 0.35, s + 0.9)));
+    show(el.querySelector('.l0'), po(t, s + 0.7, s + 1.2), 20 * (1 - po(t, s + 0.7, s + 1.2)));
+    show(el.querySelector('.l1'), po(t, s + 1.0, s + 1.5), 20 * (1 - po(t, s + 1.0, s + 1.5)));
+    el.querySelector('.year').style.color = live ? '#d9261c' : '#111418';
+  });
+  track.style.transform = `translateX(${-cam}px)`;
+  $('#pipe').style.width = (X0 + cam + 60 * po(t, ERA0 - 0.4, ERA0)) + 'px';
+
+  // Figures: rules draw left to right, numbers count up.
+  const f = $('#figures');
+  f.style.opacity = p(t, FIG_START, FIG_START + 0.4) * (1 - p(t, FIG_END - 0.3, FIG_END));
+  show($('#figs-title'), po(t, FIG_START, FIG_START + 0.5), 0);
+  figEls.forEach((g, i) => {
+    const s = FIG_START + 0.3 + i * 0.35;
+    g.el.querySelector('.rule').style.width = (100 * po(t, s, s + 0.7)) + '%';
+    const k = po(t, s + 0.2, s + 1.6);
+    const suf = g.suffix.trim();
+    g.el.querySelector('.val').innerHTML = Math.round(g.n * k) + (/^[a-z]/i.test(suf) ? `<small>${suf}</small>` : suf);
+    show(g.el.querySelector('.val'), po(t, s + 0.1, s + 0.5), 0);
+    show(g.el.querySelector('.lab'), po(t, s + 0.5, s + 1.0), 12 * (1 - po(t, s + 0.5, s + 1.0)));
+  });
+
+  // Outro
+  const o = OUT_START;
+  $('#outro').style.opacity = p(t, o, o + 0.4);
+  const use = document.querySelector('#mk .elbow');
+  use.style.strokeDashoffset = 1 - p(t, o + 0.1, o + 0.9);
+  show($('#outro-line'), po(t, o + 0.4, o + 1.1), 40 * (1 - po(t, o + 0.4, o + 1.1)));
+  show($('#outro-url'), po(t, o + 1.0, o + 1.5), 0);
+  $('#outro-url span').style.width = (100 * po(t, o + 1.3, o + 2.1)) + '%';
+}
+window.render = render;
+render(0);
+</script>
+</body></html>

@@ -25,3 +25,5 @@ pnpm-debug.log*
 
 # Lighthouse CI reports
 .lighthouseci/
+tools/video/frames/
+tools/video/video.html
