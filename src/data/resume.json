@@ -341,5 +341,24 @@
         "India Technology Showcase Award for the ACT Conference Portal"
       ]
     }
+  ],
+  "figures": [
+    {
+      "value": "10 yrs",
+      "label": "From test automation to agentic AI"
+    },
+    {
+      "value": "45%",
+      "label": "Fewer production incidents",
+      "signal": true
+    },
+    {
+      "value": "5+",
+      "label": "Engineering teams led through modernization"
+    },
+    {
+      "value": "1",
+      "label": "US patent, co-inventor of BLAZE"
+    }
   ]
 }
