@@ -69,22 +69,22 @@ const quips = [
   .dome { fill: var(--muted); }
   .body { fill: var(--raised); stroke: var(--muted); stroke-width: 1.5; }
   .visor { fill: #16181b; }
-  .eye circle { fill: var(--red); }
+  .eye circle { fill: var(--muted); }
   .eye { transform-origin: 32px 22.5px; animation: blink 7s infinite; }
-  .band { fill: var(--orange); }
+  .band { fill: var(--signal); }
   .bolt { fill: var(--bolt); }
   .antenna { stroke: var(--muted); stroke-width: 1.5; }
-  .tip { fill: var(--red); animation: pulse 2.4s ease-in-out infinite; }
+  .tip { fill: var(--muted); animation: pulse 2.4s ease-in-out infinite; }
   .arm path { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; }
-  .wrench { fill: var(--orange); }
+  .wrench { fill: var(--signal); }
   .wrench .jaw { fill: var(--bg); }
   .arm { transform-origin: 49px 44px; transition: transform 0.3s; }
   .droid:hover .arm, .droid.talking .arm { transform: rotate(-18deg); }
-  .jet { fill: var(--orange); opacity: 0.4; animation: jet 1.2s ease-in-out infinite; transform-origin: 32px 66px; }
+  .jet { fill: var(--signal); opacity: 0.4; animation: jet 1.2s ease-in-out infinite; transform-origin: 32px 66px; }
 
   .bubble {
     max-width: min(16rem, calc(100vw - 2rem)); padding: 0.6rem 0.8rem; margin-right: 0.5rem;
-    background: var(--raised); border: 1px solid var(--orange);
+    background: var(--raised); border: 1px solid var(--signal);
     font: 0.82rem/1.45 var(--mono); color: var(--text);
   }
   .bubble p { margin: 0 0 0.4rem; }
@@ -92,7 +92,7 @@ const quips = [
     padding: 0; border: 0; background: none; cursor: pointer; font: inherit; font-size: 0.75rem;
     color: var(--muted); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 0.2em;
   }
-  .dismiss:hover { color: var(--orange); }
+  .dismiss:hover { color: var(--signal); }
 
   @keyframes tilt { 30% { transform: rotate(-10deg); } 80% { transform: rotate(4deg); } }
   @keyframes wave { from { transform: rotate(10deg); } to { transform: rotate(-40deg); } }
@@ -142,7 +142,8 @@ const quips = [
     addEventListener('keydown', (e) => { if (e.key === 'Escape' && !bubble.hidden) hide(); });
     // The terminal's pip command brings Pip back.
     addEventListener('pip:summon', () => { write('0'); root.hidden = false; });
-    root.hidden = read() === '1';
+    // Pip stays out of the way until a visitor calls it (footer button or the terminal's pip command).
+    root.hidden = read() !== '0';
 
     // Welcome: once per visit, Pip appears beside the home page headline, waves, then glides to its corner.
     const perch = document.querySelector<HTMLElement>('[data-pip-perch]');

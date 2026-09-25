@@ -33,11 +33,7 @@ const last = stages.length - 1;
 </div>
 
 <style>
-  .pipe {
-    background: var(--raised);
-    border: 1px solid var(--line);
-    padding: clamp(1rem, 4vw, 1.75rem);
-  }
+  .pipe { border-top: 3px solid var(--text); padding-top: 1rem; }
   .pipe-head {
     display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline;
     gap: 0.25rem 1rem; padding-bottom: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--line);
@@ -59,28 +55,28 @@ const last = stages.length - 1;
     content: ''; position: absolute; left: calc(0.625rem - 1px); top: 1.1rem; bottom: -0.35rem;
     width: 2px; background: var(--rail); transition: background 0.3s;
   }
-  .job.done { --rail: color-mix(in srgb, var(--orange) 55%, transparent); }
+  .job.done { --rail: var(--text); }
   .meta { grid-column: 2; margin: 0 0 0.15rem; font: 0.78rem var(--mono); color: var(--muted); display: flex; gap: 0.6rem; }
-  .stg { color: var(--orange); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stg { color: var(--muted); }
   .node {
     grid-column: 1; grid-row: 1 / span 2; justify-self: center; margin-top: 0.2rem;
-    width: 1rem; height: 1rem; border-radius: 50%; border: 2px solid var(--line); background: var(--raised);
+    width: 1rem; height: 1rem; border-radius: 50%; border: 2px solid var(--line); background: var(--bg);
     position: relative; z-index: 1; transition: background 0.3s, border-color 0.3s;
   }
-  .done .node { border-color: var(--orange); background: var(--orange); }
+  .done .node { border-color: var(--text); background: var(--text); }
   .done .node::after {
     content: ''; position: absolute; left: 4px; top: 1px; width: 3px; height: 7px;
     border: solid var(--bg); border-width: 0 2px 2px 0; transform: rotate(45deg);
   }
-  .run .node { border-color: var(--red); border-top-color: transparent; animation: spin 0.9s linear infinite; }
+  .run .node { border-color: var(--signal); border-top-color: transparent; animation: spin 0.9s linear infinite; }
   .body { grid-column: 2; min-width: 0; }
   h3 {
     font: 600 1.2rem/1.25 var(--display); margin: 0 0 0.4rem;
     display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.6rem;
   }
   .state { font: 500 0.72rem var(--mono); letter-spacing: 0.02em; color: var(--muted); }
-  .done .state { color: var(--orange); }
-  .run .state { color: var(--red); }
+  .done .state { color: var(--muted); }
+  .run .state { color: var(--signal); }
   .body ul { margin: 0; padding: 0; list-style: none; max-width: 62ch; }
   .body li { position: relative; padding-left: 1.1rem; font-size: 0.97rem; line-height: 1.5; color: var(--text); }
   .body li + li { margin-top: 0.3rem; }
@@ -88,7 +84,7 @@ const last = stages.length - 1;
     content: ''; position: absolute; left: 0.1rem; top: 0.62em; width: 0.4rem; height: 2px; background: var(--muted);
   }
   .queued { opacity: 0.45; }
-  .queued .node { border-color: var(--line); background: var(--raised); animation: none; }
+  .queued .node { border-color: var(--line); background: var(--bg); animation: none; }
   .queued .node::after { display: none; }
   .queued .state { color: var(--muted); }
 
@@ -98,7 +94,7 @@ const last = stages.length - 1;
     border: 1px solid var(--line); padding: 0.4rem 0.8rem; cursor: pointer;
   }
   .replay[hidden] { display: none; }
-  .replay:hover { color: var(--orange); border-color: var(--orange); }
+  .replay:hover { color: var(--signal); border-color: var(--signal); }
 
   /* Wider screens: year and stage move into their own column left of the rail. */
   @media (min-width: 40rem) {
@@ -112,7 +108,7 @@ const last = stages.length - 1;
 
   @keyframes spin { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) {
-    .run .node { animation: none; border-top-color: var(--red); border-style: dashed; }
+    .run .node { animation: none; border-top-color: var(--signal); border-style: dashed; }
   }
 </style>
 

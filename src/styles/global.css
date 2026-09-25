@@ -1,34 +1,28 @@
-/* Used universe: weathered gunmetal panels, rebel flight-suit orange for actions and labels,
-   readout red for live values. Type follows the films' News Gothic lineage. */
+/* Swiss engineering: white paper, ink, one signal red used sparingly (primary action,
+   the featured figure, the running stage). Structure comes from heavy top rules, not boxes. */
 :root {
-  --bg: #26292e;
-  --raised: #30343a;
-  --text: #ecebe6;
-  --muted: #a9aaa6;
-  --line: #474c54;
-  --orange: #f26b1d;
-  --red: #ff5a4a;
-  --bolt: #5a5f68;
-  --hazard: repeating-linear-gradient(-45deg, var(--orange) 0 12px, #16181b 12px 24px);
-  --sans: 'Libre Franklin', system-ui, sans-serif;
-  --display: 'News Cycle', 'Libre Franklin', system-ui, sans-serif;
+  --bg: #ffffff;
+  --raised: #f2f3f5;
+  --text: #111418;
+  --muted: #5d626b;
+  --line: #dfe2e6;
+  --signal: #d9261c;
+  --sans: 'Schibsted Grotesk', system-ui, sans-serif;
+  --display: 'Schibsted Grotesk', system-ui, sans-serif;
   --mono: 'B612 Mono', ui-monospace, monospace;
   --measure: 68ch;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
-/* Light theme: the same ship in hangar light, pale hull plating. */
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   :root {
-    --bg: #e4e5e7;
-    --raised: #f1f2f3;
-    --text: #1d1f23;
-    --muted: #52565d;
-    --line: #b9bcc1;
-    --orange: #b8480c;
-    --red: #b3261e;
-    --bolt: #a3a7ad;
-    color-scheme: light;
+    --bg: #111418;
+    --raised: #1b1f24;
+    --text: #f4f5f6;
+    --muted: #a3a8b0;
+    --line: #2d3238;
+    --signal: #ff4b3e;
+    color-scheme: dark;
   }
 }
 
@@ -42,19 +36,21 @@ body {
   background: var(--bg);
   color: var(--text);
   font: 400 1.0625rem/1.6 var(--sans);
+  font-feature-settings: 'ss01';
 }
 
-a { color: inherit; text-decoration-color: var(--red); text-underline-offset: 0.2em; }
-a:hover { color: var(--orange); text-decoration-color: currentColor; }
-:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 2px; }
+a { color: inherit; text-decoration-color: var(--line); text-underline-offset: 0.2em; }
+a:hover { color: var(--signal); text-decoration-color: currentColor; }
+:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; border-radius: 2px; }
 
-h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; margin: 0 0 0.5em; text-wrap: balance; }
-h1 { font-size: clamp(2.8rem, 7.5vw, 5.5rem); line-height: 0.92; text-transform: uppercase; letter-spacing: -0.01em; }
+h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 1.1; margin: 0 0 0.5em; text-wrap: balance; }
+h1 { font-size: clamp(3rem, 8.5vw, 6.2rem); line-height: 0.92; letter-spacing: -0.045em; }
+h2, h3 { letter-spacing: -0.02em; }
 h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
 h3 { font-size: 1.3rem; }
 p { margin: 0 0 1em; }
 code, pre { font-family: var(--mono); font-size: 0.9em; }
-code { color: var(--red); }
+code { color: var(--muted); }
 pre { background: var(--raised); border: 1px solid var(--line); padding: 1rem; overflow-x: auto; }
 pre code { color: var(--text); }
 
@@ -63,44 +59,20 @@ pre code { color: var(--text); }
 .prose p, .prose li { line-height: 1.7; }
 .muted { color: var(--muted); }
 
-/* A bolted hull plate: the label sits in the frame line, the featured plate gets the orange frame. */
-.pane {
-  position: relative;
-  border: 1px solid var(--line);
-  padding: 1.5rem 1.25rem 1.25rem;
-  background: var(--raised);
-}
-.pane-title {
-  position: absolute;
-  top: -0.7em;
-  left: 0.9rem;
-  padding: 0 0.4rem;
-  background: var(--bg);
-  font: 700 0.85rem/1.4 var(--display);
-  color: var(--orange);
-}
-.pane.focused { border-color: var(--orange); border-width: 2px; }
-.pane::before, .pane::after {
-  content: ''; position: absolute; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: var(--bolt);
-}
-.pane::before { left: 8px; }
-.pane::after { right: 8px; }
-.pane.focused .pane-title { color: var(--orange); }
+/* A ruled block: a heavy ink rule on top, a quiet label under it. The featured block's rule is red. */
+.pane { position: relative; border-top: 3px solid var(--text); padding: 0.9rem 0 0; }
+.pane-title { display: block; margin-bottom: 0.6rem; font: 500 0.9rem/1.4 var(--sans); color: var(--muted); }
+.pane.focused { border-top-color: var(--signal); }
+.pane.focused .pane-title { color: var(--signal); }
 
 .button-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
-.button {
-  display: inline-block;
-  padding: 0.5rem 0.95rem;
-  border: 2px solid var(--muted);
-  text-decoration: none;
-  font-weight: 600;
-}
-.button.primary { background: var(--orange); border-color: var(--orange); color: #16181b; }
-.button.primary:hover { color: #16181b; filter: brightness(1.1); }
-.button:not(.primary):hover { border-color: var(--orange); }
+.button { display: inline-block; padding: 0.7rem 1.2rem; text-decoration: none; font-weight: 500; background: var(--raised); }
+.button:hover { background: var(--line); color: var(--text); }
+.button.primary { background: var(--signal); color: #fff; }
+.button.primary:hover { background: var(--text); color: var(--bg); }
 
 .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0; margin: 0.75rem 0 0; list-style: none; }
-.tags li { font: 0.8rem/1.5 var(--mono); color: var(--red); }
+.tags li { font: 500 0.85rem/1.5 var(--sans); color: var(--muted); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -110,4 +82,3 @@ pre code { color: var(--text); }
 
 html:has(dialog[open]) { overflow: hidden; }
 
-.hazard { height: 8px; background: var(--hazard); }

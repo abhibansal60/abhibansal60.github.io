@@ -30,6 +30,15 @@ const patent = resume.highlights.find((h) => h.name.startsWith('BLAZE'))!;
     <Terminal />
   </section>
 
+  <section class="figures" aria-label="In numbers">
+    {resume.figures.map((f) => (
+      <div>
+        <p class:list={['value', { signal: f.signal }]}>{f.value}</p>
+        <p class="label">{f.label}</p>
+      </div>
+    ))}
+  </section>
+
   <section class="panes" aria-label="Highlights">
     <div class="pane now">
       <span class="pane-title">now</span>
@@ -94,6 +103,13 @@ const patent = resume.highlights.find((h) => h.name.startsWith('BLAZE'))!;
   .subline { font-size: 1.25rem; max-width: 40ch; }
   .intro .button-row { margin-top: 1.75rem; }
 
+  .figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; margin-bottom: 5rem; }
+  .figures div { border-top: 3px solid var(--text); padding-top: 0.6rem; }
+  .figures p { margin: 0; }
+  .value { font: 800 clamp(2rem, 4.5vw, 3.2rem)/1 var(--display); letter-spacing: -0.035em; font-variant-numeric: tabular-nums; }
+  .value.signal { color: var(--signal); }
+  .label { color: var(--muted); font-size: 0.95rem; margin-top: 0.4rem !important; }
+
 
   .panes {
     display: grid;
@@ -107,10 +123,11 @@ const patent = resume.highlights.find((h) => h.name.startsWith('BLAZE'))!;
   .lead { grid-row: span 2; }
   .lead h2 a, .pane h3 a { text-decoration: none; }
   .facts { padding-left: 1.1rem; }
-  .facts li::marker { color: var(--orange); }
+  .facts li::marker { color: var(--signal); }
   .pane > :last-child { margin-bottom: 0; }
 
   @media (max-width: 60rem) {
+    .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .hero { grid-template-columns: 1fr; gap: 2.5rem; }
     .panes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
