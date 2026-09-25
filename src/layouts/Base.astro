@@ -62,6 +62,17 @@ const nav = [
       <p class="muted">For agents: <a href="/llms.txt">llms.txt</a>, <a href="/resume.json">resume.json</a>. For readers: <a href="/rss.xml">RSS</a>. How it's built: <a href="/colophon/">colophon</a>. Views are my own, not my employer's. <button type="button" class="call-pip" onclick="dispatchEvent(new Event('pip:summon'))">Call Pip, the plumber droid</button></p>
     </footer>
     <Pip />
+    <!-- Cloudflare Web Analytics: cookie-free, no personal data; the token is a public site tag.
+         Loaded only on the real domain, so local previews and CI runs are not counted. -->
+    <script is:inline>
+      if (location.hostname === 'abhibansal.dev') {
+        const s = document.createElement('script');
+        s.defer = true;
+        s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+        s.dataset.cfBeacon = '{"token": "327de7bbd2c6448bada2f572db4d1fa1"}';
+        document.body.append(s);
+      }
+    </script>
   </body>
 </html>
 
