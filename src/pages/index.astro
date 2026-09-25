@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import resume from '../data/resume.json';
 import { getPosts, formatDate } from '../lib';
-import Terminal from '../components/Terminal.astro';
 import PipGreeter from '../components/PipGreeter.astro';
 import { getLiveStats } from '../stats';
 
@@ -92,14 +91,6 @@ const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month
     </div>
   </section>
 
-  <section class="console" id="console" aria-labelledby="console-title">
-    <div>
-      <h2 id="console-title">The console</h2>
-      <p>The same profile, for people who prefer a prompt. Type <code>help</code> or tap a command. It is the front end for the AI agent coming next, which will answer questions about my work from this site's data.</p>
-    </div>
-    <Terminal />
-  </section>
-
   <section class="more" aria-label="More">
     <div class="pane">
       <span class="pane-title">speaking</span>
@@ -120,7 +111,8 @@ const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month
   section { margin-bottom: 5rem; }
   h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); }
 
-  .hero { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 3rem; align-items: center; }
+  .hero { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 3rem; align-items: start; }
+  .intro { padding-top: 2rem; }
   .intro h1 { max-width: 14ch; }
   .subline { font-size: 1.25rem; max-width: 40ch; }
   .intro .button-row { margin-top: 1.75rem; }
@@ -156,15 +148,13 @@ const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month
   .project-list p { margin: 0.15rem 0 0; font-size: 0.95rem; }
   .pane > :last-child { margin-bottom: 0; }
 
-  .console { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 2rem 3rem; align-items: start; border-top: 3px solid var(--text); padding-top: 1rem; }
-  .console p { max-width: 40ch; }
 
   .more { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.5rem; }
   .more h3 { font-size: 1.2rem; }
   .more h3 a { text-decoration: none; }
 
   @media (max-width: 60rem) {
-    .hero, .featured, .console { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero, .featured { grid-template-columns: 1fr; gap: 2.5rem; }
     .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .live { grid-template-columns: 1fr; }
     .leak-grid, .more { grid-template-columns: 1fr; }
