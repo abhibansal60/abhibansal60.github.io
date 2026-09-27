@@ -8,7 +8,7 @@ const posts = await getPosts();
 <Base title="Writing" description="Notes on agentic AI in the enterprise, testing and the cost of AI.">
   <div class="prose">
     <h1>Writing</h1>
-    <p class="lede">Notes on getting AI agents into production: guardrails, adoption, cost, and what test automation already taught us. New posts every two weeks. <a href="/rss.xml">RSS feed</a>.</p>
+    <p class="lede">Notes on getting AI agents into production: guardrails, adoption, cost, and what test automation already taught us. <a href="/rss.xml">RSS feed</a>.</p>
     {posts.length === 0 && <p>First posts are on the way.</p>}
     <ul class="posts">
       {posts.map((p) => (

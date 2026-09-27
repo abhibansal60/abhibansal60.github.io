@@ -7,6 +7,7 @@ import '../styles/global.css';
 import resume from '../data/resume.json';
 import Pip from '../components/Pip.astro';
 import Mark from '../components/Mark.astro';
+import { getPosts } from '../lib';
 
 interface Props {
   title?: string;
@@ -16,12 +17,14 @@ interface Props {
 const { title, description = resume.basics.summary } = Astro.props;
 const fullTitle = title ? `${title} | Abhinav Bansal` : `Abhinav Bansal: ${resume.basics.label}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+// Writing joins the menu once the first post is published; Uses lives in the footer.
+const hasPosts = (await getPosts()).length > 0;
 const nav = [
   ['/work/', 'Work'],
   ['/projects/', 'Projects'],
-  ['/writing/', 'Writing'],
+  ...(hasPosts ? [['/writing/', 'Writing']] : []),
   ['/speaking/', 'Speaking'],
-  ['/uses/', 'Uses'],
+  ['/cv/', 'CV'],
 ];
 ---
 
@@ -59,7 +62,7 @@ const nav = [
       <slot />
     </main>
     <footer class="wrap site-footer">
-      <p class="muted">For agents: <a href="/llms.txt">llms.txt</a>, <a href="/resume.json">resume.json</a>. For readers: <a href="/rss.xml">RSS</a>. How it's built: <a href="/colophon/">colophon</a>. Views are my own, not my employer's. <button type="button" class="call-pip" onclick="dispatchEvent(new Event('pip:summon'))">Call Pip, the plumber droid</button></p>
+      <p class="muted">For agents: <a href="/llms.txt">llms.txt</a>, <a href="/resume.json">resume.json</a>. For readers: <a href="/rss.xml">RSS</a>. My setup: <a href="/uses/">uses</a>. How it's built: <a href="/colophon/">colophon</a>. Views are my own, not my employer's. <button type="button" class="call-pip" onclick="dispatchEvent(new Event('pip:summon'))">Call Pip, the plumber droid</button></p>
     </footer>
     <Pip />
     <!-- Cloudflare Web Analytics: cookie-free, no personal data; the token is a public site tag.
