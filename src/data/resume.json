@@ -116,7 +116,7 @@
   ],
   "highlights": [
     {
-      "name": "Boardroom",
+      "name": "Agent Orchestrator",
       "summary": "A multi-agent orchestration system: three specialised agents and an orchestrator, built with LangChain and the Claude Agent SDK. It is the internal reference implementation for agentic AI at the firm."
     },
     {
@@ -339,7 +339,7 @@
       "name": "Agentic AI",
       "log": [
         "VP, AI Platform & Tech Modernization",
-        "Boardroom: multi-agent orchestration with the Claude Agent SDK",
+        "Agent Orchestrator: three specialised agents under one orchestrator, on the Claude Agent SDK",
         "India Technology Showcase Award for the ACT Conference Portal"
       ]
     }
@@ -379,7 +379,7 @@
     {
       "leak": "AI that never leaves the demo",
       "fix": "Reference agents, guardrails and literacy sessions, so teams ship agents they can trust.",
-      "proof": "Boardroom, a multi-agent system on the Claude Agent SDK, and AI literacy sessions for engineering teams.",
+      "proof": "Agent Orchestrator, a multi-agent system on the Claude Agent SDK, and AI literacy sessions for engineering teams.",
       "url": "/work/"
     }
   ]
