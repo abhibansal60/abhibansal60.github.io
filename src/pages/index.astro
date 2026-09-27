@@ -2,10 +2,12 @@
 import Base from '../layouts/Base.astro';
 import resume from '../data/resume.json';
 import { getPosts, formatDate } from '../lib';
-import PipGreeter from '../components/PipGreeter.astro';
+import PipArt from '../components/PipArt.astro';
+import Terminal from '../components/Terminal.astro';
 import { getLiveStats } from '../stats';
 
 const { basics, projects, talks, leaks } = resume;
+const role = `${resume.work[0].position}, ${resume.work[0].name}. ${basics.location.city}.`;
 const linkedin = basics.profiles.find((p) => p.network === 'LinkedIn')!.url;
 const github = basics.profiles.find((p) => p.network === 'GitHub')!.url;
 const oneLine = (text: string) => text.split('. ')[0].replace(/\.$/, '') + '.';
@@ -16,18 +18,22 @@ const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month
 
 <Base>
   <section class="hero">
-    <div class="intro">
+    <div class="title">
       <h1 data-pip-perch>{basics.label}</h1>
-      <p class="subline">{basics.subline}</p>
-      <p class="muted">Vice President at Morgan Stanley, leading engineering teams. Based in Glasgow.</p>
-      <ul class="button-row">
-        <li><a class="button primary" href="/cv/">View CV</a></li>
-        <li><a class="button" href={linkedin}>LinkedIn</a></li>
-        <li><a class="button" href={github}>GitHub</a></li>
-        <li><a class="button" href={`mailto:${basics.email}`}>Email me</a></li>
-      </ul>
+      <PipArt width={88} />
     </div>
-    <PipGreeter />
+    <p class="subline">{basics.subline}</p>
+    <p class="role">{role}</p>
+    <ul class="button-row">
+      <li><a class="button primary" href="/cv/">View CV</a></li>
+      <li><a class="button" href={linkedin}>LinkedIn</a></li>
+      <li><a class="button" href={github}>GitHub</a></li>
+      <li><a class="button" href={`mailto:${basics.email}`}>Email me</a></li>
+    </ul>
+    <details class="console">
+      <summary>Or open the console</summary>
+      <Terminal />
+    </details>
   </section>
 
   <section class="figures" aria-label="In numbers">
@@ -111,11 +117,17 @@ const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month
   section { margin-bottom: 5rem; }
   h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); }
 
-  .hero { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 3rem; align-items: start; }
-  .intro { padding-top: 2rem; }
-  .intro h1 { max-width: 14ch; }
+  .hero { padding-top: 1rem; }
+  .title { display: flex; align-items: flex-end; gap: clamp(0.75rem, 2vw, 1.5rem); margin-bottom: 1.5rem; }
+  .title h1 { margin: 0; }
+  .title :global(.pip-art) { flex: none; margin-bottom: 0.6rem; width: clamp(52px, 7vw, 88px); height: auto; }
+  .role { font-weight: 500; font-size: 1.05rem; margin-top: -0.25rem; }
+  .console { margin-top: 1.5rem; max-width: 46rem; }
+  .console summary { display: inline-block; cursor: pointer; color: var(--muted); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 0.2em; }
+  .console summary:hover { color: var(--text); }
+  .console[open] summary { margin-bottom: 0.75rem; }
   .subline { font-size: 1.25rem; max-width: 40ch; }
-  .intro .button-row { margin-top: 1.75rem; }
+  .hero .button-row { margin-top: 1.75rem; }
 
   .figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
   .figures div { border-top: 3px solid var(--text); padding-top: 0.6rem; }
@@ -154,7 +166,7 @@ const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month
   .more h3 a { text-decoration: none; }
 
   @media (max-width: 60rem) {
-    .hero, .featured { grid-template-columns: 1fr; gap: 2.5rem; }
+    .featured { grid-template-columns: 1fr; gap: 2.5rem; }
     .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .live { grid-template-columns: 1fr; }
     .leak-grid, .more { grid-template-columns: 1fr; }
