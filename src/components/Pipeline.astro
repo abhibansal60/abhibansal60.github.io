@@ -5,7 +5,7 @@ import resume from '../data/resume.json';
 // Renders fully passed without JS; the script replays the run once when scrolled into view.
 const stages = [
   ...resume.timeline.map((t) => ({ stage: t.stage, name: t.name, year: t.year, log: t.log })),
-  { stage: 'next', name: 'In progress', year: 'now', log: ['Building agents that ship safely inside a regulated enterprise', 'Leaving a cookie-cutter tool behind every fix'] },
+  { stage: 'next', name: 'In progress', year: '2026', log: ['Agent Orchestrator: three specialised agents under one orchestrator, on the Claude Agent SDK', 'Building agents that ship safely inside a regulated enterprise', 'Leaving a cookie-cutter tool behind every fix'] },
 ];
 const last = stages.length - 1;
 ---
