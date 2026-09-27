@@ -36,7 +36,12 @@ const repo = 'https://github.com/abhibansal60/abhibansal60.github.io';
     <p>Visits are counted with <a href="https://www.cloudflare.com/web-analytics/">Cloudflare Web Analytics</a>, which sets no cookies and collects no personal data. There is nothing to accept and no banner.</p>
 
     <h2>For agents</h2>
-    <p>My profile is available as <a href="/llms.txt">llms.txt</a>, <a href="/llms-full.txt">llms-full.txt</a> and <a href="/resume.json">resume.json</a> (JSON Resume format), all generated from the same data as these pages. A public MCP server is planned next.</p>
+    <p>My profile is available as <a href="/llms.txt">llms.txt</a>, <a href="/llms-full.txt">llms-full.txt</a> and <a href="/resume.json">resume.json</a> (JSON Resume format), all generated from the same data as these pages.</p>
+    <p>The same facts are served by a read-only MCP server at <code>https://pip.abhibansal60.workers.dev/mcp</code>, with tools for my profile, career timeline, systems built, projects, talk topics and contact details. To add it to Claude Code:</p>
+    <pre><code>claude mcp add --transport http abhinav https://pip.abhibansal60.workers.dev/mcp</code></pre>
+
+    <h2>Ask Pip</h2>
+    <p>Questions typed into the console on the home page go to a Cloudflare Worker. Common questions (contact, CV, the patent, location) are answered straight from the site's data. Anything else goes to a small Workers AI model that only sees the facts on this site, and plain code checks its answer before it is shown: it has to be short and about my work, or you get a polite "I only answer questions about Abhinav's work". Questions about jobs or pay, and attempts to change Pip's instructions, never reach the model. The model runs at most 250 times a day, well inside Cloudflare's free allowance, so it costs nothing.</p>
 
     <h2>Pip</h2>
     <div class="pip-note">
