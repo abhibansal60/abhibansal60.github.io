@@ -91,10 +91,15 @@ const latest = (await getPosts())[0];
   .portrait { grid-column: 2; grid-row: 1 / span 6; position: relative; width: clamp(12rem, 22vw, 17rem); margin-top: 0.5rem; align-self: start; }
   .portrait img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
   .portrait :global(.pip-art) { position: absolute; left: -2.75rem; bottom: -1.25rem; width: 5rem; height: auto; }
-  @media (max-width: 48rem) {
+  /* Phones: the photo spans the column at 4:3, aligned with the text, with Pip standing on its
+     lower-left corner; the four buttons sit in an even 2x2 grid instead of wrapping unevenly. */
+  @media (max-width: 40rem) {
     .hero { grid-template-columns: 1fr; }
-    .portrait { grid-column: 1; grid-row: auto; width: 7.5rem; margin: 0 0 1.5rem 2rem; }
-    .portrait :global(.pip-art) { left: -2rem; bottom: -0.75rem; width: 3.25rem; }
+    .portrait { grid-column: 1; grid-row: auto; width: 100%; margin: 0 0 2.25rem; }
+    .portrait img { aspect-ratio: 4 / 3; object-position: 50% 30%; }
+    .portrait :global(.pip-art) { left: 0.75rem; bottom: -1.5rem; width: 3.5rem; }
+    .hero .button-row { display: grid; grid-template-columns: 1fr 1fr; }
+    .hero .button { display: block; text-align: center; }
   }
   .role { font-weight: 500; font-size: 1.05rem; margin-top: -0.25rem; }
   .console { margin-top: 1.5rem; max-width: 46rem; }
