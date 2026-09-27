@@ -8,12 +8,18 @@ import Pipeline from '../components/Pipeline.astro';
 <Base title="Work" description="Ten years at Morgan Stanley and Infosys, from test automation through modernization at scale to agentic AI.">
   <div class="prose">
     <h1>Work</h1>
-    <p class="lede">I started out writing test frameworks, spent five years modernizing technology at scale across Morgan Stanley, and now lead agentic AI adoption. Colleagues call me the Plumber: wherever something needs fixing, I go in, and I leave behind a cookie-cutter tool so the next team doesn't have to. The thread through all of it: build the harness that lets a team trust automation.</p>
-    <p class="muted">Prefer to watch? <a href="/#film">Ten years in 40 seconds</a>.</p>
+    <p class="lede">Ten years from test automation to agentic AI, with five years of modernization at scale in between. The thread: build the harness that lets a team trust automation.</p>
   </div>
 
 
-  <section aria-labelledby="run" class="first">
+  <figure class="film first" id="film">
+    <video controls preload="none" playsinline poster="/media/career-poster.jpg" width="1920" height="1080" aria-describedby="film-note">
+      <source src="/media/career.mp4" type="video/mp4" />
+    </video>
+    <figcaption id="film-note" class="muted">Ten years in 40 seconds. The film is silent; the same timeline follows in text.</figcaption>
+  </figure>
+
+  <section aria-labelledby="run">
     <h2 id="run" class="sr-only">Career at a glance</h2>
     <Pipeline />
   </section>
@@ -39,6 +45,9 @@ import Pipeline from '../components/Pipeline.astro';
   section { margin-top: 4rem; }
   .cv-link { margin-top: 3rem; }
   .first { margin-top: 2.5rem; }
+  .film { margin-inline: 0; margin-bottom: 0; }
+  .film video { display: block; width: 100%; height: auto; background: var(--raised); border: 1px solid var(--line); }
+  .film figcaption { margin-top: 0.6rem; font-size: 0.9rem; }
   .lede { font-size: 1.25rem; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
   .grid .pane { padding-top: 1.25rem; }

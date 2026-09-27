@@ -6,15 +6,6 @@ import { getLiveStats } from '../stats';
 const live = await getLiveStats();
 
 const repo = 'https://github.com/abhibansal60/abhibansal60.github.io';
-// Snapshot from the pull request that added the quality gate; the gate itself runs on every PR.
-const scores = [
-  ['Home', 100, 100, 100, 100],
-  ['Work', 99, 100, 100, 100],
-  ['Projects', 100, 100, 100, 100],
-  ['Writing', 100, 100, 100, 100],
-  ['Speaking', 100, 100, 100, 100],
-  ['CV', 100, 100, 100, 100],
-] as const;
 ---
 
 <Base title="Colophon" description="How abhibansal.dev is built, tested and kept fast.">
@@ -23,20 +14,7 @@ const scores = [
     <p class="lede">How this site is built, and the checks that keep it fast and usable.</p>
 
     <h2>Quality gate</h2>
-    <p>Every change goes through a pull request. A <a href={`${repo}/blob/main/.github/workflows/quality.yml`}>GitHub Action</a> builds the site and runs Lighthouse on six pages; if performance, accessibility, best practices or SEO drops below 90 on any of them, the check fails. Scores when the gate was added, on 25 September 2026:</p>
-  </div>
-  <div class="table">
-    <table>
-      <thead><tr><th scope="col">Page</th><th scope="col">Performance</th><th scope="col">Accessibility</th><th scope="col">Best practices</th><th scope="col">SEO</th></tr></thead>
-      <tbody>
-        {scores.map(([page, ...s]) => (
-          <tr><th scope="row">{page}</th>{s.map((v) => <td>{v}</td>)}</tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-  <div class="prose">
-    <p>Current results are on the <a href={`${repo}/actions/workflows/quality.yml`}>workflow runs page</a>.</p>
+    <p>Every change goes through a pull request. A <a href={`${repo}/blob/main/.github/workflows/quality.yml`}>GitHub Action</a> builds the site and runs Lighthouse on six pages; if performance, accessibility, best practices or SEO drops below 90 on any of them, the check fails. When the gate was added on 25 September 2026, all six pages scored 99 or 100 in every category; current results are on the <a href={`${repo}/actions/workflows/quality.yml`}>workflow runs page</a>.</p>
 
     <h2>Built with</h2>
     <ul>
@@ -63,7 +41,7 @@ const scores = [
     <h2>Pip</h2>
     <div class="pip-note">
       <PipArt width={72} />
-      <p>Pip is the site's plumber droid, drawn in SVG. It stays out of the way until you call it from the footer or type <code>pip</code> in the console.</p>
+      <p>Pip is the site's plumber droid, drawn in SVG. It sits beside the headline on the home page; type <code>pip</code> in the console and it follows you around the site.</p>
     </div>
 
     <p><a href={repo}>Source on GitHub</a></p>
@@ -73,11 +51,6 @@ const scores = [
 <style>
   .lede { font-size: 1.25rem; }
   h2 { margin-top: 2.5rem; font-size: 1.5rem; }
-  .table { overflow-x: auto; margin-bottom: 1rem; }
-  table { border-collapse: collapse; min-width: 34rem; width: 100%; max-width: 52rem; font-variant-numeric: tabular-nums; }
-  th, td { text-align: left; padding: 0.55rem 1rem 0.55rem 0; border-bottom: 1px solid var(--line); }
-  thead th { border-bottom: 3px solid var(--text); font-weight: 500; color: var(--muted); }
-  tbody th { font-weight: 500; }
   .live { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; margin: 0 0 1rem; }
   .live div { display: flex; flex-direction: column-reverse; }
   .live dt { color: var(--muted); font-size: 0.9rem; }

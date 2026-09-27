@@ -10,7 +10,7 @@ python3 build.py
 google-chrome --headless=new --remote-debugging-port=9333 --user-data-dir=/tmp/film-chrome about:blank &
 node capture.mjs frames
 ffmpeg -framerate 30 -i frames/%05d.png -c:v libx264 -preset slow -crf 22 -pix_fmt yuv420p -movflags +faststart ../../public/media/career.mp4
-ffmpeg -i frames/00078.png -q:v 3 ../../public/media/career-poster.jpg
+ffmpeg -i frames/00600.png -q:v 3 ../../public/media/career-poster.jpg   # poster: a timeline frame, not the title card
 ```
 
 Needs `npm install` first (the page uses the Schibsted Grotesk files from `node_modules`), Python 3, Chrome and ffmpeg. `frames/` and `video.html` are generated and ignored.
