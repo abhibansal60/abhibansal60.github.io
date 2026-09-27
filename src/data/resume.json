@@ -117,7 +117,7 @@
   "highlights": [
     {
       "name": "Agent Orchestrator",
-      "summary": "A multi-agent orchestration system: three specialised agents and an orchestrator, built with LangChain and the Claude Agent SDK. It is the internal reference implementation for agentic AI at the firm."
+      "summary": "A multi-agent orchestration system from 2026: three specialised agents and an orchestrator, built with LangChain and the Claude Agent SDK. It is the internal reference implementation for agentic AI at the firm."
     },
     {
       "name": "BLAZE (US patent, co-inventor)",

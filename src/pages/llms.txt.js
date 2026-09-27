@@ -16,6 +16,7 @@ export async function GET({ site }) {
     '## About',
     `- [Full profile as plain text](${url('/llms-full.txt')}): work history, projects, skills and talk topics`,
     `- [resume.json](${url('/resume.json')}): the same data in JSON Resume format`,
+    '- [MCP server](https://pip.abhibansal60.workers.dev/mcp): read-only tools for the same data (profile, timeline, systems built, projects, talks, contact)',
     `- [Work](${url('/work/')}): roles and what I built at Morgan Stanley`,
     `- [CV](${url('/cv/')})`,
     '',

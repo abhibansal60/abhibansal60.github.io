@@ -1,0 +1,14 @@
+{
+  // Pip: answers questions for abhibansal.dev and serves a read-only MCP server.
+  // Deploy from this folder with `npx wrangler deploy`, then check it with `bash check.sh`.
+  // Types for `tsc -p tsconfig.json` come from `npx wrangler types` (git-ignored).
+  "$schema": "https://unpkg.com/wrangler/config-schema.json",
+  "name": "pip",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "workers_dev": true,
+  "ai": { "binding": "AI" },
+  "kv_namespaces": [{ "binding": "CAPS", "id": "5f0efe7c025e4a26919e01474f047d0a" }],
+  "ratelimits": [{ "name": "PER_IP", "namespace_id": "1001", "simple": { "limit": 6, "period": 60 } }],
+  "observability": { "enabled": true }
+}
