@@ -4,16 +4,13 @@ import resume from '../data/resume.json';
 import { getPosts, formatDate } from '../lib';
 import PipArt from '../components/PipArt.astro';
 import Terminal from '../components/Terminal.astro';
-import { getLiveStats } from '../stats';
 
-const { basics, projects, talks, leaks } = resume;
+const { basics, projects, leaks } = resume;
 const role = `${resume.work[0].position}, ${resume.work[0].name}. ${basics.location.city}.`;
 const linkedin = basics.profiles.find((p) => p.network === 'LinkedIn')!.url;
 const github = basics.profiles.find((p) => p.network === 'GitHub')!.url;
 const oneLine = (text: string) => text.split('. ')[0].replace(/\.$/, '') + '.';
 const latest = (await getPosts())[0];
-const live = await getLiveStats();
-const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/London' });
 ---
 
 <Base>
@@ -43,23 +40,6 @@ const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month
         <p class="label">{f.label}</p>
       </div>
     ))}
-  </section>
-
-  <section class="live" aria-labelledby="live-title">
-    <h2 id="live-title">Now</h2>
-    <div>
-      <p class="now">{basics.currently}</p>
-      {live.stats.length > 0 && (
-        <>
-          <dl>
-            {live.stats.map((s) => (
-              <div><dt>{s.label}</dt><dd>{s.value}</dd></div>
-            ))}
-          </dl>
-          <p class="muted small">Live from GitHub and PyPI, rebuilt every night. Last updated <time datetime={live.builtAt.toISOString()}>{builtOn}</time>.</p>
-        </>
-      )}
-    </div>
   </section>
 
   <section class="leaks" aria-labelledby="leaks-title">
@@ -97,20 +77,13 @@ const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month
     </div>
   </section>
 
-  <section class="more" aria-label="More">
-    <div class="pane">
-      <span class="pane-title">speaking</span>
-      <h3><a href="/speaking/">{talks[0].title}</a></h3>
-      <p class="muted">And {talks.length - 1} more talk topics.</p>
-    </div>
-    {latest && (
+  {latest && <section class="more" aria-label="Writing">
       <div class="pane">
         <span class="pane-title">writing</span>
         <h3><a href={`/writing/${latest.id}/`}>{latest.data.title}</a></h3>
         <p class="muted">{formatDate(latest.data.date)}</p>
       </div>
-    )}
-  </section>
+  </section>}
 </Base>
 
 <style>
@@ -136,14 +109,6 @@ const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month
   .value.signal { color: var(--signal); }
   .label { color: var(--muted); font-size: 0.95rem; margin-top: 0.4rem !important; }
 
-  .live { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 0.5rem 1.5rem; align-items: baseline; }
-  .live h2 { font-size: 1rem; font-weight: 500; letter-spacing: 0; margin: 0; }
-  .now { font-size: 1.15rem; margin: 0 0 1rem; max-width: var(--measure); }
-  .live dl { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; margin: 0 0 0.5rem; }
-  .live dl div { display: flex; flex-direction: column-reverse; }
-  .live dt { color: var(--muted); font-size: 0.9rem; }
-  .live dd { margin: 0; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-  .small { font-size: 0.85rem; margin: 0; }
 
   .leak-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 1.5rem; margin-top: 1.5rem; }
   .leak-grid h3 { font-size: 1.5rem; }
@@ -168,7 +133,6 @@ const builtOn = live.builtAt.toLocaleDateString('en-GB', { day: 'numeric', month
   @media (max-width: 60rem) {
     .featured { grid-template-columns: 1fr; gap: 2.5rem; }
     .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .live { grid-template-columns: 1fr; }
     .leak-grid, .more { grid-template-columns: 1fr; }
   }
 </style>
