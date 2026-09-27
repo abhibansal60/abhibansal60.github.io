@@ -62,7 +62,7 @@ const nav = [
       <slot />
     </main>
     <footer class="wrap site-footer">
-      <p class="muted">For agents: <a href="/llms.txt">llms.txt</a>, <a href="/resume.json">resume.json</a>. For readers: <a href="/rss.xml">RSS</a>. My setup: <a href="/uses/">uses</a>. How it's built: <a href="/colophon/">colophon</a>. Views are my own, not my employer's. <button type="button" class="call-pip" onclick="dispatchEvent(new Event('pip:summon'))">Call Pip, the plumber droid</button></p>
+      <p class="muted">Views are my own, not my employer's. <a href="/uses/">My setup</a>, <a href="/colophon/">colophon</a>, <a href="/rss.xml">RSS</a>.</p>
     </footer>
     <Pip />
     <!-- Cloudflare Web Analytics: cookie-free, no personal data; the token is a public site tag.
@@ -93,7 +93,5 @@ const nav = [
   nav a:hover, nav a[aria-current='page'] { color: var(--text); }
   nav a[aria-current='page'] { text-decoration: underline; text-decoration-color: var(--signal); }
   main { padding-bottom: 5rem; }
-  .call-pip { padding: 0; border: 0; background: none; font: inherit; color: var(--muted); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 0.2em; cursor: pointer; }
-  .call-pip:hover { color: var(--text); }
   .site-footer { border-top: 3px solid var(--text); padding-block: 1rem 2.5rem; font-size: 0.9rem; }
 </style>
