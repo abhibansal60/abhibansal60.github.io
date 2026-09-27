@@ -10,10 +10,24 @@ const invite = `mailto:${resume.basics.email}?subject=${encodeURIComponent('Spea
     <h1>Speaking</h1>
     <p class="lede">I run agentic AI literacy sessions for engineering teams at work, and I'm now taking these topics to meetups and conferences. Each one can be a 20-minute talk or a hands-on workshop.</p>
   </div>
+  <section aria-labelledby="given">
+    <h2 id="given">Talks given</h2>
+    {resume.talksGiven.map((t) => (
+      <article class="given pane">
+        <img src={t.image} alt={`Event poster: ${t.title}, ${t.event}`} loading="lazy" />
+        <div>
+          <h3>{t.title}</h3>
+          <p class="muted">{[t.event, t.host, t.date].filter(Boolean).join(', ')}</p>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <h2 class="topics-title">Talk topics</h2>
   <div class="talks">
     {resume.talks.map((t) => (
       <article class="pane">
-        <h2>{t.title}</h2>
+        <h3>{t.title}</h3>
         <p>{t.summary}</p>
       </article>
     ))}
@@ -23,7 +37,13 @@ const invite = `mailto:${resume.basics.email}?subject=${encodeURIComponent('Spea
 
 <style>
   .lede { font-size: 1.25rem; }
-  .talks { display: grid; gap: 1.5rem; margin-block: 3rem; max-width: 48rem; }
+  section { margin-top: 3rem; display: grid; gap: 1.5rem; }
+  .given { display: flex; gap: 1.5rem; align-items: center; max-width: 48rem; }
+  .given img { width: 9rem; height: auto; aspect-ratio: 67 / 72; object-fit: cover; flex: none; }
+  .given h3 { margin-bottom: 0.25rem; }
+  .given p { margin: 0; }
+  .topics-title { margin-top: 3.5rem; }
+  .talks { display: grid; gap: 1.5rem; margin-block: 1.5rem 3rem; max-width: 48rem; }
   .talks .pane { padding-top: 1.25rem; }
   .talks p { margin: 0; }
 </style>

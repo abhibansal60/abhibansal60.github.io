@@ -6,6 +6,7 @@
     "subline": "Wherever engineering leaks, I go in, then build the team and the tools so it stays fixed. Test automation, then modernization at scale, now AI agents.",
     "email": "abhibansal60@gmail.com",
     "url": "https://abhibansal.dev",
+    "image": "https://abhibansal.dev/media/abhinav.jpg",
     "summary": "Vice President at Morgan Stanley leading engineering teams through agentic AI adoption and tech modernization, after five years modernizing technology at scale across the firm's business units. Known as the Plumber: wherever something needs fixing, I go in. Strong Python engineer who builds multi-agent systems with LangChain, MCP and the Claude Agent SDK. I love building cookie-cutter tools that let every team start from a working pattern, and presenting them as a developer advocate. Came up through test automation and DevOps, and co-invented a patented test automation engine.",
     "currently": "Leading agentic AI adoption at Morgan Stanley in Glasgow, and building open source agent tools on the side.",
     "location": {
@@ -381,6 +382,22 @@
       "fix": "Reference agents, guardrails and literacy sessions, so teams ship agents they can trust.",
       "proof": "Agent Orchestrator, a multi-agent system on the Claude Agent SDK, and AI literacy sessions for engineering teams.",
       "url": "/work/"
+    }
+  ],
+  "talksGiven": [
+    {
+      "title": "Career Paths in Computer Science Engineering",
+      "event": "Alumni Talk Series",
+      "host": "Maharishi Markandeshwar University",
+      "date": "16 February 2023",
+      "image": "/media/career-paths-talk-2023.jpg"
+    },
+    {
+      "title": "Luminaries Speak #15",
+      "event": "Alumni Meet 1.0, Bangalore chapter",
+      "host": "Maharishi Markandeshwar University",
+      "date": "",
+      "image": "/media/alumni-meet-bangalore.jpg"
     }
   ]
 }

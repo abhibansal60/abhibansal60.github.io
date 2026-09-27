@@ -46,7 +46,10 @@ const sections = {
   built: resume.highlights.map((h) => `${h.name}: ${h.summary}`).join('\n'),
   leaks: resume.leaks.map((l) => `${l.leak}: ${l.fix} Proof: ${l.proof}`).join('\n'),
   projects: resume.projects.map((p) => `${p.name} (${p.kind}, ${p.url}): ${p.description}`).join('\n'),
-  talks: resume.talks.map((t) => `${t.title}: ${t.summary}`).join('\n'),
+  talks: [
+    ...resume.talksGiven.map((t) => `Talk given: "${t.title}", ${[t.event, t.host, t.date].filter(Boolean).join(', ')}`),
+    ...resume.talks.map((t) => `Talk topic: ${t.title}: ${t.summary}`),
+  ].join('\n'),
   contact: `Email ${basics.email}. LinkedIn ${linkedin}. GitHub ${github}. CV ${SITE}/cv/.`,
 };
 const FACTS = Object.entries(sections).map(([k, v]) => `## ${k}\n${v}`).join('\n\n');
@@ -145,7 +148,7 @@ const TOOLS: Record<string, { description: string; text: () => string }> = {
   get_systems_built: { description: 'Systems Abhinav built at Morgan Stanley, including the patent (described only; they are internal).', text: () => sections.built },
   get_leaks_fixed: { description: 'The engineering problems Abhinav fixes, how, and the proof for each.', text: () => sections.leaks },
   list_projects: { description: "Abhinav's open source projects with links.", text: () => sections.projects },
-  get_talk_topics: { description: 'Talk topics Abhinav offers.', text: () => sections.talks },
+  get_talk_topics: { description: 'Talks Abhinav has given and the topics Abhinav offers.', text: () => sections.talks },
   get_contact: { description: 'How to contact Abhinav.', text: () => sections.contact },
 };
 
