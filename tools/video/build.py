@@ -9,9 +9,9 @@ d = json.loads((REPO / 'src/data/resume.json').read_text())
 picks = {'bootstrap': [1, 0], 'build': [0, 2], 'test': [0, 2], 'modernize': [1, 2], 'release': [1, 2]}
 eras = [{'year': t['year'], 'stage': t['stage'], 'name': t['name'],
          'lines': [t['log'][i] for i in picks.get(t['stage'], [0, 1])]} for t in d['timeline']]
-eras.append({'year': 'now', 'stage': 'next', 'name': 'In progress',
-             'lines': ['Building agents that ship safely inside a regulated enterprise',
-                       'Leaving a cookie-cutter tool behind every fix']})
+eras.append({'year': '2026', 'stage': 'next', 'name': 'In progress',
+             'lines': ['Agent Orchestrator: three specialised agents under one orchestrator, on the Claude Agent SDK',
+                       'Building agents that ship safely inside a regulated enterprise']})
 data = {'eras': eras, 'figures': d['figures'], 'label': d['basics']['label'], 'name': d['basics']['name']}
 
 html = (pathlib.Path(__file__).parent / 'template.html').read_text()
