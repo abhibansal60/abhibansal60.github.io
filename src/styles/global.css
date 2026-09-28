@@ -60,7 +60,7 @@ pre code { color: var(--text); }
 .muted { color: var(--muted); }
 
 /* A ruled block: a heavy ink rule on top, a quiet label under it. The featured block's rule is red. */
-.pane { position: relative; border-top: 3px solid var(--text); padding: 0.9rem 0 0; }
+.pane { position: relative; border-top: 3px solid var(--text); padding: 0.9rem 0 0; min-width: 0; }
 .pane-title { display: block; margin-bottom: 0.6rem; font: 500 0.9rem/1.4 var(--sans); color: var(--muted); }
 .pane.focused { border-top-color: var(--signal); }
 .pane.focused .pane-title { color: var(--signal); }
