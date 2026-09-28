@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Emblem from '../components/Emblem.astro';
 import resume from '../data/resume.json';
 ---
 
@@ -8,13 +9,14 @@ import resume from '../data/resume.json';
     <h1>Projects</h1>
     <p class="lede">Open source work I build outside my day job, mostly agents and the tooling around them.</p>
   </div>
-  <div class="list">
+  <div class="grid">
     {resume.projects.map((p) => (
-      <article class={p.featured ? 'pane' : 'pane quiet'}>
-        <span class="pane-title">{p.kind}</span>
+      <article class="pane spec">
+        <div class="plate"><Emblem name={p.name} /></div>
         <h2><a href={p.url}>{p.name}</a></h2>
+        <p class="class">{p.kind}</p>
         <p>{p.description}</p>
-        {p.highlights && <ul>{p.highlights.map((h) => <li>{h}</li>)}</ul>}
+        {p.highlights && <ul class="checks">{p.highlights.map((h) => <li>{h}</li>)}</ul>}
         {p.install && <pre><code>{p.install}</code></pre>}
         <ul class="tags">{p.keywords.map((k) => <li>{k}</li>)}</ul>
       </article>
@@ -24,8 +26,32 @@ import resume from '../data/resume.json';
 
 <style>
   .lede { font-size: 1.25rem; }
-  .list { display: grid; gap: 2rem; margin-top: 3rem; max-width: 48rem; }
-  .list h2 a { text-decoration: none; }
-  .list ul:not(.tags) { padding-left: 1.1rem; }
-  .quiet { background: transparent; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
+    gap: 3rem 2.5rem;
+    margin-top: 3rem;
+  }
+  .spec { display: flex; flex-direction: column; }
+  .spec .tags { margin-top: auto; padding-top: 0.75rem; }
+  /* The plate: a drafting sheet the emblem is drawn on. */
+  .plate {
+    margin-bottom: 1.25rem;
+    padding: 0.75rem;
+    background-color: var(--raised);
+    background-image: radial-gradient(var(--line) 1px, transparent 1.2px);
+    background-size: 12px 12px;
+  }
+  .plate :global(.emblem) { max-width: 22rem; margin-inline: auto; }
+  .spec h2 { margin-bottom: 0.15em; }
+  .spec h2 a { text-decoration: none; }
+  .class { font: 400 0.85rem/1.4 var(--mono); color: var(--muted); margin-bottom: 0.9rem; }
+  .checks { padding-left: 1.1rem; }
+  .checks li::marker { color: var(--signal); }
+  /* One moment of motion, answering the reader: the plate scans when its card is pointed at. */
+  .spec:is(:hover, :focus-within) :global(.scan) { animation: scan 0.9s ease-in-out; }
+  @keyframes scan {
+    0% { opacity: 0.9; transform: translateY(4px); }
+    100% { opacity: 0; transform: translateY(74px); }
+  }
 </style>
