@@ -158,6 +158,24 @@
       "install": "pipx install tidy-ai"
     },
     {
+      "name": "iphone-backup-linux",
+      "kind": "claude code plugin",
+      "featured": true,
+      "description": "A Claude Code plugin that backs up an iPhone from Linux with no iTunes and no sudo: a full encrypted backup you can restore to any iPhone, plus a photo archive that only ever adds files, so photos survive being deleted from the phone.",
+      "highlights": [
+        "First run: a 121 GB encrypted backup and 20,371 photos archived by month",
+        "Passed all 7 checks for Claude's plugin directory; in review there now"
+      ],
+      "keywords": [
+        "Claude Code",
+        "Plugins",
+        "Python",
+        "Linux"
+      ],
+      "url": "https://github.com/abhibansal60/iphone-backup-linux",
+      "install": "/plugin marketplace add abhibansal60/iphone-backup-linux"
+    },
+    {
       "name": "ai-workbench",
       "kind": "claude code skill",
       "featured": true,
