@@ -208,6 +208,25 @@
         "Linux"
       ],
       "url": "https://github.com/abhibansal60/macify"
+    },
+    {
+      "name": "explore-mullana",
+      "kind": "web app",
+      "description": "A free map and directory of shops and places in Mullana, a small town in Haryana, and around the MMDU university campus. Built in September 2026 to put my hometown on the map and help students and residents find local shops.",
+      "highlights": [
+        "A 3D view of the town's 4,877 buildings, drawn from open Overture Maps footprints",
+        "Open-now filter, nearest-first sorting, and call, WhatsApp and directions on every shop",
+        "Shops are listed through a Google Form; nothing is published without the owner's consent and an approval step",
+        "Runs at $0 on Cloudflare Pages, Pages Functions and KV"
+      ],
+      "keywords": [
+        "Astro",
+        "MapLibre GL",
+        "Overture Maps",
+        "Cloudflare"
+      ],
+      "url": "https://github.com/abhibansal60/explore-mullana",
+      "live": "https://mullana.abhibansal.dev"
     }
   ],
   "awards": [
