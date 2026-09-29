@@ -58,7 +58,15 @@ const { name } = Astro.props;
       </g>
     </g>
   )}
-  {!['tidy', 'iphone-backup-linux', 'ai-workbench', 'awesome-copilot-toolkit', 'macify'].includes(name) && (
+  {name === 'explore-mullana' && (
+    <g>
+      <path class="ink" d="M14 20l30-8 32 8 30-8v48l-30 8-32-8-30 8z" />
+      <path class="line faint" d="M44 12v48M76 20v48" />
+      <circle class="lamp" cx="60" cy="36" r="6" />
+      <path class="line" d="M60 42v8" />
+    </g>
+  )}
+  {!['tidy', 'iphone-backup-linux', 'ai-workbench', 'awesome-copilot-toolkit', 'macify', 'explore-mullana'].includes(name) && (
     <g>
       <circle class="ink" cx="60" cy="40" r="20" />
       <path class="line" d="M60 14v6M60 60v6M34 40h6M80 40h6" />

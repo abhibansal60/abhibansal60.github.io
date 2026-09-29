@@ -43,6 +43,7 @@ for (const p of projects) {
     esc(p.description),
     ...(p.highlights ?? []).map((h) => `<span class="g">✓</span> ${esc(h)}`),
     ...(p.install ? [`<span class="g">${esc(p.install)}</span>`] : []),
+    ...(p.live ? [link(p.live, p.live.replace('https://', ''))] : []),
     link(p.url, p.url.replace('https://', '')),
   ].join('\n');
 }

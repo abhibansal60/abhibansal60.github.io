@@ -17,6 +17,7 @@ import resume from '../data/resume.json';
         <p class="class">{p.kind}</p>
         <p>{p.description}</p>
         {p.highlights && <ul class="checks">{p.highlights.map((h) => <li>{h}</li>)}</ul>}
+        {p.live && <p class="class">Live: <a href={p.live}>{p.live.replace('https://', '')}</a></p>}
         {p.install && <pre><code>{p.install}</code></pre>}
         <ul class="tags">{p.keywords.map((k) => <li>{k}</li>)}</ul>
       </article>
