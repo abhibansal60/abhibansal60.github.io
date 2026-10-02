@@ -1,0 +1,44 @@
+name: e2e
+
+# Browser tests (tests/*.e2e.ts) against the built site: the home page console, every main
+# page and the 404. Deterministic: no model, no keys.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      E2E_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: npx playwright install chromium --with-deps
+      - run: npx e2e run --reporter list,junit
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: e2e-report
+          path: |
+            .e2e/report.json
+            .e2e/junit.xml
+            .e2e/artifacts
+          if-no-files-found: warn
+          retention-days: 7
