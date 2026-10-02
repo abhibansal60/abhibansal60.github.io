@@ -176,6 +176,37 @@
       "install": "/plugin marketplace add abhibansal60/iphone-backup-linux"
     },
     {
+      "name": "post-reviewer",
+      "kind": "claude code skill",
+      "description": "Paste in a post, README or screenshot about a tool you're thinking of adopting and get a signal-or-noise verdict for your own setup: adopt, trial or skip, with every claim checked against the files and marked supported, unsupported, contradicted or unverifiable.",
+      "highlights": [
+        "Tuned on 13 real cases, with Opus 5.5 grading Sonnet 5.5's reviews",
+        "Correct verdicts rose from 62% to 96%, and invented facts dropped by about two thirds"
+      ],
+      "keywords": [
+        "Claude Code",
+        "Skills",
+        "Evals"
+      ],
+      "url": "https://github.com/abhibansal60/post-reviewer"
+    },
+    {
+      "name": "why-slow",
+      "kind": "claude code plugin",
+      "description": "An agent skill that finds out why a Linux machine feels slow: load, swap, RAM-backed /tmp, CPU heat and throttling, OOM kills and stuck processes, all read-only. Fixes happen one approved step at a time, and processes you protect, like tmux or other agent sessions, are never touched.",
+      "highlights": [
+        "Its first run found a stuck image loader that had kept one core at 100% for 13 hours and cooled the CPU from 87 °C to 61 °C"
+      ],
+      "keywords": [
+        "Claude Code",
+        "Plugins",
+        "Linux",
+        "Bash"
+      ],
+      "url": "https://github.com/abhibansal60/why-slow",
+      "install": "/plugin marketplace add abhibansal60/why-slow"
+    },
+    {
       "name": "ai-workbench",
       "kind": "claude code skill",
       "featured": true,
@@ -227,6 +258,21 @@
       ],
       "url": "https://github.com/abhibansal60/explore-mullana",
       "live": "https://mullana.abhibansal.dev"
+    },
+    {
+      "name": "mullana-committee-tracker",
+      "kind": "web app",
+      "description": "A tracker for a bidding chit fund (a \"committee\") run among friends: monthly auction results, cash and UPI payments, and a ledger for each month. On committee day, members sign in with Google and bid live from their phones while the holder runs the auction room.",
+      "highlights": [
+        "All the payout and dues maths lives in one tested function"
+      ],
+      "keywords": [
+        "Next.js",
+        "TypeScript",
+        "Postgres",
+        "Vercel"
+      ],
+      "url": "https://github.com/abhibansal60/mullana-committee-tracker"
     }
   ],
   "awards": [
