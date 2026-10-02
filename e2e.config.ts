@@ -14,9 +14,9 @@ export default {
           executable: 'npx',
           args: ['astro', 'preview', '--host', '127.0.0.1', '--port', '{port}'],
           log: '.e2e/logs/preview.log',
-          // Locally, reuse an `astro preview` that already serves dist/ (APP_URL=http://127.0.0.1:4399);
-          // CI ignores this and starts its own.
-          reuseExisting: true,
+          // APP_URL points at an `astro preview` already serving dist/ (Astro allows one per project):
+          // reuse it. Without APP_URL the runner starts its own on a free port, as in CI.
+          reuseExisting: Boolean(process.env.APP_URL),
         },
       },
     },
