@@ -207,6 +207,22 @@
       "install": "/plugin marketplace add abhibansal60/why-slow"
     },
     {
+      "name": "claude-mods",
+      "kind": "claude code plugins",
+      "description": "Five Claude Code mods built from my own session logs: Claude read my last 20 sessions, found what I keep asking it, and turned the top asks into live UI. A line above the prompt says what's waiting on me and how much room my other account has; side panes show whether each repo is pushed, green and deployed, and what every parallel session is doing.",
+      "highlights": [
+        "Built from real usage: 16 manual account switches and repeated \"what's next?\" asks across 20 sessions",
+        "Guards stop Chrome actions in the wrong profile and commands that would close my own session"
+      ],
+      "keywords": [
+        "Claude Code",
+        "Plugins",
+        "TypeScript"
+      ],
+      "url": "https://github.com/abhibansal60/claude-mods",
+      "install": "/plugin marketplace add abhibansal60/claude-mods"
+    },
+    {
       "name": "ai-workbench",
       "kind": "claude code skill",
       "featured": true,
