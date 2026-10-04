@@ -226,11 +226,12 @@
       "name": "ai-workbench",
       "kind": "claude code skill",
       "featured": true,
-      "description": "A Claude Code skill that sets up a matching matrix-green and cyber-purple dev environment on Linux: prompt, terminal, editor, diffs and status line. No sudo; it reads your config before touching it.",
+      "description": "A Claude Code skill that sets up my Linux dev machines: one matrix-green and cyber-purple theme across prompt, terminal, editor and status line, plus T3 Code over Tailscale, always-on hosts, offline voice typing and remote desktop between machines. It reads your config before touching it.",
       "keywords": [
         "Claude Code",
         "Skills",
-        "Linux"
+        "Linux",
+        "T3 Code"
       ],
       "url": "https://github.com/abhibansal60/ai-workbench"
     },
