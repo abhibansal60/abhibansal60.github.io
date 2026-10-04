@@ -258,6 +258,22 @@
       "url": "https://github.com/abhibansal60/macify"
     },
     {
+      "name": "sponsor-check",
+      "kind": "web app",
+      "description": "Does this company sponsor work visas? Search the UK Home Office register of licensed sponsors and US H-1B approvals by company name, in a browser or from one standard-library Python file. Rebuilt daily from the official data.",
+      "highlights": [
+        "127,606 UK sponsors and 27,146 US H-1B employers, searchable on a phone",
+        "Feeds my job-search pipeline: a JD that says nothing about visas now gets checked against the register"
+      ],
+      "keywords": [
+        "Python",
+        "Open data",
+        "GitHub Actions"
+      ],
+      "url": "https://github.com/abhibansal60/sponsor-check",
+      "live": "https://abhibansal.dev/sponsor-check/"
+    },
+    {
       "name": "explore-mullana",
       "kind": "web app",
       "description": "A free map and directory of shops and places in Mullana, a small town in Haryana, and around the MMDU university campus. Built in September 2026 to put my hometown on the map and help students and residents find local shops.",
