@@ -9,13 +9,17 @@ const setup = [
   ['CLI', 'eza, bat, fzf, zoxide, and git delta for side-by-side diffs'],
   ['Monitor', 'btop, themed'],
   ['Claude Code', 'A custom status line with context usage and rate-limit bars, plus the mattpocock-skills, ponytail, caveman and humanizer plugins'],
+  ['Machines', 'Two HP EliteBooks that never sleep: an i7 with 30 GB as the main box, lid shut next to a monitor, and an i5 with 14 GB that I carry'],
+  ['Agents', 'T3 Code on both laptops, reached from my iPhone over Tailscale, with two Claude Pro accounts as separate providers'],
+  ['Voice', 'Handy with NVIDIA Parakeet, offline, one shortcut to dictate into any app'],
+  ['Remote', 'GNOME remote desktop between the two laptops, one click from Remmina'],
 ];
 ---
 
 <Base title="Uses" description="The Linux and Claude Code setup Abhinav Bansal works in every day.">
   <div class="prose">
     <h1>Uses</h1>
-    <p class="lede">My daily setup on Ubuntu. All of it installs with one Claude Code skill, <a href="https://github.com/abhibansal60/ai-workbench">ai-workbench</a>, with no sudo.</p>
+    <p class="lede">My daily setup on Ubuntu. All of it installs with one Claude Code skill, <a href="https://github.com/abhibansal60/ai-workbench">ai-workbench</a>. The tools need no sudo; the host settings hand me the few root commands to run.</p>
     <dl>
       {setup.map(([k, v]) => (<><dt>{k}</dt><dd>{v}</dd></>))}
     </dl>
