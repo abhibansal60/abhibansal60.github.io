@@ -1,9 +1,10 @@
 import resume from '../data/resume.json';
+import projects from '../data/projects.json';
 import { getPosts } from '../lib';
 
 // Follows the llms.txt proposal: H1, blockquote summary, then sections of links.
 export async function GET({ site }) {
-  const { basics, projects } = resume;
+  const { basics } = resume;
   const url = (path) => new URL(path, site).href;
   const posts = await getPosts();
   const lines = [

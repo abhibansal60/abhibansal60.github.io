@@ -1,11 +1,12 @@
 // Pip's back end for abhibansal.dev: answers questions about Abhinav's work, and serves the same
-// facts to AI agents as a read-only MCP server. Everything comes from the site's resume.json.
+// facts to AI agents as a read-only MCP server. Everything comes from the site's resume.json and projects.json.
 //
 // Cost guard: the Workers AI model is called at most DAILY_AI_CAP times a day (about 20 neurons
 // each), which stays inside the 10,000 free neurons a day on both the Free and Paid plans.
 // Common questions are answered from the data without calling the model at all.
 
 import resume from '../../src/data/resume.json';
+import projects from '../../src/data/projects.json';
 
 interface Env {
   AI: Ai;
@@ -45,7 +46,7 @@ const sections = {
     .join('\n'),
   built: resume.highlights.map((h) => `${h.name}: ${h.summary}`).join('\n'),
   leaks: resume.leaks.map((l) => `${l.leak}: ${l.fix} Proof: ${l.proof}`).join('\n'),
-  projects: resume.projects.map((p) => `${p.name} (${p.kind}, ${p.url}): ${p.description}`).join('\n'),
+  projects: projects.map((p) => `${p.name} (${p.kind}, ${p.url}): ${p.description}`).join('\n'),
   talks: [
     ...resume.talksGiven.map((t) => `Talk given: "${t.title}", ${[t.event, t.host, t.date].filter(Boolean).join(', ')}`),
     ...resume.talks.map((t) => `Talk topic: ${t.title}: ${t.summary}`),

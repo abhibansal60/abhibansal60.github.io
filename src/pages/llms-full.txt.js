@@ -1,8 +1,9 @@
 import resume from '../data/resume.json';
+import projects from '../data/projects.json';
 import { getPosts, formatMonth } from '../lib';
 
 export async function GET() {
-  const { basics, work, highlights, projects, skills, awards, certificates, education, talks } = resume;
+  const { basics, work, highlights, skills, awards, certificates, education, talks } = resume;
   const posts = await getPosts();
   const out = [
     `# ${basics.name}`,

@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Emblem from '../components/Emblem.astro';
-import resume from '../data/resume.json';
+import projects from '../data/projects.json';
 ---
 
 <Base title="Projects" description="Open source agent tools and developer tooling by Abhinav Bansal.">
@@ -10,7 +10,7 @@ import resume from '../data/resume.json';
     <p class="lede">Open source work I build outside my day job, mostly agents and the tooling around them.</p>
   </div>
   <div class="grid">
-    {resume.projects.map((p) => (
+    {projects.map((p) => (
       <article class="pane spec">
         <div class="plate"><Emblem name={p.name} /></div>
         <h2><a href={p.url}>{p.name}</a></h2>

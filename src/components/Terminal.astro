@@ -1,5 +1,6 @@
 ---
 import resume from '../data/resume.json';
+import projects from '../data/projects.json';
 import { getPosts } from '../lib';
 
 // Every command's output is built here at build time, so the browser only looks strings up.
@@ -7,7 +8,7 @@ const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&l
 const dim = (s: string) => `<span class="d">${esc(s)}</span>`;
 const link = (href: string, text: string) => `<a href="${esc(href)}">${esc(text)}</a>`;
 
-const { basics, projects, timeline, talks } = resume;
+const { basics, timeline, talks } = resume;
 const posts = await getPosts();
 const linkedin = basics.profiles.find((p) => p.network === 'LinkedIn')!.url;
 const pad = Math.max(...projects.map((p) => p.name.length)) + 3;

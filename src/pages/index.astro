@@ -1,11 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import resume from '../data/resume.json';
+import projects from '../data/projects.json';
 import { getPosts, formatDate } from '../lib';
 import PipArt from '../components/PipArt.astro';
 import Terminal from '../components/Terminal.astro';
 
-const { basics, projects, leaks } = resume;
+const { basics, leaks } = resume;
 const role = `${resume.work[0].position}, ${resume.work[0].name}. ${basics.location.city}.`;
 const linkedin = basics.profiles.find((p) => p.network === 'LinkedIn')!.url;
 const github = basics.profiles.find((p) => p.network === 'GitHub')!.url;

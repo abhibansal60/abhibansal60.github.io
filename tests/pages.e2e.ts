@@ -3,6 +3,7 @@ import { test } from '@e2e-dev/web';
 import { expect } from 'e2e';
 
 const resume = JSON.parse(readFileSync(new URL('../src/data/resume.json', import.meta.url), 'utf8'));
+const projects = JSON.parse(readFileSync(new URL('../src/data/projects.json', import.meta.url), 'utf8'));
 
 const pages: [string, string | RegExp][] = [
   ['/work/', 'Work'],
@@ -27,10 +28,10 @@ test('the main nav goes to Projects', async ({ app, screen, browser }) => {
   await expect(browser).toHaveURL('/projects/');
 });
 
-test('every project in resume.json is listed on /projects/', async ({ app, browser }) => {
+test('every project in projects.json is listed on /projects/', async ({ app, browser }) => {
   await app.open('/projects/');
   const main = browser.locator('main');
-  for (const p of resume.projects) await expect(main).toContainText(p.name);
+  for (const p of projects) await expect(main).toContainText(p.name);
 });
 
 test('an unknown page shows the 404', async ({ app, screen }) => {
