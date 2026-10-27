@@ -2,7 +2,7 @@
 
 Personal site of Abhinav Bansal, built with Astro and deployed to GitHub Pages at https://abhibansal.dev by `.github/workflows/deploy.yml` on every push to `main`.
 
-- Profile data lives in `src/data/resume.json`. The home page, work page, CV, `llms.txt`, `llms-full.txt` and `/resume.json` are all generated from it.
+- Profile data lives in `src/data/resume.json`, and open source projects in `src/data/projects.json`. The home page, work page, projects page, CV, `llms.txt`, `llms-full.txt` and `/resume.json` are all generated from them.
 - Posts are Markdown files in `src/content/writing/`. Posts with `draft: true` show up in `npm run dev` and are left out of the build.
 
 ```sh
