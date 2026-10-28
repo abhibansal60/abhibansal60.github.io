@@ -165,5 +165,49 @@
       "Vercel"
     ],
     "url": "https://github.com/abhibansal60/mullana-committee-tracker"
+  },
+  {
+    "name": "led-catalog",
+    "kind": "web app",
+    "description": "A catalog of LED display programs for Bansal Lights, a lighting shop in Mullana. Technicians keep each controller program with a photo and notes in English and Hindi, offline in the browser, and write it to an SD card from desktop Chrome or Edge.",
+    "highlights": [
+      "Writes the program to the SD card, then reads it back and checks the copy byte for byte"
+    ],
+    "keywords": [
+      "React",
+      "TypeScript",
+      "IndexedDB",
+      "Cloudflare Pages"
+    ],
+    "url": "https://github.com/abhibansal60/led-catalog"
+  },
+  {
+    "name": "home-list",
+    "kind": "web app",
+    "description": "A shared chores list for two people in one home, installed on both phones as a home-screen app. Tasks can have a complete-by time; each phone gets a push when the other person adds a task, and a reminder an hour before one is due. Invite-only: only allowlisted Google accounts can see the list.",
+    "highlights": [
+      "Reminders every five minutes at no cost: a Cloudflare Worker cron calls the app, because Vercel's free cron runs only once a day"
+    ],
+    "keywords": [
+      "Next.js",
+      "Firebase",
+      "Web Push",
+      "Cloudflare Workers"
+    ],
+    "url": "https://chores.abhibansal.dev"
+  },
+  {
+    "name": "expense-tracker",
+    "kind": "web app",
+    "description": "A shared expense tracker for housemates: quick entry, filters by category, type and date, and monthly summaries with the net position and a category breakdown. Changes show up live for everyone signed in with Google.",
+    "highlights": [
+      "Real-time sync and Google sign-in come from Convex, so there is no server to run"
+    ],
+    "keywords": [
+      "React",
+      "TypeScript",
+      "Convex"
+    ],
+    "url": "https://github.com/abhibansal60/expense-tracker"
   }
 ]
