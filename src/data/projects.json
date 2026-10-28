@@ -169,7 +169,7 @@
   {
     "name": "led-catalog",
     "kind": "web app",
-    "description": "A catalog of LED display programs for Bansal Lights, a lighting shop in Mullana. Technicians keep each controller program with a photo and notes in English and Hindi, offline in the browser, and write it to an SD card from desktop Chrome or Edge.",
+    "description": "A catalog of LED display programs for Bansal Lights Decorator, my father's lighting business in Mullana. Technicians keep each controller program with a photo and notes in English and Hindi, offline in the browser, and write it to an SD card from desktop Chrome or Edge.",
     "highlights": [
       "Writes the program to the SD card, then reads it back and checks the copy byte for byte"
     ],
