@@ -154,7 +154,7 @@
   {
     "name": "mullana-committee-tracker",
     "kind": "web app",
-    "description": "A tracker for a bidding chit fund (a \"committee\") run among friends: monthly auction results, cash and UPI payments, and a ledger for each month. On committee day, members sign in with Google and bid live from their phones while the holder runs the auction room.",
+    "description": "A shared ledger for a monthly savings group run among friends: who has paid in, by cash or UPI, and a running record for every month. Members sign in with Google to check the group's status from their phones.",
     "highlights": [
       "All the payout and dues maths lives in one tested function"
     ],
