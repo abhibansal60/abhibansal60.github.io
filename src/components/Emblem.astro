@@ -95,7 +95,16 @@ const { name } = Astro.props;
       <ellipse class="lamp" cx="88" cy="38" rx="14" ry="5" />
     </g>
   )}
-  {!['tidy', 'iphone-backup-linux', 'ai-workbench', 'awesome-copilot-toolkit', 'macify', 'explore-mullana', 'post-reviewer', 'why-slow', 'mullana-committee-tracker'].includes(name) && (
+  {name === 'free-island' && (
+    <g>
+      <path class="line faint" d="M14 72V20a10 10 0 0 1 10-10h72a10 10 0 0 1 10 10v52" />
+      <rect class="screen" x="26" y="20" width="68" height="24" rx="12" />
+      <circle class="lamp" cx="40" cy="32" r="5" />
+      <circle class="ink" cx="56" cy="32" r="4" />
+      <path class="cut" d="M72 27v10M78 24v16M84 29v6" />
+    </g>
+  )}
+  {!['tidy', 'iphone-backup-linux', 'ai-workbench', 'awesome-copilot-toolkit', 'macify', 'explore-mullana', 'post-reviewer', 'why-slow', 'mullana-committee-tracker', 'free-island'].includes(name) && (
     <g>
       <circle class="ink" cx="60" cy="40" r="20" />
       <path class="line" d="M60 14v6M60 60v6M34 40h6M80 40h6" />
@@ -114,6 +123,7 @@ const { name } = Astro.props;
   .screen { fill: var(--text); }
   .dot { fill: var(--text); }
   .lamp { fill: var(--signal); }
+  .cut { fill: none; stroke: var(--bg); stroke-width: 2.5; stroke-linecap: round; }
   .mark { fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
   .scan { fill: var(--signal); opacity: 0; transform-box: view-box; }
 </style>
