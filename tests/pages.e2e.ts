@@ -12,6 +12,7 @@ const pages: [string, string | RegExp][] = [
   ['/uses/', 'Uses'],
   ['/colophon/', 'Colophon'],
   ['/privacy/', 'Privacy'],
+  ['/free-island/', 'Free Island'],
   ['/cv/', resume.basics.name],
 ];
 
