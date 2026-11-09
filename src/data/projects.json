@@ -82,6 +82,23 @@
     "install": "/plugin marketplace add abhibansal60/claude-mods"
   },
   {
+    "name": "free-island",
+    "kind": "android app",
+    "description": "An island around the camera for Android. Notifications, music, calls, timers, Live Updates, maps directions and downloads show in a small pill around the front camera and grow into a card when you tap. No ads, no paywall and nothing locked behind \"Pro\", and it never goes online: the app has no internet permission. Built for Android 14 to 17, and coming to Google Play.",
+    "highlights": [
+      "No internet permission, no account, no analytics: nothing it reads can leave the phone",
+      "Follows Android's lock screen privacy settings, so private messages show only the app name",
+      "Shows Android 16 Live Updates and Android 17 Clock timers live in the island"
+    ],
+    "keywords": [
+      "Android",
+      "Kotlin",
+      "Privacy"
+    ],
+    "url": "https://github.com/abhibansal60/free-island",
+    "live": "https://abhibansal.dev/free-island/"
+  },
+  {
     "name": "ai-workbench",
     "kind": "claude code skill",
     "featured": true,

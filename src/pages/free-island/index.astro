@@ -1,0 +1,99 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const shots = [
+  ['01-msg-card', 'A message card in the island with Reply, Mark as read and Clear buttons'],
+  ['02-music-card', 'The music card: album art, a seek bar, and previous, pause and next buttons'],
+  ['05-live-card', 'A Live Update for a ride, three minutes away, with a progress bar'],
+  ['03-privacy', 'The setup screen explaining that notifications stay on the phone and the app has no internet permission'],
+];
+---
+
+<Base title="Free Island" description="Free Island turns the camera hole on your Android phone into a live island. No ads, no paywall, and it never goes online. Coming to Google Play.">
+  <header class="hero">
+    <img class="icon" src="/media/free-island/icon.webp" width="96" height="96" alt="" />
+    <p class="soon">Coming to Google Play</p>
+    <h1>Free Island</h1>
+    <p class="lede">The island for your camera: no ads, no paywall, and it never goes online.</p>
+    <p class="prose">Free Island turns the camera hole on your Android phone into a live island. Notifications, music, calls, timers and directions show in a small black pill around the camera, and grow into a card when you tap. Built for Android 14 to 17.</p>
+    <ul class="button-row">
+      <li><a class="button primary" href="https://github.com/abhibansal60/free-island">Source on GitHub</a></li>
+      <li><a class="button" href="/free-island/privacy/">Privacy policy</a></li>
+    </ul>
+  </header>
+
+  <ul class="shots">
+    {shots.map(([file, alt]) => (
+      <li><img src={`/media/free-island/${file}.webp`} width="540" height="960" alt={alt} loading="lazy" /></li>
+    ))}
+  </ul>
+
+  <div class="features">
+    <section class="pane">
+      <h2>Nothing locked</h2>
+      <ul>
+        <li>No weekly subscription, no ads, no "Pro" tier</li>
+        <li>No internet permission, so it cannot send your notifications anywhere</li>
+        <li>No account, no analytics, no crash reporting</li>
+        <li>Open source under the MIT licence</li>
+      </ul>
+    </section>
+    <section class="pane">
+      <h2>What it shows</h2>
+      <ul>
+        <li>Notifications as a mini capsule or a full card, with action buttons, inline reply and Clear</li>
+        <li>Music with album art, a visualizer in the album's colours and a seek bar you can drag</li>
+        <li>Ringing calls with Answer and Decline, then a live call timer; Snooze or Stop for alarms</li>
+        <li>Live Updates from rides, deliveries and flights, and Android 17 Clock timers</li>
+        <li>Maps directions, downloads, charging, ringer mode, Bluetooth headphone battery and the flashlight</li>
+      </ul>
+    </section>
+    <section class="pane">
+      <h2>Safe on the lock screen</h2>
+      <ul>
+        <li>Follows Android's lock screen settings: private messages show only the app name, secret ones stay hidden</li>
+        <li>Replies and buttons need an unlock; calls and alarms still work</li>
+        <li>Hides while you share or record your screen</li>
+      </ul>
+    </section>
+    <section class="pane">
+      <h2>Make it yours</h2>
+      <ul>
+        <li>Size, position, camera gap and colour</li>
+        <li>Tap, double tap, long press and swipe gestures</li>
+        <li>Shortcuts to your favourite apps</li>
+        <li>Hide it in landscape or in apps you choose</li>
+        <li>Works with TalkBack</li>
+      </ul>
+    </section>
+  </div>
+
+  <p class="muted note">A free side project, tested on Pixel phones. Other phones may place the camera or status bar differently. Read the <a href="/free-island/privacy/">privacy policy</a>.</p>
+</Base>
+
+<style>
+  .hero { max-width: var(--measure); }
+  .icon { display: block; width: 4rem; height: 4rem; border-radius: 1rem; margin-bottom: 1.25rem; }
+  .soon { font: 400 0.85rem/1.4 var(--mono); color: var(--signal); margin-bottom: 0.75rem; }
+  .lede { font-size: 1.25rem; }
+  .hero .button-row { margin-top: 1.5rem; }
+  .shots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 1.25rem;
+    margin: 3.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .shots img { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
+    gap: 2.5rem;
+    margin-top: 3.5rem;
+  }
+  .features ul { padding-left: 1.1rem; margin: 0; }
+  .features li { margin-bottom: 0.4rem; }
+  .features li::marker { color: var(--signal); }
+  .note { margin-top: 3rem; max-width: var(--measure); }
+</style>
