@@ -5,22 +5,23 @@ import Base from '../../layouts/Base.astro';
 <Base title="Free Island privacy" description="Privacy policy for Free Island, the Android camera island app.">
   <div class="prose">
     <h1>Free Island privacy policy</h1>
-    <p class="lede">Free Island is an Android app made by Abhinav Bansal. It does not collect, store, sell or share any personal data. The app has no internet permission, so it cannot send anything off your phone.</p>
+    <p class="lede">Free Island is an Android app made by Abhinav Bansal. It has no internet permission, ads, analytics, crash reporting or account. It processes notifications on your phone and does not upload them. Settings are stored locally; you can choose to export them to a file.</p>
 
     <h2>What the app reads, and why</h2>
     <ul>
       <li><strong>Notifications (notification access):</strong> to show notifications, calls, timers, music, navigation and downloads in the island, the app reads notifications as they arrive: the app name, title, text, icon, picture and buttons. It uses them only to draw the island at that moment and does not save them.</li>
-      <li><strong>Accessibility service:</strong> the app uses Android's accessibility service to draw the island over the status bar. It also reads the name of the app that is open, so it can hide the island in apps you choose. It does not read what is on screen, what you type or your passwords.</li>
+      <li><strong>Accessibility service:</strong> the app uses Android's accessibility service to draw the island over the status bar. It also reads the name of the app that is open, so it can hide the island in apps you choose. It does not request access to window content, typed text or passwords. If you choose the Screenshot shortcut, it asks Android to take a screenshot through the system screenshot action. Android handles the capture and where it is saved; Free Island does not read or store the image.</li>
       <li><strong>Media sessions:</strong> to show what is playing, the app reads the track title, artist, album art and playback position from the music or video app.</li>
       <li><strong>Bluetooth (optional):</strong> if you allow it, the app reads the name and battery level of Bluetooth headphones when they connect, to show them in the island.</li>
       <li><strong>Installed apps:</strong> the app lists the apps on your phone that have a launcher icon, so you can pick shortcuts and choose apps where the island hides or never pops up.</li>
     </ul>
 
     <h2>What the app stores</h2>
-    <p>Only your settings (sizes, colours, switches and the apps you picked) are stored, on your phone. Uninstalling the app deletes them.</p>
+    <p>Your settings (sizes, colours, switches and the apps you picked) are stored on your phone. Uninstalling the app deletes its local settings.</p>
+    <p><strong>Settings files:</strong> Save settings writes your preferences, including the package names of apps you picked, to a text file at a location you choose in Android's file picker. That location may be a cloud storage provider. Load settings reads a file you choose and applies its preferences. Exported files are not deleted when you uninstall Free Island; you control their storage, sharing and deletion. Notification content is not included.</p>
 
     <h2>Sharing</h2>
-    <p>Nothing is shared with anyone. The app has no ads, no analytics, no crash reporting and no account.</p>
+    <p>Free Island does not send data to the developer. Reply and notification action buttons pass your input to the original app, which handles it under its own privacy policy. Settings exports go to the file location you choose, whose provider may store or sync the file under its own policy.</p>
 
     <h2>Children</h2>
     <p>Free Island is not directed at children under 13.</p>
@@ -28,6 +29,6 @@ import Base from '../../layouts/Base.astro';
     <h2>Changes and contact</h2>
     <p>If this policy changes, the new version will be posted at this address with a new date. Questions: <a href="mailto:abhibansal60@gmail.com">abhibansal60@gmail.com</a>.</p>
 
-    <p class="meta">Last updated 24 October 2026.</p>
+    <p class="meta">Last updated 17 November 2026.</p>
   </div>
 </Base>
