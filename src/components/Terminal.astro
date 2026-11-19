@@ -61,6 +61,7 @@ commands.help = dim(`commands: ${[...chips, 'speaking', 'cv', 'crawl', 'pip', ..
   <form class="in" data-form autocomplete="off" hidden>
     <span class="p" aria-hidden="true">$</span>
     <input data-input aria-label="Type a command" placeholder="ask Pip about Abhinav's work, or type help" spellcheck="false" autocapitalize="off" />
+    <span class="d" data-status role="status"></span>
   </form>
   <div class="chips" data-chips hidden>
     {chips.map((c) => <button type="button" data-cmd={c}>{c}</button>)}
@@ -99,6 +100,7 @@ commands.help = dim(`commands: ${[...chips, 'speaking', 'cv', 'crawl', 'pip', ..
   .in[hidden], .chips[hidden] { display: none; }
   .in input { flex: 1; min-width: 0; background: transparent; border: 0; color: var(--text); font: inherit; caret-color: var(--signal); }
   .in input:focus { outline: none; }
+  .in [data-status]:empty { display: none; }
   .in:focus-within { box-shadow: inset 0 -1px 0 var(--signal); }
   .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.6rem 0.9rem 0.8rem; border-top: 1px solid var(--line); }
   .chips button {
@@ -158,7 +160,13 @@ commands.help = dim(`commands: ${[...chips, 'speaking', 'cv', 'crawl', 'pip', ..
     const crawl = root.querySelector<HTMLDialogElement>('[data-crawl]')!;
     crawl.querySelector('[data-close]')!.addEventListener('click', () => crawl.close());
     crawl.addEventListener('close', () => { crawl.classList.remove('rolling'); input.focus(); });
+    const status = root.querySelector<HTMLElement>('[data-status]')!;
     let busy = false;
+    // Only one command runs at a time. A second one is refused, and typed text stays in the box.
+    const admit = () => {
+      if (busy) status.textContent = 'busy, try again in a moment';
+      return !busy;
+    };
 
     const line = (html: string) => {
       const p = document.createElement('p');
@@ -175,44 +183,54 @@ commands.help = dim(`commands: ${[...chips, 'speaking', 'cv', 'crawl', 'pip', ..
       p.className = 'r d';
       p.textContent = 'Pip is thinking...';
       out.scrollTop = out.scrollHeight;
+      // The deadline covers the headers and reading the body. A 429 still carries Pip's answer.
+      const signal = AbortSignal.timeout(15_000);
       try {
-        const res = await fetch(PIP, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question }) });
-        const data = (await res.json()) as { answer?: string; links?: { label: string; url: string }[] };
+        const res = await fetch(PIP, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question }), signal });
+        const data = (await res.json()) as { answer?: unknown; links?: unknown } | null;
         p.className = 'r';
-        p.textContent = data.answer ?? 'Pip could not answer that. Type help for the built-in commands.';
-        for (const l of data.links ?? []) {
-          if (!/^(https:|mailto:)/.test(l.url)) continue;
+        p.textContent = typeof data?.answer === 'string' ? data.answer : 'Pip could not answer that. Type help for the built-in commands.';
+        for (const l of Array.isArray(data?.links) ? data.links : []) {
+          if (typeof l?.url !== 'string' || !/^(https:|mailto:)/.test(l.url)) continue;
           const a = document.createElement('a');
           a.href = l.url;
-          a.textContent = l.label;
+          a.textContent = typeof l.label === 'string' ? l.label : l.url;
           p.append('\n', a);
         }
       } catch {
-        p.textContent = "Pip can't be reached right now. Type help for the built-in commands.";
+        p.textContent = signal.aborted
+          ? 'Pip took too long to answer. Type help for the built-in commands.'
+          : "Pip can't be reached right now. Type help for the built-in commands.";
       }
     }
 
     async function run(raw: string, typed: boolean) {
-      if (busy) return;
       busy = true;
+      out.setAttribute('aria-busy', 'true');
+      status.textContent = '';
       const cmd = raw.trim().toLowerCase().replace(/\s+/g, ' ');
-      const echo = line('<span class="p">$ </span>');
-      const text = document.createTextNode('');
-      echo.append(text);
-      if (typed && !still) {
-        for (const ch of raw) { text.data += ch; await new Promise((r) => setTimeout(r, 32)); }
-      } else text.data = raw;
+      try {
+        const echo = line('<span class="p">$ </span>');
+        const text = document.createTextNode('');
+        echo.append(text);
+        if (typed && !still) {
+          for (const ch of raw) { text.data += ch; await new Promise((r) => setTimeout(r, 32)); }
+        } else text.data = raw;
 
-      if (cmd === 'clear') out.replaceChildren();
-      else if (commands[cmd]) line(commands[cmd]).className = 'r';
-      else if (/\s|\?/.test(raw.trim())) await askPip(raw.trim());
-      else {
-        const p = line('');
-        p.className = 'r d';
-        p.textContent = `${raw.trim()}: command not found. Type help, or ask Pip a question.`;
+        if (cmd === 'clear') out.replaceChildren();
+        else if (commands[cmd]) line(commands[cmd]).className = 'r';
+        else if (/\s|\?/.test(raw.trim())) await askPip(raw.trim());
+        else {
+          const p = line('');
+          p.className = 'r d';
+          p.textContent = `${raw.trim()}: command not found. Type help, or ask Pip a question.`;
+        }
+        out.scrollTop = out.scrollHeight;
+      } finally {
+        busy = false;
+        out.removeAttribute('aria-busy');
+        status.textContent = '';
       }
-      out.scrollTop = out.scrollHeight;
-      busy = false;
       if (cmd === 'pip') dispatchEvent(new Event('pip:summon'));
       if (cmd === 'cv') setTimeout(() => (location.href = '/cv/'), 600);
       if (cmd === 'crawl') {
@@ -228,12 +246,15 @@ commands.help = dim(`commands: ${[...chips, 'speaking', 'cv', 'crawl', 'pip', ..
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const v = input.value;
-      input.value = '';
-      if (v.trim()) run(v, false);
+      if (!v.trim()) input.value = '';
+      else if (admit()) {
+        input.value = '';
+        run(v, false);
+      }
     });
     chips.addEventListener('click', (e) => {
       const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-cmd]');
-      if (b) run(b.dataset.cmd!, true);
+      if (b && admit()) run(b.dataset.cmd!, true);
     });
   }
 </script>
